@@ -1,0 +1,77 @@
+var exports = module.exports = {};
+
+const Logger = require("../logger")
+const Result = require("../result").Result
+const CommandI = require("./commandI").CommandI;
+
+const File = require("../file");
+const Database = require("../database").Database;
+
+class ReadFile extends CommandI {
+
+	constructor(){
+		super();
+
+		this.options = [
+			[global.commandOptions.filePath, false],
+			[global.commandOptions.fileName, true],
+		];
+	}
+
+	async _execute(filePath, fileName, resource){
+		if(fileName === undefined) fileName = "index.html";
+		const fullFilePath = `${filePath}/${fileName}`;
+		const readFileExtension = /(?:\.([^.]+))?$/.exec(fileName)[1];
+		console.log(readFileExtension);
+		const fileResult = await File.readWebFile(fullFilePath);
+		if(fileResult.success) {
+			switch (readFileExtension) {
+				case "js":
+					resource.writeHead(200, {'Content-Type': 'text/javascript'});
+					break;
+				case "css":
+					resource.writeHead(200, {'Content-Type': 'text/css'});
+					break;
+				case "html":
+					resource.writeHead(200, {'Content-Type': 'text/html'});
+					break;
+				case "ico":
+					readFilePath = readFilePath.slice(0, -3) + "png";
+					readFileExtension = "png";
+				case "png":
+					resource.writeHead(200, {'Content-Type': 'image/png'});
+					break;
+				default:
+					resource.writeHead(200, {'Content-Type': 'text/plain'});
+					break;
+			}
+
+			resource.write(fileResult.data);
+		}
+
+		return fileResult;
+	}
+
+	async execute(query, resource){
+		const optionResult = this._separateOptions(query);
+		if(!optionResult.success) return optionResult;
+		const [filePath, fileName] = optionResult.data;
+
+		Logger.log("ReadFile", "File requested");
+		const fileResult = this._execute(filePath, fileName, resource);
+		if(!fileResult.success) {
+			Logger.warn("ReadFile", `Requested file ${readFilePath} not found`);
+			return new Result(
+				false,
+				{},
+				"The file could not be read.",
+				"The file could not be read."
+			);
+		}
+
+		Logger.log("ReadFile", "File read")
+		return;
+	}
+}
+
+exports.Command = ReadFile;

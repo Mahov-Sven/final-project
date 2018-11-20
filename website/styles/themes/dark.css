@@ -1,0 +1,46 @@
+/*===== General Objects =====*/
+
+.Text {
+	color: #cccccc;
+	font-family: Verdana;
+}
+
+.Button {}
+
+.ButtonText {
+	color: #9b9b9b;
+	font-family: Verdana;
+}
+
+.ButtonText:hover {
+	color: #ffffff;
+}
+
+.ButtonText.Active {
+	color: #3e84f4;
+}
+
+.ButtonText.Active:hover {
+	color: #6ea3f7;
+}
+
+.FlexRow {}
+
+.FlexColumn {}
+
+.FlexDynamic {}
+
+.FlexStatic {}
+
+.Disabled {
+	opacity: 0.2;
+	user-select: none;
+	cursor: default;
+	pointer-events: none;
+}
+
+/*===== Main Page =====*/
+
+#Content {}
+
+#Page {}

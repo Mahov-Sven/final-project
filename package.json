@@ -1,0 +1,20 @@
+{
+  "name": "final-project",
+  "version": "1.0.0",
+  "description": "Final Project for CSCE-411 based on CSPs",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.unl.edu/csce-411/final-project.git"
+  },
+  "keywords": [
+    "CSP",
+    "FinalProject"
+  ],
+  "author": "Andrew Buckwalter, Ethan Penn, Josh Martin, Tommy Boswell, Randy Scheffler",
+  "license": "ISC"
+}
