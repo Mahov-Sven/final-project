@@ -2,14 +2,16 @@ Project assignees and design/implementation details are subject to change!
 
 1. DATABASE
 (Assignees - Andrew, Ethan, Tommy)
+
 This step constitutes designing and implementating the database. 
 A rough mock-up of the database design will be added to this document at a later date. It is summarized here: 
 The database will store constraint satisfaction problems (CSPs), which consist of variables and constraints. 
 The database will hold a list of problems under a key-value pair association of unique problem-names to unique file-names. 
-Each "problem" file will contain, in order: the number of variables, each variable's domain, the number of constraints (functions), and the generic assmebly code of each function. 
+Each "problem" file will contain, in order: the number of variables, each variable's domain, the number of constraints (functions), and the generic assembly code of each function. 
 
 2. VISUALIZATION
 (Assignees - Andrew, Ethan, Tommy)
+
 This step constitutes designing and implementating visualization of the CSP. 
 A rough mock-up of the visualization design will be added to this document at a later date. It is summarized here: 
 The visualization will show variables, their domains, and the constraints at each step of the algorithm.
@@ -28,6 +30,7 @@ The back-end of the visualization must properly interpret the user's assembly co
 
 3. ALGORITHMS
 (Assignees - Randy, Josh)
+
 This step constitutes implementation of two or more CSP-solving algorithms. 
 Generally, such an algorithm takes all variables, their domains, and a set of constraints as inputs. 
 It returns the first valid solution (or sometimes all valid solutions) to the CSP it finds, if any exist. 
@@ -36,6 +39,7 @@ The algorithm may be modified to accept the constraints as a set of functions.
 
 4. DOCUMENTATION
 (Assignees - TBD)
+
 This step constitutes writing up documentation to instruct a potential user of our project. 
 The primary challenge is to help the user understand the constraints of a CSP. 
 The average user will not be familiar with assembly code, so it will fall to the documentation to teach them the basics. 
@@ -43,6 +47,7 @@ The documentation will be accessible through the initial page of the visualizati
 
 5. PRESENTATION
 (Assignees - All)
+
 This step constitutes preparing for the presentation - a Powerpoint, demo, notes, etc.
 This step will be approached when all other steps are completed. 
 
