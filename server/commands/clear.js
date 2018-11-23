@@ -34,7 +34,7 @@ class Clear extends CommandI {
 
 		Logger.warn("Clear", `Trying to clear the database ${databaseName}`);
 
-		let clearResult = this._execute(databaseName);
+		let clearResult = await this._execute(databaseName);
 		if(clearResult.success) Logger.log("Clear", `The database ${databaseName} has been cleared`);
 
 		return new Result(

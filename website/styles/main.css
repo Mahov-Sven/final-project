@@ -4,9 +4,47 @@
 	overflow: hidden;
 }
 
+#NotificationStack {
+	right: 0;
+	bottom: 0;
+	position: absolute;
+}
+
+.Notification {
+	width: 300pt;
+	margin: 4pt 4pt;
+}
+
+.Notification .NotificationTitle {
+	margin: 2pt 2pt;
+	padding: 2pt;
+	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.Notification .NotificationFieldName {
+	margin: 2pt 0 2pt 2pt;
+	padding: 2pt;
+}
+
+.Notification .NotificationFieldValue {
+	margin: 2pt 2pt 2pt 0;
+	padding: 2pt;
+	overflow: hidden;
+	word-wrap: normal;
+	white-space: nowrap;
+}
+
 .FullContainer {
 	width: 100%;
 	height: 100%;
+}
+
+.Input {
+	padding: 0 5pt;
+	box-sizing: border-box;
 }
 
 .Button {
@@ -49,24 +87,6 @@
 	height: 0.2rem;
 	width: 90%;
 	left: 5%;
-}
-
-.ContentDividerColumn {
-	background-color: #000000;
-	opacity: 0.4;
-	height: 95%;
-	width: 0.1rem;
-	top: 2.5%;
-	margin: 0 0.2rem;
-}
-
-.ContentDividerRow {
-	background-color: #000000;
-	opacity: 0.4;
-	width: 95%;
-	height: 0.1rem;
-	left: 2.5%;
-	margin: 0.2rem 0;
 }
 
 body {

@@ -27,7 +27,7 @@ class Website extends CommandI {
 
 	async execute(query, resource){
 		Logger.log("Website", "Page requested");
-		const fileResult = this._execute(resource);
+		const fileResult = await this._execute(resource);
 		if(!fileResult.success) {
 			Logger.err("Website", "Page not found");
 			return new Result(

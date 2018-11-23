@@ -6,7 +6,7 @@ const Result = require("../result").Result;
 class CommandI {
 
 	constructor(){
-		this.name = this.constructor.name;;
+		this.name = this.constructor.name[0].toLowerCase() + this.constructor.name.substring(1);
 		this.options = [];
 	}
 
@@ -18,7 +18,7 @@ class CommandI {
 		// STUB
 	}
 
-	static separateOptions(query){
+	_separateOptions(query){
 		const optionVals = [];
 
 		for(const optionPair in this.options){

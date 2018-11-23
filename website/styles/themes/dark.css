@@ -1,11 +1,43 @@
 /*===== General Objects =====*/
 
+.Notification {
+	background-color: #55dd55;
+	border-radius: 4pt;
+	opacity: 0.7;
+	cursor: pointer;
+}
+
+.Notification.NotificationFailure {
+	background-color: #dd5555;
+}
+
+.Notification .NotificationTitle {
+	background-color: #eeeeee77;
+	background-blend-mode: lighten;
+	border-radius: 4pt;
+	font-weight: bold;
+	color: #000000;
+}
+
+.Notification .NotificationFieldName {
+	background-color: #00000055;
+	background-blend-mode: darken;
+	border-radius: 4pt 0 0 4pt;
+	font-weight: bold;
+	color: #000000;
+}
+
+.Notification .NotificationFieldValue {
+	background-color: #eeeeee44;
+	background-blend-mode: lighten;
+	border-radius: 0 4pt 4pt 0;
+	color: #000000;
+}
+
 .Text {
 	color: #cccccc;
 	font-family: Verdana;
 }
-
-.Button {}
 
 .ButtonText {
 	color: #9b9b9b;
@@ -24,13 +56,21 @@
 	color: #6ea3f7;
 }
 
-.FlexRow {}
+.Input {
+	border-width: 0 0 1pt 0;
+	border-color: #555555;
+	border-style: solid;
+	outline-width: 0;
+	background-color: #111111;
+	box-sizing: border-box;
+	padding-bottom: 1pt;
+}
 
-.FlexColumn {}
-
-.FlexDynamic {}
-
-.FlexStatic {}
+.Input:focus {
+	border-width: 0 0 2pt 0;
+	border-color: #9b9b9b;
+	padding-bottom: 0pt;
+}
 
 .Disabled {
 	opacity: 0.2;
@@ -41,6 +81,10 @@
 
 /*===== Main Page =====*/
 
-#Content {}
+#Content {
+	background-color: #222222;
+}
 
-#Page {}
+#CommandInput {
+	font-size: 14pt;
+}

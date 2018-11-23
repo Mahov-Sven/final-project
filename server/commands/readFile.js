@@ -19,10 +19,8 @@ class ReadFile extends CommandI {
 	}
 
 	async _execute(filePath, fileName, resource){
-		if(fileName === undefined) fileName = "index.html";
 		const fullFilePath = `${filePath}/${fileName}`;
 		const readFileExtension = /(?:\.([^.]+))?$/.exec(fileName)[1];
-		console.log(readFileExtension);
 		const fileResult = await File.readWebFile(fullFilePath);
 		if(fileResult.success) {
 			switch (readFileExtension) {
@@ -55,12 +53,14 @@ class ReadFile extends CommandI {
 	async execute(query, resource){
 		const optionResult = this._separateOptions(query);
 		if(!optionResult.success) return optionResult;
-		const [filePath, fileName] = optionResult.data;
+		let [filePath, fileName] = optionResult.data;
+		if(filePath === undefined) filePath = "";
+		if(fileName === undefined) fileName = "index.html";
 
 		Logger.log("ReadFile", "File requested");
-		const fileResult = this._execute(filePath, fileName, resource);
+		const fileResult = await this._execute(filePath, fileName, resource);
 		if(!fileResult.success) {
-			Logger.warn("ReadFile", `Requested file ${readFilePath} not found`);
+			Logger.warn("ReadFile", `Requested file ${filePath}/${fileName} not found`);
 			return new Result(
 				false,
 				{},
