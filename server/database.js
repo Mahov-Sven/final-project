@@ -25,37 +25,8 @@ class Database {
 		return result;
 	}
 
-	async _update(query, object){
-		return new Promise((resolve, reject) => {
-			//reject(new PromiseError(error));
-			resolve(new Result(true));
-		});
-	}
-
-	async update(query, object){
-		Logger.log("Database", `Trying to update an object in the database`);
-		const result = await this._update(query, objects);
-		if(result.success) Logger.log("Database", `Successfully updated the object in the database`);
-		else Logger.warn("Database", `Could not find the object in the database`);
-		return result;
-	}
-
-	async _remove(query){
-		return new Promise((resolve, reject) => {
-			//reject(new PromiseError(error));
-			resolve(new Result(true));
-		});
-	}
-
-	async remove(query){
-		if(query === undefined) return new Result(false);
-		Logger.log("Database", `Trying to remove an object(s) from the database`);
-		const result = await this._remove(query);
-		if(result.success) Logger.log("Database", `Successfully removed an object(s) from the database`);
-		return result;
-	}
-
 	async _query(query){
+		// top 10
 		return new Promise((resolve, reject) => {
 			//reject(new PromiseError(error));
 			resolve(new Result(true));

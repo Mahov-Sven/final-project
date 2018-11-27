@@ -8,25 +8,32 @@ const Result = require("./result").Result;
 
 const rootDir = Path.join(__dirname, "..");
 
-exports.readWebFile = function(fileName){
-	const fullFilePath = Path.join(rootDir, "website", fileName);
-	return _readFile(fullFilePath, fileName);
-}
+class File {
 
-exports.readFile = function(fileName){
-	const fullFilePath = Path.join(rootDir, fileName);
-	return _readFile(fullFilePath, fileName);
-}
+	constructor(){}
 
-function _readFile(fullFilePath, errPartialFileName=""){
-	Logger.log("File", `Reading file "${fullFilePath}"`);
-	try {
-		const data = FileSystem.readFileSync(fullFilePath);
-		return new Result(true, data);
-	} catch (e) {
-		switch(e.code){
-			case "ENOENT": return new Result(false, {}, "File not found.", `The file "${errPartialFileName}" was not found.`);
-			default: return new Result(false, {}, "Unknown File Error", `An unknown File IO Error occured.`);
+	static _readFile(fullFilePath, errPartialFileName=""){
+		Logger.log("File", `Reading file "${fullFilePath}"`);
+		try {
+			const data = FileSystem.readFileSync(fullFilePath);
+			return new Result(true, data);
+		} catch (e) {
+			switch(e.code){
+				case "ENOENT": return new Result(false, {}, "File not found.", `The file "${errPartialFileName}" was not found.`);
+				default: return new Result(false, {}, "Unknown File Error", `An unknown File IO Error occured.`);
+			}
 		}
 	}
+
+	static readWebFile(fileName){
+		const fullFilePath = Path.join(rootDir, "website", fileName);
+		return _readFile(fullFilePath, fileName);
+	}
+
+	static readFile(fileName){
+		const fullFilePath = Path.join(rootDir, fileName);
+		return _readFile(fullFilePath, fileName);
+	}
 }
+
+exports.File = File;

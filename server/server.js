@@ -4,7 +4,6 @@ const Url = require("url")
 
 const Globals = require("./globals")
 const Result = require("./result").Result
-const File = require("./file")
 const Logger = require("./logger")
 const QueryError = require("./queryError").QueryError
 const Database = require("./database").Database
