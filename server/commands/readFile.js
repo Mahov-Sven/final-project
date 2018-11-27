@@ -19,7 +19,7 @@ class ReadFile extends CommandI {
 	}
 
 	async _execute(filePath, fileName, resource){
-		const fullFilePath = `${filePath}/${fileName}`;
+		const fullFilePath = `${filePath}/${fileName}`.replace(/\.\.\/|\.\.\\/g, "");
 		const readFileExtension = /(?:\.([^.]+))?$/.exec(fileName)[1];
 		const fileResult = await File.readWebFile(fullFilePath);
 		if(fileResult.success) {

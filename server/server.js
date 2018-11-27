@@ -3,6 +3,7 @@ const Path = require("path")
 const Url = require("url")
 
 const Globals = require("./globals")
+const Result = require("./result").Result
 const File = require("./file")
 const Logger = require("./logger")
 const QueryError = require("./queryError").QueryError
@@ -52,15 +53,26 @@ async function handleHTTPRequest(request, resource){
 		if(!(e instanceof QueryError)) throw e;
 
 		const readFileArray = /^\/(([0-9a-zA-Z\-_. ]+\/)*)([0-9a-zA-Z\-_. ]*)$/.exec(uri);
-		const readFilePath = readFileArray[1];
-		const readFileName = readFileArray[3];
+		if(readFileArray !== null){
+			const readFilePath = readFileArray[1];
+			const readFileName = readFileArray[3];
 
-		Logger.log("Server", `Trying to read file "${uri}"`);
-		const ReadFileCommand = require("./commands/readFile").Command;
-		const readFileResult = await (new ReadFileCommand())._execute(readFilePath, readFileName, resource);
-		if(!readFileResult.success) {
-			Logger.warn("Server", `Requested file "${uri}" not found`);
-			resource.json(readFileResult);
+			Logger.log("Server", `Trying to read file "${uri}"`);
+			const ReadFileCommand = require("./commands/readFile").Command;
+			const readFileResult = await (new ReadFileCommand())._execute(readFilePath, readFileName, resource);
+			if(!readFileResult.success) {
+				Logger.warn("Server", `Requested file "${uri}" not found`);
+				resource.json(readFileResult);
+			}
+		} else {
+			Logger.warn("Server", `Requested file path was invalid.`);
+			resource.json(
+				new Result(
+					false,
+					{},
+					"Given an invalid path.",
+					"Input path was in an invalid structure."
+				));
 		}
 	}
 
