@@ -10,18 +10,19 @@ class Database {
 
 	constructor(){}
 
-	async _add(objArr){
+	async _add(problemName, jsonString){
 		return new Promise((resolve, reject) => {
-			//reject(new PromiseError(error));
-			resolve(new Result(true));
+			const fullFilePath = File.removePathEscapes(`server/database/${problemName}.json`);
+			const fileResult = File.writeFile(fullFilePath, jsonString, problemName)
+			if(fileResult.success) resolve(fileResult);
+			else reject(fileResult);
 		});
 	}
 
-	async add(input){
-		const objArr = Array.isArray(input) ? input : [input];
-		Logger.log("Database", `Trying to add ${objArr.length} object(s) into the database`);
-		const result = await this._add(objArr);
-		if(result.success) Logger.log("Database", `Successfully added ${objArr.length} object(s) into the database`);
+	async add(problemName, jsonString){
+		Logger.log("Database", `Trying to add a new problem named "${problemName}" to the database`);
+		const result = await this._add(problemName, jsonString);
+		if(result.success) Logger.log("Database", `Successfully added a new problem named ${problemName} to the database`);
 		return result;
 	}
 
@@ -58,7 +59,7 @@ class Database {
 
 	async _clear(){
 		return new Promise((resolve, reject) => {
-			//reject(new PromiseError(error));
+			File.clearDirectory("server/database", [".placeholder"]);
 			resolve(new Result(true));
 		});
 	}
