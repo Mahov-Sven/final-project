@@ -8,23 +8,7 @@ const File = require("./file").File
 
 class Database {
 
-	constructor(){
-		// TODO
-	}
-
-	async _open(){
-		return new Promise((resolve, reject) => {
-			// Connect to DB
-			//reject(new PromiseError(error));
-			resolve(new Result(true));
-		});
-	}
-
-	async open(){
-		Logger.log("Database", "Trying to connected to client");
-		const result = await this._open();
-		if(result.success) Logger.log("Database", "Successfully connected to client");
-	}
+	constructor(){}
 
 	async _add(objArr){
 		return new Promise((resolve, reject) => {
@@ -113,12 +97,6 @@ class Database {
 		const result = await this._clear();
 		if(result.success) Logger.warn("Database", `Successfully cleared the database`);
 		return new Result(result.success);
-	}
-
-	async close(){
-		Logger.log("Database", `Trying to close the database`);
-		// TODO: close dB
-		Logger.log("Database", `Successfully closed the database`);
 	}
 }
 
