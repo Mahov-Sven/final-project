@@ -65,7 +65,7 @@ async function handleHTTPRequest(request, resource){
 				resource.json(readFileResult);
 			}
 		} else {
-			Logger.warn("Server", `Requested file path was invalid.`);
+			Logger.warn("Server", `Requested file path was invalid`);
 			resource.json(
 				new Result(
 					false,
