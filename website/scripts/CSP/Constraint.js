@@ -1,0 +1,9 @@
+class Constraint {
+    constructor(){
+        
+    }
+
+    isSatisfiedBy(){
+        
+    }
+}
