@@ -10,7 +10,7 @@ global.collections = {
 }
 */
 global.loggerTitleSize = 10;
-global.loggerHeadingSize = 10;
+global.loggerHeadingSize = 16;
 
 // ===============================================
 // 					  Commands
@@ -18,7 +18,7 @@ global.loggerHeadingSize = 10;
 
 global.commandRegex = /^\/(\w+)(\?(([^=]+=[^=]+&?)+)?)?$/;
 global.commandOptions = {
-	developer : {
+	developer: {
 		name: "developer",
 		type: Boolean,
 		names: new Set(["d", "developer"]),
@@ -27,7 +27,7 @@ global.commandOptions = {
 			long: "Whether to use the developer database over the production one.",
 		},
 	},
-	filePath : {
+	filePath: {
 		name: "filePath",
 		type: String,
 		names: new Set(["p", "fp", "path", "filePath"]),
@@ -45,4 +45,13 @@ global.commandOptions = {
 			long: "The name of the requested file.",
 		},
 	},
+	jsonString: {
+		name: "jsonString",
+		type: String,
+		names: new Set(["j", "jo", "json", "jsonString"]),
+		description: {
+			short: "json_string",
+			long: "The Json of an object as a String.",
+		},
+	}
 }

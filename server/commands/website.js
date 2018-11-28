@@ -4,7 +4,7 @@ const Logger = require("../logger")
 const Result = require("../result").Result
 const CommandI = require("./commandI").CommandI;
 
-const File = require("../file");
+const File = require("../file").File;
 
 class Website extends CommandI {
 

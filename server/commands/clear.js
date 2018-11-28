@@ -11,37 +11,32 @@ class Clear extends CommandI {
 	constructor(){
 		super();
 
-		this.options = [
-			[global.commandOptions.developer, false],
-		];
+		this.options = [];
 	}
 
-	async _execute(databaseName){
+	async _execute(){
 		const database = new Database();
-		await database.open();
-
 		let clearResult = await database.clear();
-
-		await database.close();
 		return clearResult;
 	}
 
-	async execute(query){
+	async execute(query, resource){
+		/*
 		const optionResult = this._separateOptions(query);
 		if(!optionResult.success) return optionResult;
-		const [developer] = optionResult.data;
-		const databaseName = developer ? databases.developer : databases.production;
+		const [] = optionResult.data;
+		*/
 
-		Logger.warn("Clear", `Trying to clear the database ${databaseName}`);
+		Logger.warn("Clear", `Trying to clear the database of all problems`);
 
-		let clearResult = await this._execute(databaseName);
-		if(clearResult.success) Logger.log("Clear", `The database ${databaseName} has been cleared`);
+		let clearResult = await this._execute();
+		if(clearResult.success) Logger.log("Clear", `The database has been cleared`);
 
 		return new Result(
 			true,
 			{},
-			`The database ${databaseName} has been cleared`,
-			`All entries in database ${databaseName} have been removed`
+			`The database has been cleared`,
+			`All problems in database have been removed`
 		);
 	}
 }

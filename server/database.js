@@ -8,70 +8,26 @@ const File = require("./file").File
 
 class Database {
 
-	constructor(){
-		// TODO
-	}
+	constructor(){}
 
-	async _open(){
+	async _add(problemName, jsonString){
 		return new Promise((resolve, reject) => {
-			// Connect to DB
-			//reject(new PromiseError(error));
-			resolve(new Result(true));
+			const fullFilePath = File.removePathEscapes(`server/database/${problemName}.json`);
+			const fileResult = File.writeFile(fullFilePath, jsonString, problemName)
+			if(fileResult.success) resolve(fileResult);
+			else reject(fileResult);
 		});
 	}
 
-	async open(){
-		Logger.log("Database", "Trying to connected to client");
-		const result = await this._open();
-		if(result.success) Logger.log("Database", "Successfully connected to client");
-	}
-
-	async _add(objArr){
-		return new Promise((resolve, reject) => {
-			//reject(new PromiseError(error));
-			resolve(new Result(true));
-		});
-	}
-
-	async add(input){
-		const objArr = Array.isArray(input) ? input : [input];
-		Logger.log("Database", `Trying to add ${objArr.length} object(s) into the database`);
-		const result = await this._add(objArr);
-		if(result.success) Logger.log("Database", `Successfully added ${objArr.length} object(s) into the database`);
-		return result;
-	}
-
-	async _update(query, object){
-		return new Promise((resolve, reject) => {
-			//reject(new PromiseError(error));
-			resolve(new Result(true));
-		});
-	}
-
-	async update(query, object){
-		Logger.log("Database", `Trying to update an object in the database`);
-		const result = await this._update(query, objects);
-		if(result.success) Logger.log("Database", `Successfully updated the object in the database`);
-		else Logger.warn("Database", `Could not find the object in the database`);
-		return result;
-	}
-
-	async _remove(query){
-		return new Promise((resolve, reject) => {
-			//reject(new PromiseError(error));
-			resolve(new Result(true));
-		});
-	}
-
-	async remove(query){
-		if(query === undefined) return new Result(false);
-		Logger.log("Database", `Trying to remove an object(s) from the database`);
-		const result = await this._remove(query);
-		if(result.success) Logger.log("Database", `Successfully removed an object(s) from the database`);
+	async add(problemName, jsonString){
+		Logger.log("Database", `Trying to add a new problem named "${problemName}" to the database`);
+		const result = await this._add(problemName, jsonString);
+		if(result.success) Logger.log("Database", `Successfully added a new problem named ${problemName} to the database`);
 		return result;
 	}
 
 	async _query(query){
+		// top 10
 		return new Promise((resolve, reject) => {
 			//reject(new PromiseError(error));
 			resolve(new Result(true));
@@ -103,7 +59,7 @@ class Database {
 
 	async _clear(){
 		return new Promise((resolve, reject) => {
-			//reject(new PromiseError(error));
+			File.clearDirectory("server/database", [".placeholder"]);
 			resolve(new Result(true));
 		});
 	}
@@ -113,12 +69,6 @@ class Database {
 		const result = await this._clear();
 		if(result.success) Logger.warn("Database", `Successfully cleared the database`);
 		return new Result(result.success);
-	}
-
-	async close(){
-		Logger.log("Database", `Trying to close the database`);
-		// TODO: close dB
-		Logger.log("Database", `Successfully closed the database`);
 	}
 }
 

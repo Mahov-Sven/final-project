@@ -4,8 +4,7 @@ const Logger = require("../logger")
 const Result = require("../result").Result
 const CommandI = require("./commandI").CommandI;
 
-const File = require("../file");
-const Database = require("../database").Database;
+const File = require("../file").File;
 
 class ReadFile extends CommandI {
 
@@ -19,7 +18,7 @@ class ReadFile extends CommandI {
 	}
 
 	async _execute(filePath, fileName, resource){
-		const fullFilePath = `${filePath}/${fileName}`.replace(/\.\.\/|\.\.\\/g, "");
+		const fullFilePath = File.removePathEscapes(`${filePath}/${fileName}`);
 		const readFileExtension = /(?:\.([^.]+))?$/.exec(fileName)[1];
 		const fileResult = await File.readWebFile(fullFilePath);
 		if(fileResult.success) {
