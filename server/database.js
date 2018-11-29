@@ -26,34 +26,27 @@ class Database {
 		return result;
 	}
 
-	async _query(query){
-		// top 10
-		return new Promise((resolve, reject) => {
-			//reject(new PromiseError(error));
-			resolve(new Result(true));
-		});
+	async _query(problemName){
+		const filesList = File.listDirectoryFiles("server/database");
+		const resultList = [];
+		for(const fileName of filesList){
+			const fileNameOnly = fileName.replace(/(?:\.([^.]+))?$/, "");
+			if(fileNameOnly === problemName){
+				const fileResult = File.readFile(`server/database/${problemName}.json`);
+				fileResult.data = fileResult.data.toString();
+				return fileResult;
+			}
+			if(fileNameOnly.startsWith(problemName)) resultList.push(fileNameOnly);
+			if(resultList.length >= 10) break;
+		}
+		return new Result(true, resultList);
 	}
 
-	async query(query){
-		Logger.log("Database", `Trying to find an object(s) in the database`);
-		const result = await this._query(query);
-		if(result.success) Logger.log("Database", `Successfully found the object(s) in the database`);
-		else Logger.log("Database", `Could not find the object(s) in the database`);
-		return result;
-	}
-
-	async find(query){
-		Logger.log("Database", `Trying to find an object in the database`);
-		const result = await this._query(query);
-		if(result.data.length > 1){
-			Logger.warn("Database", `Query returned more than one object in the database`)
-			result.success = false
-		}
-		if(result.success){
-			Logger.log("Database", `Successfully found the object in the database`);
-			result.data = result.data[0];
-		}
-		else Logger.log("Database", `Could not find the object in the database`);
+	async query(problemName){
+		Logger.log("Database", `Trying to find matching problem(s) in the database`);
+		const result = await this._query(problemName);
+		if(result.success) Logger.log("Database", `Successfully found matching problems(s) in the database`);
+		else Logger.log("Database", `Could not find matching problems(s) in the database`);
 		return result;
 	}
 
