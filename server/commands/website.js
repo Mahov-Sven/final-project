@@ -11,7 +11,7 @@ class Website extends CommandI {
 	constructor(){
 		super();
 
-		this.options = {};
+		this.options = [];
 	}
 
 	async _execute(resource){

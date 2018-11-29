@@ -75,10 +75,19 @@ class File {
 		return this._deleteFile(fullFilePath, fileName);
 	}
 
+	static _listDirectoryFiles(fullDirectoryPath){
+		return FileSystem.readdirSync(fullDirectoryPath);
+	}
+
+	static listDirectoryFiles(directoryName){
+		const fullDirectoryPath = Path.join(rootDir, directoryName);
+		return this._listDirectoryFiles(fullDirectoryPath);
+	}
+
 	static _clearDirectory(fullDirectoryPath, exceptionFileNames=[], errPartialDirectoryName=""){
 		Logger.log("File", `Clearing Directory "${fullDirectoryPath}"`);
 		try {
-			FileSystem.readdirSync(fullDirectoryPath).forEach((file) => {
+			this._listDirectoryFiles(fullDirectoryPath).forEach((file) => {
 				if(!exceptionFileNames.includes(file)){
 					console.log(fullDirectoryPath);
 					this._deleteFile(Path.join(fullDirectoryPath, file));

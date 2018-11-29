@@ -27,31 +27,31 @@ global.commandOptions = {
 			long: "Whether to use the developer database over the production one.",
 		},
 	},
-	filePath: {
-		name: "filePath",
+	path: {
+		name: "path",
 		type: String,
-		names: new Set(["p", "fp", "path", "filePath"]),
+		names: new Set(["p", "path"]),
 		description: {
-			short: "file_path",
-			long: "The path of the requested file.",
+			short: "path",
+			long: "The path of something.",
 		},
 	},
-	fileName : {
-		name: "fileName",
+	name: {
+		name: "name",
 		type: String,
-		names: new Set(["f", "fn", "name", "file", "fileName"]),
+		names: new Set(["n", "name"]),
 		description: {
-			short: "file_name",
-			long: "The name of the requested file.",
+			short: "name",
+			long: "The name of something.",
 		},
 	},
-	jsonString: {
-		name: "jsonString",
+	dataString: {
+		name: "dataString",
 		type: String,
-		names: new Set(["j", "jo", "json", "jsonString"]),
+		names: new Set(["d", "ds", "data", "dataString"]),
 		description: {
-			short: "json_string",
-			long: "The Json of an object as a String.",
+			short: "data_string",
+			long: "The String of some sort of data.",
 		},
 	}
 }

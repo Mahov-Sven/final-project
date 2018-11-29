@@ -12,15 +12,15 @@ class ReadFile extends CommandI {
 		super();
 
 		this.options = [
-			[global.commandOptions.filePath, false],
-			[global.commandOptions.fileName, true],
+			[global.commandOptions.path, false],
+			[global.commandOptions.name, true],
 		];
 	}
 
-	async _execute(filePath, fileName, resource){
-		const fullFilePath = File.removePathEscapes(`${filePath}/${fileName}`);
-		const readFileExtension = /(?:\.([^.]+))?$/.exec(fileName)[1];
-		const fileResult = await File.readWebFile(fullFilePath);
+	async _execute(path, name, resource){
+		const fullFilePath = File.removePathEscapes(`${path}/${name}`);
+		const readFileExtension = /(?:\.([^.]+))?$/.exec(name)[1];
+		const fileResult = File.readWebFile(fullFilePath);
 		if(fileResult.success) {
 			switch (readFileExtension) {
 				case "js":
@@ -52,14 +52,14 @@ class ReadFile extends CommandI {
 	async execute(query, resource){
 		const optionResult = this._separateOptions(query);
 		if(!optionResult.success) return optionResult;
-		let [filePath, fileName] = optionResult.data;
-		if(filePath === undefined) filePath = "";
-		if(fileName === undefined) fileName = "index.html";
+		let [path, name] = optionResult.data;
+		if(path === undefined) path = "";
+		if(name === undefined) name = "index.html";
 
 		Logger.log("ReadFile", "File requested");
-		const fileResult = await this._execute(filePath, fileName, resource);
+		const fileResult = await this._execute(path, name, resource);
 		if(!fileResult.success) {
-			Logger.warn("ReadFile", `Requested file ${filePath}/${fileName} not found`);
+			Logger.warn("ReadFile", `Requested file ${path}/${name} not found`);
 			return new Result(
 				false,
 				{},
@@ -69,7 +69,7 @@ class ReadFile extends CommandI {
 		}
 
 		Logger.log("ReadFile", "File read")
-		return;
+		return fileResult;
 	}
 }
 

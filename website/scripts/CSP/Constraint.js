@@ -1,9 +1,13 @@
-class Constraint {
-    constructor(){
-        
-    }
+export default class Constraint {
+	constructor(){
+		this.instructions = [];
+	}
 
-    isSatisfiedBy(){
-        
-    }
+	addInstruction(instruction){
+		this.instructions.push(instruction);
+	}
+
+	isSatisfiedBy(assignment){
+		// TODO
+	}
 }
