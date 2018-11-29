@@ -1,10 +1,13 @@
 class AbstractAlgorithm {
-    constructor(constraints, variables){
+    constructor(constraints, problem){
         this.constraints = constraints;
-        this.variables = variables;
+        this.variables = problem.variables;
     }
 
-    setup(){}
+    setup(){
+        this.iteration = 0;
+        this.assignment = new Assignment();
+    }
 
     step(){}
 }
