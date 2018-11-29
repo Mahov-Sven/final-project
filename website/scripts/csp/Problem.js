@@ -1,3 +1,5 @@
+import Constraint from "./Constraint.js"
+
 export default class Problem {
 	constructor(variables={}, constraints=[]){
 		this.variables = variables;
@@ -13,7 +15,15 @@ export default class Problem {
 	}
 
 	static fromJSON(jsonString){
-		const jsonObj = JSON.parse(jsonString);
-		return new Problem(jsonObj.variables, jsonObj.constraints);
+		return Problem.fromObject(JSON.parse(jsonString));
+	}
+
+	static fromObject(obj){
+		const prob = new Problem(jsonObj.variables, jsonObj.constraints);
+		for(let i = 0; i < this.constraints.length; i++){
+			// TODO
+			this.constraints[i] = Constraint.fromObject(this.constraints[i]);
+		}
+		return prob;
 	}
 }

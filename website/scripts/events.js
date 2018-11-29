@@ -1,4 +1,5 @@
 import * as Loader from "./loader.js"
+import Problem from "./csp/Problem.js"
 
 let activeBannerButton = -1;
 
