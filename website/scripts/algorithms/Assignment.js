@@ -1,7 +1,7 @@
 export default class Assignment {
 	constructor(){}
 
-	setAssignment(varName, value){
+	set(varName, value){
 		this[varName] = value;
 	}
 }
