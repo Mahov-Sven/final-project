@@ -12,7 +12,10 @@ export function init() {
 	});
 
 	$("#ImportInput").on("click", function(){
-		ImportCSP.createPage();
-		$("#ImportOverviewContainer").show();
+		ImportCSP.createPage("Main");
 	});
+
+	$("#ImportOverviewContainer").hide();
+	$("#ImportPageContainer").hide();
+	
 }

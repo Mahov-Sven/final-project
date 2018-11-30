@@ -1,8 +1,11 @@
 // This is the file that has the functions to create the import page for csps
+import * as ImportCSP from "./importCSP.js"
+
 export default class Notification {
 	constructor(){
 		this.elem = undefined;
 		this.variables = 0;
+		this.constraints = 0;
 		this._construct();
 	}
 
@@ -10,7 +13,6 @@ export default class Notification {
 		this._constructRoot();
 		this._constructContainer("Variable");
 		this._constructContainer("Constraint");
-		this._constructEvents();
 	}
 
 	_constructRoot(){
@@ -48,16 +50,15 @@ export default class Notification {
 		const button = $("<input type=\"button\" value=\"Add\"/> ");
 		button.addClass("Import");
 		button.addClass("Button");
+		button.addClass("HorizontalCenter");
+		button.attr("id", `Add${type}Button`);
+		button.on("click", function(){
+			ImportCSP.createPage(type);
+		});
 		parent.append(button);
-	}
-
-	_constructEvents(){
-		
 	}
 
 	appendTo(elemId){
         $(`${elemId}`).append(this.elem);
-        // Add element to another element
-        // Can add other things here
 	}
 }

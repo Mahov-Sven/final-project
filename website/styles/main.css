@@ -13,11 +13,11 @@
 #ImportOverviewContainer,  #ImportPageContainer {
 	height: 100%;
 	width: 40%;
-	display: none;
 }
 
 #ImportPage {
 	height: 100%;
+	width: 100%;
 }
 
 
@@ -100,6 +100,11 @@
 .FlexCenter {
 	align-items: center;
 	justify-content: center;
+}
+
+.HorizontalCenter {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .PageLine {
