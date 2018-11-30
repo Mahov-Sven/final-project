@@ -1,9 +1,14 @@
 export default class Instruction {
+
 	constructor(instructionName, var1, var2, rvar=var1){
 		this.name = instructionName;
 		this.var1 = var1;
 		this.var2 = var2;
 		this.rvar = rvar;
+	}
+
+	static fromObject(obj){
+		return new Instruction(obj.instructionName, obj.var1, obj.var2, obj.rvar);
 	}
 
 	execute(state){

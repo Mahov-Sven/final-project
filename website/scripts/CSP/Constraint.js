@@ -2,8 +2,17 @@ import Instruction from "./Instruction.js"
 import Assignment from "../algorithms/Assignment.js"
 
 export default class Constraint {
-	constructor(){
-		this.instructions = [];
+
+	constructor(instructions=[]){
+		this.instructions = instructions;
+	}
+
+	static fromObject(obj){
+		const constraint = new Constraint(obj.instructions);
+		for(let i = 0; i < constraint.instructions.length; i++){
+			constraint.instructions[i] = Instruction.fromObject(constraint.instructions[i]);
+		}
+		return constraint;
 	}
 
 	addInstruction(instruction){
@@ -22,15 +31,3 @@ export default class Constraint {
 		return true;
 	}
 }
-
-const assignment = new Assignment({"v1": 5, "v2": 7, "v13": 9});
-const con = new Constraint();
-const instr1 = new Instruction("mul", "v1", "v2");
-const instr2 = new Instruction("pow", "v13", 2);
-const instr3 = new Instruction("grt", "v1", "v13");
-con.addInstruction(instr1);
-con.addInstruction(instr2);
-con.addInstruction(instr3);
-console.log(con);
-console.log(con.isSatisfiedBy(assignment));
-console.log(JSON.stringify(con));
