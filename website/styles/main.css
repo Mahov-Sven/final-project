@@ -1,7 +1,7 @@
 #Content {
 	width: 100vw;
 	height: 100vh;
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 
 #NotificationStack {
@@ -10,10 +10,16 @@
 	position: absolute;
 }
 
-#ImportContainer {
+#ImportOverviewContainer,  #ImportPageContainer {
 	height: 100%;
 	width: 40%;
+	display: none;
 }
+
+#ImportPage {
+	height: 100%;
+}
+
 
 .Notification {
 	width: 300pt;
@@ -40,6 +46,14 @@
 	overflow: hidden;
 	word-wrap: normal;
 	white-space: nowrap;
+}
+
+.ImportPageContainer {
+	height: 50%;
+}
+
+.Import.Button {
+	width: 40%;
 }
 
 .FullContainer {
@@ -98,4 +112,5 @@ body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
+	white-space: nowrap;
 }

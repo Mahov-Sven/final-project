@@ -1,8 +1,8 @@
-import Import from "./import.js"
+import ImportPage from "./importPage.js"
 
 export function init(){}
 
 export function createPage(){
-    const importPage = new Import();
-    importPage.appendTo("#ImportContainer");
+    const importPage = new ImportPage();
+    importPage.appendTo("#ImportOverviewContainer");
 }

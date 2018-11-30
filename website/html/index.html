@@ -9,23 +9,26 @@
 	<script id="Main-JS" type="module" src="scripts/main.js"></script>
 </head>
 <body>
-	<div id="Content" class="FullContainer FlexColumn">
-		<div id="ImportContainer" class="FlexStatic"></div>
-		<div id="BannerContainer" class="FlexStatic FlexRow">
-			<input id="ImportInput" class="" type="button" value="Import CSP"/>
-			<div class="FlexDynamic"></div>
-		</div>
-		<div id="Page" class="FlexDynamic FlexColumn">
-			<div id="PageTools" class="FlexStatic FlexRow">
+	<div id="Content" class="FullContainer FlexRow">
+		<div id="ImportOverviewContainer" class="FlexStatic FlexRow"></div>
+		<div id="ImportPageContainer" class="FlexStatic FlexRow"></div>
+		<div class="FullContainer FlexColumn">
+			<div id="BannerContainer" class="FlexStatic FlexRow">
+				<input id="ImportInput" type="button" classe="button" value="Import CSP"/>
 				<div class="FlexDynamic"></div>
 			</div>
-			<div id="PageSpace" class="FlexDynamic"></div>
-		</div>
-		<div id="NotificationContainer" class="FlexStatic FlexRow" style="height: 0; position: relative;">
-			<div id="NotificationStack" class="FlexColumn"></div>
-		</div>
-		<div id="FooterContainer" class="FlexStatic FlexRow">
-			<input id="CommandInput" class="FlexDynamic Input Text" spellcheck="false" placeholder="Enter Command"/>
+			<div id="Page" class="FlexDynamic FlexColumn">
+				<div id="PageTools" class="FlexStatic FlexRow">
+					<div class="FlexDynamic"></div>
+				</div>
+				<div id="PageSpace" class="FlexDynamic"></div>
+			</div>
+			<div id="NotificationContainer" class="FlexStatic FlexRow" style="height: 0; position: relative;">
+				<div id="NotificationStack" class="FlexColumn"></div>
+			</div>
+			<div id="FooterContainer" class="FlexStatic FlexRow">
+				<input id="CommandInput" class="FlexDynamic Input Text" spellcheck="false" placeholder="Enter Command"/>
+			</div>
 		</div>
 	</div>
 </body>

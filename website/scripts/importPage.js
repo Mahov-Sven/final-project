@@ -2,15 +2,13 @@
 export default class Notification {
 	constructor(){
 		this.elem = undefined;
-
+		this.variables = 0;
 		this._construct();
 	}
 
 	_construct(){
 		this._constructRoot();
-		this._constructTitle("Variables:");
 		this._constructContainer("Variable");
-		this._constructTitle("Constraints:");
 		this._constructContainer("Constraint");
 		this._constructEvents();
 	}
@@ -19,29 +17,38 @@ export default class Notification {
 		this.elem = $("<div>");
 		this.elem.addClass("FlexStatic");
 		this.elem.addClass("FlexColumn");
+		this.elem.attr("id", "ImportPage");
 	}
 
-	_constructTitle(title){
+	_constructTitle(title, parent){
 		const variableTitle = $("<div>");
 		variableTitle.text(title);
-		this.elem.append(variableTitle);
+		parent.append(variableTitle);
 	}
 
 	_constructContainer(containerType){
 		const container = $("<div>");
-		if(containerType == "Variable") this._constructVariableInput(container);
+		container.addClass("FlexStatic");
+		container.addClass("FlexColumn");
+		container.addClass("ImportPageContainer");
+		switch(containerType){
+			case "Variable":
+				this._constructTitle("Variables:", container);
+				this._constructAddButton("Variable", container);
+			break;
+			case "Constraint":
+				this._constructTitle("Constraints:", container);
+				this._constructAddButton("Constraint", container);
+			break;
+		}
 		this.elem.append(container);
 	}
 
-	_constructVariableInput(container){
-		const variable = $("<div>");
-		variable.addClass("FlexRow");
-		const nameInput = $("<input spellcheck=\"False\" placeholder=\"Name\">");
-		nameInput.addClass("FlexStatic");
-		const domainInput = $("<input spellcheck=\"False\" placeholder=\"Values\">");
-		domainInput.addClass("FlexStatic");
-		variable.append(nameInput).append(domainInput);
-		container.append(variable);
+	_constructAddButton(type, parent){
+		const button = $("<input type=\"button\" value=\"Add\"/> ");
+		button.addClass("Import");
+		button.addClass("Button");
+		parent.append(button);
 	}
 
 	_constructEvents(){

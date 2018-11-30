@@ -13,8 +13,6 @@ export function init() {
 
 	$("#ImportInput").on("click", function(){
 		ImportCSP.createPage();
-		$("#ImportContainer").show();
+		$("#ImportOverviewContainer").show();
 	});
-
-	$("#ImportContainer").hide();
 }
