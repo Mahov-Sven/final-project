@@ -56,17 +56,20 @@ export default class VariablePage {
 		nameInput.addClass("FlexStatic");
 		nameInput.addClass("Variable");
 		nameInput.addClass("Name");
+		nameInput.addClass("Input");
 
 		const domainInput = $("<input spellcheck=\"False\" placeholder=\"Values\">");
 		domainInput.addClass("FlexStatic");
 		domainInput.addClass("Variable");
 		domainInput.addClass("Domain");
+		domainInput.addClass("Input");
 		variable.append(nameInput).append(domainInput);
 		this.variableContainer.append(variable);
 	}
 
 	_constructAddVariableButton(){
 		const input = $("<input type=\"button\" class=\"button\" value=\"Add Variable\"/>");
+		input.addClass("Button");
 		input.on("click", () => this._constructVariableInput());
 		this.variablePageContainer.append(input);
 	}
@@ -78,6 +81,7 @@ export default class VariablePage {
 		container.addClass("FlexCenter");
 		container.attr("style", "margin-top: auto");
 		const confirmButton = $("<input type=\"button\" class=\"button\" value=\"Confirm\"/>");
+		confirmButton.addClass("Button");
 		confirmButton.attr("style", "width: 65%");
 		confirmButton.on("click", function(){
 			$("#variablePageContainer :first").children().each(function(i, elem){
@@ -90,8 +94,10 @@ export default class VariablePage {
 					importPage.importedVariable(variable);
 				}
 			});
+			$("#ImportPageContainer").hide();
 		});
 		const cancelButton = $("<input type=\"button\" class=\"button\" value=\"Cancel\"/>");
+		cancelButton.addClass("Button");
 		cancelButton.attr("style", "width: 30%");
 		cancelButton.on("click", () => $("#ImportPageContainer").hide());
 		container.append(cancelButton);
