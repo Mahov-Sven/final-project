@@ -94,32 +94,7 @@ const testgraph = {
 	]
 }
 
-const graph = {
-  "nodes": [
-    {"id": "1", "group": 1, "color": [128,127,0], "name": "v1", "value": "v1"},	
-    {"id": "2", "group": 2, "color": [128,127,0], "name": "v2", "value": "v3"},
-    {"id": "4", "group": 3, "color": [200,55,0], "name": "v3", "value": "v4"},
-    {"id": "8", "group": 4, "color": [55,200,0], "name": "v4", "value": "v5"},
-    {"id": "16", "group": 5, "color": [105,150,0], "name": "v5", "value": "v7"},
-    {"id": "11", "group": 1, "color": [20,235,0], "name": "v6", "value": "v9"},
-    {"id": "12", "group": 2, "color": [0,0,255], "name": "v7", "value": "1"},
-    {"id": "14", "group": 3, "color": [0,0,255], "name": "v8", "value": "2"},
-    {"id": "18", "group": 4, "color": [0,0,255], "name": "v9", "value": "12"},
-    {"id": "116", "group": 5, "color": [0,0,255], "name": "v10", "value": "5"}
-  ],
-  "links": [
-    {"source": "1", "target": "2", "value": 1, "color": [0,0,160]},
-    {"source": "2", "target": "4", "value": 1, "color": [0,0,160]},
-    {"source": "4", "target": "8", "value": 1, "color": [0,160,0]},
-    {"source": "4", "target": "8", "value": 1, "color": [0,160,0]},
-    {"source": "8", "target": "16", "value": 1, "color": [0,160,0]},
-    {"source": "16", "target": "1", "value": 1, "color": [60,60,60]},
-	{"source": "2", "target": "14", "value": 1, "color": [60,60,60]}
-  ]
-}
 
-  
- 
 function run(abpJSON){
 
 	var graph = JSON.parse(abbreviatedProblemToGraph(abpJSON));
