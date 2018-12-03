@@ -22,6 +22,10 @@
 	width: 100%;
 }
 
+#variablePageContainer{
+	overflow-y: auto;
+	overflow-x: hidden;
+}
 
 .Notification {
 	width: 300pt;
@@ -52,11 +56,6 @@
 
 .ImportPageContainer {
 	height: 50%;
-}
-
-.variablePageContainer{
-	overflow-y: auto;
-	overflow-x: hidden;
 }
 
 .Import.Button {
