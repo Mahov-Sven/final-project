@@ -56,7 +56,7 @@ export default class Notification {
 		nameInput.addClass("FlexStatic");
 		nameInput.addClass("Variable");
 		nameInput.addClass("Name");
-		
+
 		const domainInput = $("<input spellcheck=\"False\" placeholder=\"Values\">");
 		domainInput.addClass("FlexStatic");
 		domainInput.addClass("Variable");
@@ -87,7 +87,30 @@ export default class Notification {
 	}
 
 	_constructEvents(){
-		
+
+	}
+
+	_parseVariableValues(inString){
+		const valSet = new Set();
+		const valueArray = inString.split(",");
+		for(const valStr of valueArray){
+			const valueRange = valStr.split("-");
+			if(valueRange.length === 1){
+				const newVal = parseInt(valStr);
+				if(isNaN(newVal))
+					throw new Error(`The value "${valStr}" given for a variable could not be parsed.`);
+
+				valSet.add(newVal);
+			} else if(valueRange.length === 2){
+				const startVal = parseInt(valueRange[0]);
+				const endVal = parseInt(valueRange[1]);
+				if(isNaN(startVal) || isNaN(endVal) || startVal > endVal)
+					throw new Error(`The value "${valStr}" given for a variable could not be parsed.`);
+
+				for(let i = startVal; i <= endVal; i++) valSet.add(i);
+			} else throw new Error(`The value "${valStr}" given for a variable could not be parsed.`);
+		}
+		return valSet;
 	}
 
 	appendTo(elemId){
