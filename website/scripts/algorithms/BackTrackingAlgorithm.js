@@ -1,4 +1,4 @@
-class BackTrackingAlgorithm extends AbstractAlgorith{
+class BackTrackingAlgorithm extends AbstractAlgorithm {
     constructor(){
         this.solution = {};
         this.keys = [];
