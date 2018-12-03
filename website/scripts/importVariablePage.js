@@ -2,6 +2,8 @@
 export default class Notification {
 	constructor(){
 		this.elem = undefined;
+		this.variablePageContainer = undefined;
+		this.variableContainer = undefined;
 		this.variables = 0;
 		this._construct();
 	}
@@ -9,6 +11,11 @@ export default class Notification {
 	_construct(){
 		this._constructRoot();
 		this._constructTitle("Variables:");
+		this._constructVariablePageContainer();
+		this._constructVariableContainer();
+		this._constructVariableInput();
+		this._constructAddVariableButton();
+		this._constructBottomButtons();
 		this._constructEvents();
 	}
 
@@ -16,6 +23,15 @@ export default class Notification {
 		this.elem = $("<div>");
 		this.elem.addClass("FlexStatic");
 		this.elem.addClass("FlexColumn");
+		this.elem.attr("overflow", "auto");
+	}
+
+	_constructVariablePageContainer(){
+		this.variablePageContainer = $("<div>");
+		this.variablePageContainer.addClass("FlexGrow");
+		this.variablePageContainer.addClass("FlexColumn");
+		this.variablePageContainer.addClass("variablePageContainer");
+		this.elem.append(this.variablePageContainer);
 	}
 
 	_constructTitle(title){
@@ -24,7 +40,13 @@ export default class Notification {
 		this.elem.append(variableTitle);
 	}
 
-	_constructVariableInput(container){
+	_constructVariableContainer(){
+		const variableContainer = $("<div>");
+		this.variableContainer = variableContainer;
+		this.variablePageContainer.append(variableContainer);
+	}
+
+	_constructVariableInput(){
 		const variable = $("<div>");
 		variable.addClass("FlexStatic");
 		variable.addClass("FlexRow");
@@ -40,7 +62,28 @@ export default class Notification {
 		domainInput.addClass("Variable");
 		domainInput.addClass("Domain");
 		variable.append(nameInput).append(domainInput);
-		container.append(variable);
+		this.variableContainer.append(variable);
+	}
+
+	_constructAddVariableButton(){
+		const input = $("<input type=\"button\" class=\"button\" value=\"Add Variable\"/>");
+		input.on("click", () => this._constructVariableInput());
+		this.variablePageContainer.append(input);
+	}
+
+	_constructBottomButtons(){
+		const container = $("<div>");
+		container.addClass("FlexRow");
+		container.addClass("FlexStatic");
+		container.addClass("FlexCenter");
+		container.attr("style", "margin-top: auto");
+		const confirmButton = $("<input type=\"button\" class=\"button\" value=\"Confirm\"/>");
+		confirmButton.attr("style", "width: 65%");
+		const cancelButton = $("<input type=\"button\" class=\"button\" value=\"Cancel\"/>");
+		cancelButton.attr("style", "width: 30%");
+		container.append(cancelButton);
+		container.append(confirmButton);
+		this.elem.append(container);
 	}
 
 	_constructEvents(){

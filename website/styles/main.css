@@ -1,7 +1,7 @@
 #Content {
 	width: 100vw;
 	height: 100vh;
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
 
 #NotificationStack {
@@ -13,6 +13,8 @@
 #ImportOverviewContainer,  #ImportPageContainer {
 	height: 100%;
 	width: 40%;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 #ImportPage {
@@ -50,6 +52,11 @@
 
 .ImportPageContainer {
 	height: 50%;
+}
+
+.variablePageContainer{
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .Import.Button {
