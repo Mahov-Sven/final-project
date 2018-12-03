@@ -36,6 +36,7 @@ export default class VariablePage {
 
 	_constructTitle(title){
 		const variableTitle = $("<div>");
+		variableTitle.addClass("Text");
 		variableTitle.text(title);
 		this.elem.append(variableTitle);
 	}
@@ -70,6 +71,7 @@ export default class VariablePage {
 	_constructAddVariableButton(){
 		const input = $("<input type=\"button\" class=\"button\" value=\"Add Variable\"/>");
 		input.addClass("Button");
+		input.addClass("ButtonText");
 		input.on("click", () => this._constructVariableInput());
 		this.variablePageContainer.append(input);
 	}
@@ -82,6 +84,7 @@ export default class VariablePage {
 		container.attr("style", "margin-top: auto");
 		const confirmButton = $("<input type=\"button\" class=\"button\" value=\"Confirm\"/>");
 		confirmButton.addClass("Button");
+		confirmButton.addClass("ButtonText");
 		confirmButton.attr("style", "width: 65%");
 		confirmButton.on("click", function(){
 			$("#variablePageContainer :first").children().each(function(i, elem){
@@ -98,6 +101,7 @@ export default class VariablePage {
 		});
 		const cancelButton = $("<input type=\"button\" class=\"button\" value=\"Cancel\"/>");
 		cancelButton.addClass("Button");
+		cancelButton.addClass("ButtonText");
 		cancelButton.attr("style", "width: 30%");
 		cancelButton.on("click", () => $("#ImportPageContainer").hide());
 		container.append(cancelButton);

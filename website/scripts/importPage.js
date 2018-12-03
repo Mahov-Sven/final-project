@@ -24,6 +24,7 @@ export default class ImportPage {
 
 	_constructTitle(title, parent){
 		const variableTitle = $("<div>");
+		variableTitle.addClass("Text");
 		variableTitle.text(title);
 		parent.append(variableTitle);
 	}
@@ -56,6 +57,7 @@ export default class ImportPage {
 		const button = $("<input type=\"button\" value=\"Add\"/> ");
 		button.addClass("Import");
 		button.addClass("Button");
+		button.addClass("ButtonText");
 		button.addClass("HorizontalCenter");
 		button.attr("id", `Add${type}Button`);
 		button.on("click", function(){
