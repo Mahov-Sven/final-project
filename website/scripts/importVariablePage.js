@@ -80,11 +80,13 @@ export default class VariablePage {
 		confirmButton.attr("style", "width: 65%");
 		confirmButton.on("click", function(){
 			$("#variablePageContainer :first").children().each(function(i, elem){
-				const variable = {
-					name: $($(elem).children()[0]).val(),
-					domain: $($(elem).children()[1]).val()
+				if ($($(elem).children()[0]).val() != "" && $($(elem).children()[1]).val() != ""){
+					const variable = {
+						name: $($(elem).children()[0]).val(),
+						domain: $($(elem).children()[1]).val()
+					}
+					console.log(variable);
 				}
-				console.log(variable);
 			});
 		});
 		const cancelButton = $("<input type=\"button\" class=\"button\" value=\"Cancel\"/>");
