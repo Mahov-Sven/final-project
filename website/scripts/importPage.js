@@ -36,9 +36,15 @@ export default class ImportPage {
 		switch(containerType){
 			case "Variable":
 				this._constructTitle("Variables:", container);
+				const variableContainer = $("<div>");
+				variableContainer.addClass("Variable");
+				variableContainer.addClass("FlexColumn");
+				variableContainer.addClass("FlexStatic");
+				container.append(variableContainer);
 				this._constructAddButton("Variable", container);
 			break;
 			case "Constraint":
+				container.addClass("Constraint");
 				this._constructTitle("Constraints:", container);
 				this._constructAddButton("Constraint", container);
 			break;
@@ -56,6 +62,20 @@ export default class ImportPage {
 			ImportCSP.createPage(type);
 		});
 		parent.append(button);
+	}
+
+	importedVariable(variable){
+		const container = $("<div>");
+		container.addClass("FlexRow");
+		container.addClass("FlexStatic");
+		const name = $("<div>");
+		name.html("Name: " + variable.name);
+		const domain = $("<div>");
+		domain.html(" Domain: " + variable.domain);
+
+		container.append(name);
+		container.append(domain);
+		$(".ImportPageContainer .Variable").append(container);
 	}
 
 	appendTo(elemId){
