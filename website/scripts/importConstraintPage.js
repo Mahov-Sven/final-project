@@ -1,5 +1,5 @@
 // This is the file that has the functions to create the import page for csps
-export default class Notification {
+export default class ConstraintPage {
 	constructor(){
 		this.elem = undefined;
 		this.variables = 0;

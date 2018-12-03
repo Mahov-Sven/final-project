@@ -1,7 +1,7 @@
 // This is the file that has the functions to create the import page for csps
 import * as ImportCSP from "./importCSP.js"
 
-export default class Notification {
+export default class ImportPage {
 	constructor(){
 		this.elem = undefined;
 		this.variables = 0;
