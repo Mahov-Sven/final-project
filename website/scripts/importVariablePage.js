@@ -1,4 +1,5 @@
-// This is the file that has the functions to create the import page for csps
+import ImportPage from "./importPage.js"
+
 export default class VariablePage {
 	constructor(){
 		this.elem = undefined;
@@ -85,7 +86,8 @@ export default class VariablePage {
 						name: $($(elem).children()[0]).val(),
 						domain: $($(elem).children()[1]).val()
 					}
-					console.log(variable);
+					const importPage = new ImportPage();
+					importPage.importedVariable(variable);
 				}
 			});
 		});
