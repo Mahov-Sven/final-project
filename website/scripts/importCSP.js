@@ -4,27 +4,29 @@ import VariablePage from "./importVariablePage.js"
 
 export function init(){}
 
-export function createPage(page){    
+export function createPage(page){
     switch(page){
         case "Main":
             $("#ImportOverviewContainer").empty();
             $("#ImportOverviewContainer").show();
             const importPage = new ImportPage();
             importPage.appendTo("#ImportOverviewContainer");
-        break;
+			$("#ImportSpace").show();
+        	break;
         case "Variable":
             $("#ImportPageContainer").empty();
             $("#ImportPageContainer").show();
             const variablePage = new VariablePage();
             variablePage.appendTo("#ImportPageContainer");
-
-        break;
+			$("#ImportSpace").show();
+        	break;
         case "Constraint":
             $("#ImportPageContainer").empty();
             $("#ImportPageContainer").show();
             const constraintPage = new ConstraintPage();
             constraintPage.appendTo("#ImportPageContainer");
-        break;
+			$("#ImportSpace").show();
+        	break;
         default: throw new Error(`Unknown Page ${page}`);
     }
 }

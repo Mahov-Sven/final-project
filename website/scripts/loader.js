@@ -1,4 +1,5 @@
 import Notification from "./notification.js"
+import * as Visualization from "./visualization.js"
 
 export function init(){}
 

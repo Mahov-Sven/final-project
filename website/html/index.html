@@ -5,23 +5,28 @@
 	<link rel="icon" href="resources/favicon.png">
 	<link id="Main-CSS" rel='stylesheet' type='text/css' href='styles/main.css'/>
 	<link id="Theme-CSS" rel='stylesheet' type='text/css' href='styles/themes/dark.css'/>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script id="Main-JS" type="module" src="scripts/main.js"></script>
 </head>
 <body>
 	<div id="Content" class="FullContainer FlexRow">
-		<div id="ImportOverviewContainer" class="FlexStatic FlexRow"></div>
-		<div id="ImportPageContainer" class="FlexStatic FlexRow"></div>
 		<div class="FullContainer FlexColumn">
 			<div id="BannerContainer" class="FlexStatic FlexRow">
-				<input id="ImportInput" type="button" classe="button" value="Import CSP"/>
+				<input id="ImportInput" type="button" class="Button ButtonText" value="Import CSP"/>
 				<div class="FlexDynamic"></div>
 			</div>
 			<div id="Page" class="FlexDynamic FlexColumn">
 				<div id="PageTools" class="FlexStatic FlexRow">
 					<div class="FlexDynamic"></div>
 				</div>
-				<div id="PageSpace" class="FlexDynamic"></div>
+				<div id="PageSpace" class="FlexDynamic FlexRow">
+					<div id="ImportSpace" class="FlexStatic FlexRow">
+						<div id="ImportOverviewContainer" class="FlexDynamic FlexColumn"></div>
+						<div id="ImportPageContainer" class="FlexStatic FlexColumn"></div>
+					</div>
+					<svg id="VisualizationSpace" class="FlexDynamic"></svg>
+				</div>
 			</div>
 			<div id="NotificationContainer" class="FlexStatic FlexRow" style="height: 0; position: relative;">
 				<div id="NotificationStack" class="FlexColumn"></div>

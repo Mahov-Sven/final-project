@@ -15,7 +15,7 @@ export function init() {
 		ImportCSP.createPage("Main");
 	});
 
+	$("#ImportSpace").hide();
 	$("#ImportOverviewContainer").hide();
 	$("#ImportPageContainer").hide();
-	
 }

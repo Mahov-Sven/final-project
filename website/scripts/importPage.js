@@ -1,7 +1,7 @@
 // This is the file that has the functions to create the import page for csps
 import * as ImportCSP from "./importCSP.js"
 
-export default class Notification {
+export default class ImportPage {
 	constructor(){
 		this.elem = undefined;
 		this.variables = 0;
@@ -11,19 +11,19 @@ export default class Notification {
 
 	_construct(){
 		this._constructRoot();
+		if(this.elem.children().length !== 0) return;
 		this._constructContainer("Variable");
 		this._constructContainer("Constraint");
 	}
 
 	_constructRoot(){
-		this.elem = $("<div>");
-		this.elem.addClass("FlexStatic");
-		this.elem.addClass("FlexColumn");
-		this.elem.attr("id", "ImportPage");
+		this.elem = $("#ImportOverviewContainer");
 	}
 
 	_constructTitle(title, parent){
 		const variableTitle = $("<div>");
+		variableTitle.addClass("FlexStatic");
+		variableTitle.addClass("Text");
 		variableTitle.text(title);
 		parent.append(variableTitle);
 	}
@@ -32,25 +32,30 @@ export default class Notification {
 		const container = $("<div>");
 		container.addClass("FlexStatic");
 		container.addClass("FlexColumn");
-		container.addClass("ImportPageContainer");
 		switch(containerType){
 			case "Variable":
 				this._constructTitle("Variables:", container);
 				this._constructAddButton("Variable", container);
-			break;
+				const variableContainer = $("<div>");
+				variableContainer.attr("id", "SaveVariableContainer");
+				variableContainer.addClass("FlexColumn");
+				variableContainer.addClass("FlexStatic");
+				container.append(variableContainer);
+				break;
 			case "Constraint":
+				container.addClass("Constraint");
 				this._constructTitle("Constraints:", container);
 				this._constructAddButton("Constraint", container);
-			break;
+				break;
 		}
 		this.elem.append(container);
 	}
 
 	_constructAddButton(type, parent){
 		const button = $("<input type=\"button\" value=\"Add\"/> ");
-		button.addClass("Import");
+		button.addClass("FlexStatic");
 		button.addClass("Button");
-		button.addClass("HorizontalCenter");
+		button.addClass("ButtonText");
 		button.attr("id", `Add${type}Button`);
 		button.on("click", function(){
 			ImportCSP.createPage(type);
@@ -58,7 +63,21 @@ export default class Notification {
 		parent.append(button);
 	}
 
+	importedVariable(variable){
+		const container = $("<div>");
+		container.addClass("FlexRow");
+		container.addClass("FlexStatic");
+		const name = $("<div>");
+		name.html("Name: " + variable.name);
+		const domain = $("<div>");
+		domain.html(" Domain: " + variable.domain);
+
+		container.append(name);
+		container.append(domain);
+		$("#SaveVariableContainer").append(container);
+	}
+
 	appendTo(elemId){
-        $(`${elemId}`).append(this.elem);
+		$(`${elemId}`).append(this.elem);
 	}
 }

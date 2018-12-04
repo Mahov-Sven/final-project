@@ -33,6 +33,16 @@ export default class Instruction {
 			case Instruction.names.greaterThanOrEqualTo[0]: state[this.rvar] = val1 >= val2; break;
 			case Instruction.names.equal[0]: state[this.rvar] = val1 === va2l; break;
 			case Instruction.names.lessThanOrEqualTo[0]: state[this.rvar] = val1 <= val2; break;
+			case Instruction.names.and[0]: state[this.rvar] = val1 && val2; break;
+			case Instruction.names.or[0]: state[this.rvar] = val1 || val2; break;
+			case Instruction.names.not[0]: state[this.rvar] = !val1; break;
+			case Instruction.names.bitNot[0]: state[this.rvar] = ~val1; break;
+			case Instruction.names.bitAnd[0]: state[this.rvar] = val1 & val2; break;
+			case Instruction.names.bitOr[0]: state[this.rvar] = val1 | val2; break;
+			case Instruction.names.bitXor[0]: state[this.rvar] = val1 ^ val2; break;
+			case Instruction.names.shiftRight[0]: state[this.rvar] = val1 >> va2l; break;
+			case Instruction.names.unsignedShiftRight[0]: state[this.rvar] = val1 >>> va2l; break;
+			case Instruction.names.shiftLeft[0]: state[this.rvar] = val1 << val2; break;
 			default: throw new Error(`Unknown Instruction ${this.name}`);
 		}
 	}
@@ -49,5 +59,14 @@ Instruction.names = {
 	lessThan: ["lst", "less than"],
 	greaterThanOrEqualTo: ["geq", "greater than or equal to"],
 	equal: ["eql", "equal"],
-	lessThanOrEqualTo: ["leq", "less than or equal to"],
+	and: ["lnd", "logical and"],
+	or: ["lor", "logical or"],
+	not: ["lnt", "logical not"],
+	bitAnd: ["bnd", "bitwise and"],
+	bitOr: ["bor", "bitwise or"],
+	bitXor: ["bxr", "bitwise xor"],
+	bitNot: ["bnt", "bitwise not"],
+	shiftRight: ["shr", "bitwise shift right"],
+	unsignedShiftRight: ["usr", "bitwise shift right (zero fill)"],
+	shiftLeft: ["shl", "bitwise shift left"],
 }

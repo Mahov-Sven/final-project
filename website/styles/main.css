@@ -1,7 +1,7 @@
 #Content {
 	width: 100vw;
 	height: 100vh;
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
 
 #NotificationStack {
@@ -11,24 +11,24 @@
 }
 
 #ImportOverviewContainer,  #ImportPageContainer {
-	height: 100%;
-	width: 40%;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
-#ImportPage {
-	height: 100%;
-	width: 100%;
+#ImportSpace {
+	width: 50%;
 }
-
 
 .Notification {
-	width: 300pt;
-	margin: 4pt 4pt;
+	width: 30.0rem;
+	margin: 0.2rem 0.2rem;
+	opacity: 0.7;
+	cursor: pointer;
 }
 
 .Notification .NotificationTitle {
-	margin: 2pt 2pt;
-	padding: 2pt;
+	margin: 0.2rem 0.2rem;
+	padding: 0.2rem;
 	text-align: center;
 	overflow: hidden;
 	white-space: nowrap;
@@ -36,24 +36,20 @@
 }
 
 .Notification .NotificationFieldName {
-	margin: 2pt 0 2pt 2pt;
-	padding: 2pt;
+	margin: 0.2rem 0 0.2rem 0.2rem;
+	padding: 0.2rem;
 }
 
 .Notification .NotificationFieldValue {
-	margin: 2pt 2pt 2pt 0;
-	padding: 2pt;
+	margin: 0.2rem 0.2rem 0.2rem 0;
+	padding: 0.2rem;
 	overflow: hidden;
 	word-wrap: normal;
 	white-space: nowrap;
 }
 
-.ImportPageContainer {
-	height: 50%;
-}
-
-.Import.Button {
-	width: 40%;
+.VariableName {
+	width: 8rem;
 }
 
 .FullContainer {
@@ -62,19 +58,19 @@
 }
 
 .Input {
-	padding: 0 5pt;
-	box-sizing: border-box;
+	padding: 0 0.5rem;
 }
 
 .Button {
 	user-select: none;
 	cursor: pointer;
+	margin: 0.4rem;
 }
 
 .ButtonText {
 	vertical-align: middle;
 	text-align: center;
-	padding: 0 0.4rem;
+	padding: 0 1.4rem;
 }
 
 .FlexRow {
@@ -113,9 +109,20 @@
 	left: 5%;
 }
 
+.Disabled {
+	opacity: 0.2;
+	user-select: none;
+	cursor: default;
+	pointer-events: none;
+}
+
 body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
 	white-space: nowrap;
+}
+
+html {
+	font-size: 83.333%;
 }
