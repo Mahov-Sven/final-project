@@ -30,4 +30,15 @@ export default class Constraint {
 
 		return true;
 	}
+	
+	function contains(){
+		let res = new Set();
+		for(let i = 0; i < this.instructions.length; i++){
+			for(let item of this.instructions[i].refersTo()){
+				res.add(item);
+			}
+		}		
+		return Array.from(res);
+	}
+	
 }
