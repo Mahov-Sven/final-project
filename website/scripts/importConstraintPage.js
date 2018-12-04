@@ -4,13 +4,19 @@ import Instruction from "./csp/Instruction.js";
 export default class ConstraintPage {
 	constructor(){
 		this.elem = undefined;
+		this.constraintPageContainer = undefined;
+		this.constraintContainer = undefined;
 		this._construct();
 	}
 
 	_construct(){
 		this._constructRoot();
 		this._constructTitle("Constraints:");
+		this._constructAddOperationButton();
+		this._constructConstraintPageContainer();
+		this._constructConstraintContainer();
 		this._constructConstraintInput();
+		this._constructBottomButtons();
 		this._constructEvents();
 	}
 
@@ -18,6 +24,23 @@ export default class ConstraintPage {
 		this.elem = $("<div>");
 		this.elem.addClass("FlexStatic");
 		this.elem.addClass("FlexColumn");
+	}
+
+	_constructConstraintPageContainer(){
+		this.constraintPageContainer = $("<div>");
+		this.constraintPageContainer.addClass("FlexDynamic");
+		this.constraintPageContainer.addClass("FlexColumn");
+		this.constraintPageContainer.addClass("Scrollbar");
+		this.constraintPageContainer.attr("id", "ConstraintPageContainer");
+		this.elem.append(this.constraintPageContainer);
+	}
+
+	_constructConstraintContainer(){
+		this.constraintContainer = $("<div>");
+		this.constraintContainer.addClass("FlexStatic");
+		this.constraintContainer.addClass("FlexColumn");
+		this.constraintContainer.css("margin", "0 0.5rem");
+		this.constraintPageContainer.append(this.constraintContainer);
 	}
 
 	_constructTitle(title){
@@ -32,48 +55,45 @@ export default class ConstraintPage {
 		constraint.addClass("FlexRow");
 		constraint.addClass("NewConstraint");
 
-		this._constructAssemblyDropdown(constraint);
-	
-		// const domainInput = $("<input spellcheck=\"False\" placeholder=\"Values\">");
-		// domainInput.addClass("FlexDynamic");
-		// domainInput.addClass("VariableDomain");
-		// domainInput.addClass("Input");
-		// domainInput.addClass("Text");
-		// domainInput.css("margin", "0.1rem 0.0rem");
+		const variableOne = $("<input spellcheck=\"False\" placeholder=\"Variable One\">");
+		variableOne.addClass("FlexStatic");
+		variableOne.addClass("FullHeight");
+		variableOne.addClass("Input");
+		variableOne.addClass("Text");
+		variableOne.css("margin", "0.1rem 0.0rem");
 
-		// constraint.append(domainInput);
-		this.elem.append(constraint);
+		const variableTwo = $("<input spellcheck=\"False\" placeholder=\"Variable Two\">");
+		variableTwo.addClass("FlexDynamic");
+		variableTwo.addClass("Input");
+		variableTwo.addClass("Text");
+		variableTwo.css("margin", "0.1rem 0.0rem");
+
+		this._constructAssemblyDropdown(constraint);
+		constraint.append(variableOne);
+		constraint.append(variableTwo);
+		this.constraintContainer.append(constraint);
 	}
 
 	_constructAssemblyDropdown(parent){
 		const container = $("<div>");
-		//dropdownContainer.addClass("FlexStatic");
-		//dropdownContainer.addClass("VariableName");
 		container.addClass("Text");
 		container.addClass("Dropdown");
 		container.css("margin", "0.1rem 0.0rem");
 
-		// const dropdownButton = $("<div>");
-		//dropdownButton.attr("type", "button");
-		//dropdownButton.on("click", () => $(".DropdownContent").toggle());
-
 		const dropdownContainer = $("<select>");
 		const _ = $("<option>");
 		_.val("");
-		_.attr("selected");
-		_.attr("disabled");
-		_.attr("hidden");
+		_.attr("selected", true);
+		_.attr("disabled", true);
+		_.attr("hidden", true);
 		_.html("Instruction");
+		dropdownContainer.append(_);
 		dropdownContainer.addClass("DropdownContent");
 		dropdownContainer.addClass("FlexColumn");
 		dropdownContainer.addClass("FlexStatic");
 		
-		
 		this._constructDropdownOptions(dropdownContainer);
-		
-		//dropdownButton.append(dropdownContainer);
 		container.append(dropdownContainer);
-		
 		parent.append(container);
 	}
 
@@ -84,6 +104,38 @@ export default class ConstraintPage {
 			instructionDiv.addClass(instruction);
 			parent.append(instructionDiv);
 		}
+	}
+
+	_constructAddOperationButton(){
+		const input = $("<input type=\"button\" class=\"button\" value=\"Add Operation\"/>");
+		input.addClass("FlexStatic");
+		input.addClass("Button");
+		input.addClass("ButtonText");
+		input.on("click", () => this._constructConstraintInput());
+		this.elem.append(input);
+	}
+
+	_constructBottomButtons(){
+		const container = $("<div>");
+		container.addClass("FlexRow");
+		container.addClass("FlexStatic");
+		container.addClass("FlexCenter");
+		container.attr("style", "margin-top: auto");
+
+		const confirmButton = $("<input type=\"button\" class=\"button\" value=\"Confirm\"/>");
+		confirmButton.addClass("Button");
+		confirmButton.addClass("ButtonText");
+		confirmButton.attr("style", "width: 65%");
+		confirmButton.on("click", function(){});
+		const cancelButton = $("<input type=\"button\" class=\"button\" value=\"Cancel\"/>");
+		cancelButton.addClass("Button");
+		cancelButton.addClass("ButtonText");
+		cancelButton.attr("style", "width: 30%");
+		cancelButton.on("click", () => $("#ImportPageContainer").hide());
+		container.append(cancelButton);
+		container.append(confirmButton);
+
+		this.elem.append(container);
 	}
 
 	_constructEvents(){
