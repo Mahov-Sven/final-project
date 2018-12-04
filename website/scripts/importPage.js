@@ -11,19 +11,18 @@ export default class ImportPage {
 
 	_construct(){
 		this._constructRoot();
+		if(this.elem.children().length !== 0) return;
 		this._constructContainer("Variable");
 		this._constructContainer("Constraint");
 	}
 
 	_constructRoot(){
-		this.elem = $("<div>");
-		this.elem.addClass("FlexStatic");
-		this.elem.addClass("FlexColumn");
-		this.elem.attr("id", "ImportPage");
+		this.elem = $("#ImportOverviewContainer");
 	}
 
 	_constructTitle(title, parent){
 		const variableTitle = $("<div>");
+		variableTitle.addClass("FlexStatic");
 		variableTitle.addClass("Text");
 		variableTitle.text(title);
 		parent.append(variableTitle);
@@ -33,32 +32,30 @@ export default class ImportPage {
 		const container = $("<div>");
 		container.addClass("FlexStatic");
 		container.addClass("FlexColumn");
-		container.addClass("ImportPageContainer");
 		switch(containerType){
 			case "Variable":
 				this._constructTitle("Variables:", container);
+				this._constructAddButton("Variable", container);
 				const variableContainer = $("<div>");
-				variableContainer.addClass("Variable");
+				variableContainer.attr("id", "SaveVariableContainer");
 				variableContainer.addClass("FlexColumn");
 				variableContainer.addClass("FlexStatic");
 				container.append(variableContainer);
-				this._constructAddButton("Variable", container);
-			break;
+				break;
 			case "Constraint":
 				container.addClass("Constraint");
 				this._constructTitle("Constraints:", container);
 				this._constructAddButton("Constraint", container);
-			break;
+				break;
 		}
 		this.elem.append(container);
 	}
 
 	_constructAddButton(type, parent){
 		const button = $("<input type=\"button\" value=\"Add\"/> ");
-		button.addClass("Import");
+		button.addClass("FlexStatic");
 		button.addClass("Button");
 		button.addClass("ButtonText");
-		button.addClass("HorizontalCenter");
 		button.attr("id", `Add${type}Button`);
 		button.on("click", function(){
 			ImportCSP.createPage(type);
@@ -77,10 +74,10 @@ export default class ImportPage {
 
 		container.append(name);
 		container.append(domain);
-		$(".ImportPageContainer .Variable").append(container);
+		$("#SaveVariableContainer").append(container);
 	}
 
 	appendTo(elemId){
-        $(`${elemId}`).append(this.elem);
+		$(`${elemId}`).append(this.elem);
 	}
 }
