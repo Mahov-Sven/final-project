@@ -1,60 +1,42 @@
+import Constraint from "../CSP/Constraint.js"
+import Problem from "../CSP/Problem.js"
+import Assignment from "./Assignment.js";
+
 class BackTrackingAlgorithm extends AbstractAlgorithm {
     constructor(){
-        this.solution = {};
-        this.keys = [];
+    
     }
 
     setup(){
-        //setup keys array
-       for(key in variables){
-           this.keys.push(key);
-       } 
-       //possible solutions
-       this.possibleSolutions = {};
-       for(key in keys){
-        this.possibleSolutions[key] = [];
-       }
-
-       
+    
     }
 
     step(){
-        let currentKey = keys[iteration];
-        
-        for(key of keys){
-            if(key != currentKey){
-                for(possibleCurrent of variables[currentKey]){
-                    this.assignment.set(currentKey, possibleCurrent);
-                    for(possibleNext of variables[key]){
-                        this.assignment.set(key, possibleNext);
-                        for(constraint of this.constraints){
+        for(let x = 0; x < length(this.variables[this.iteration]); x ++){
+            for(let y = 0; y < length(this.variables[this.iteration +1]); y++){
+                let tempKey = keys(this.variables)[iteration];
+                let tempKeyNext = keys(this.variables)[iteration + 1];
+                this.assignment.set(tempKey, variables[tempKey][x]);
+                this.assignment.set(tempKeyNext, variables[tempKeyNext][y]);
+                for(constraint of this.constraints){
+                    for(instruction of constraint){
+                        if((instruction.var1 === tempKey && instruction.var2 === tempKeyNext) || (instruction.var2 === tempKey && instruction.var1 === tempKeyNext)){
                             if(constraint.isSatisfiedBy(this.assignment)){
-                                this.possibleSolutions[currentKey].push(possibleCurrent);
-                                this.possibleSolutions[possibleNext].push(possible);
+                                iteration ++;
+                                return;
                             }
                         }
                     }
                 }
             }
         }
-
-
-        /*for(possibleCurrent of variables[currentKey]){
-            this.assignment.set(currentKey, possibleCurrent);
-            for(possibleNext of variables[nextKey]){
-                this.assignment.set(nextKey, possibleNext);
-                for(possibleConstraint of this.constraints){
-                    if(!possibleConstraint.isSatisfiedBy(this.assignment)){
-                        satisfied = false;
-                    }
-                }
-                this.solution[currentKey] = possibleCurrent;
-                this.solution[nextKey] = possibleNext;
-                this.iteration += 1;
-                return;
-            }
+        if(iteration !== 0){
+            iteration --;
+        } else {
+            console.log("No valid solution.");
         }
-        this.iteration += 1;
-        */
     }
+       
 }
+
+
