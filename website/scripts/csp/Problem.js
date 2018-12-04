@@ -22,4 +22,12 @@ export default class Problem {
 	addConstraint(constraint){
 		this.constraints.push(constraint);
 	}
+
+	getVariableNames(){
+		const varNames = new Set();
+		for(const varName in this.variables){
+			varNames.add(varName);
+		}
+		return varNames;
+	}
 }

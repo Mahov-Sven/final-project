@@ -46,11 +46,6 @@ export default class Instruction {
 			default: throw new Error(`Unknown Instruction ${this.name}`);
 		}
 	}
-	
-	function refersTo(){
-		return new Set([this.var1, this.var2, this.rvar]);
-	}
-	
 }
 
 Instruction.names = {

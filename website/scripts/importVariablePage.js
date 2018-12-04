@@ -154,8 +154,8 @@ export default class VariablePage {
 	}
 
 	appendTo(elemId){
-        $(`${elemId}`).append(this.elem);
-        // Add element to another element
-        // Can add other things here
+		$(`${elemId}`).append(this.elem);
+		// Add element to another element
+		// Can add other things here
 	}
 }

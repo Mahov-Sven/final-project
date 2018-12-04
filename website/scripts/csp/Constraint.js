@@ -30,15 +30,16 @@ export default class Constraint {
 
 		return true;
 	}
-	
-	function contains(){
-		let res = new Set();
-		for(let i = 0; i < this.instructions.length; i++){
-			for(let item of this.instructions[i].refersTo()){
-				res.add(item);
-			}
-		}		
-		return Array.from(res);
+
+	getVariableNames(problemVarNames){
+		if(problemVarNames === undefined)
+			throw new Error("You must provide a set of variable names in the problem iteself");
+
+		let varNames = new Set();
+		for(const instr of this.instuctions){
+			if(problemVarNames.has(instr.var1)) varNames.add(instr);
+			if(problemVarNames.has(instr.var2)) varNames.add(instr);
+		}
+		return varNames;
 	}
-	
 }
