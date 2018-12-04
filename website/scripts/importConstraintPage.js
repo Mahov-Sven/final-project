@@ -23,6 +23,7 @@ export default class ConstraintPage {
 	_constructTitle(title){
 		const constraintTitle = $("<div>");
 		constraintTitle.text(title);
+		constraintTitle.addClass("Text");
 		this.elem.append(constraintTitle);
 	}
 
@@ -33,7 +34,7 @@ export default class ConstraintPage {
 		constraint.addClass("NewConstraint");
 
 		this._constructAssemblyDropdown(constraint);
-	
+
 		// const domainInput = $("<input spellcheck=\"False\" placeholder=\"Values\">");
 		// domainInput.addClass("FlexDynamic");
 		// domainInput.addClass("VariableDomain");
@@ -46,53 +47,54 @@ export default class ConstraintPage {
 	}
 
 	_constructAssemblyDropdown(parent){
-		const container = $("<div>");
+		//const container = $("<div>");
 		//dropdownContainer.addClass("FlexStatic");
 		//dropdownContainer.addClass("VariableName");
-		container.addClass("Text");
-		container.addClass("Dropdown");
-		container.css("margin", "0.1rem 0.0rem");
+		//container.addClass("Text");
+		//container.addClass("DropdownContainer");
 
 		// const dropdownButton = $("<div>");
 		//dropdownButton.attr("type", "button");
 		//dropdownButton.on("click", () => $(".DropdownContent").toggle());
 
 		const dropdownContainer = $("<select>");
+		dropdownContainer.addClass("FlexColumn");
+		dropdownContainer.addClass("FlexStatic");
+		dropdownContainer.addClass("Dropdown");
+		dropdownContainer.addClass("Text");
+
 		const _ = $("<option>");
 		_.val("");
 		_.attr("selected");
 		_.attr("disabled");
 		_.attr("hidden");
 		_.html("Instruction");
-		dropdownContainer.addClass("DropdownContent");
-		dropdownContainer.addClass("FlexColumn");
-		dropdownContainer.addClass("FlexStatic");
-		
-		
+
 		this._constructDropdownOptions(dropdownContainer);
-		
+
 		//dropdownButton.append(dropdownContainer);
-		container.append(dropdownContainer);
-		
-		parent.append(container);
+		parent.append(dropdownContainer);
+
+		//parent.append(container);
 	}
 
 	_constructDropdownOptions(parent){
-		for (let instruction in Instruction.names){
+		for (let instructionKey in Instruction.names){
+			const instruction = Instruction.names[instructionKey];
 			const instructionDiv = $("<option>");
-			instructionDiv.html(instruction);
+			instructionDiv.text(instruction[1]);
 			instructionDiv.addClass(instruction);
 			parent.append(instructionDiv);
 		}
 	}
 
 	_constructEvents(){
-		
+
 	}
 
 	appendTo(elemId){
-        $(`${elemId}`).append(this.elem);
-        // Add element to another element
-        // Can add other things here
+		$(`${elemId}`).append(this.elem);
+		// Add element to another element
+		// Can add other things here
 	}
 }
