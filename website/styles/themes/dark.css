@@ -72,7 +72,7 @@
 	border-color: #555555;
 	border-style: solid;
 	background-color: #111111;
-	padding-bottom: 0.1rem;
+	padding: 0.5rem 1rem;
 	transition: 0.1s;
 	box-sizing: border-box;
 	outline-width: 0;
@@ -81,13 +81,13 @@
 .Input:hover {
 	border-width: 0 0 0.2rem 0;
 	border-color: #9b9b9b;
-	padding-bottom: 0;
+	padding-bottom: 0.4rem;
 }
 
 .Input:focus {
 	border-width: 0 0 0.2rem 0;
 	border-color: #9999ff;
-	padding-bottom: 0;
+	padding-bottom: 0.4rem;
 }
 
 .Dropdown {
