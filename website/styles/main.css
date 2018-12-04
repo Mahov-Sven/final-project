@@ -52,11 +52,6 @@
 	width: 8rem;
 }
 
-.FullContainer {
-	width: 100%;
-	height: 100%;
-}
-
 .Input {
 	padding: 0 0.5rem;
 }
@@ -107,6 +102,19 @@
 	height: 0.2rem;
 	width: 90%;
 	left: 5%;
+}
+
+.FullWidth {
+	width: 100%;
+}
+
+.FullHeight {
+	height: 100%;
+}
+
+.FullContainer {
+	width: 100%;
+	height: 100%;
 }
 
 .Disabled {

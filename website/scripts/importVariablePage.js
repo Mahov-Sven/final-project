@@ -56,6 +56,7 @@ export default class VariablePage {
 
 		const nameInput = $("<input spellcheck=\"False\" placeholder=\"Name\">");
 		nameInput.addClass("FlexStatic");
+		nameInput.addClass("FullHeight");
 		nameInput.addClass("VariableName");
 		nameInput.addClass("Input");
 		nameInput.addClass("Text");
