@@ -14,17 +14,24 @@ To modify this code, the algorithm will need to supply a javascript object of si
 
 */
 
+/*
 var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
+*/
+
+var svg = d3.select("svg"), width = 960, height = 600;
 
 var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
 	.force('charge', d3.forceManyBody()
 		.strength(-200)
-		.theta(0.8)
+		.theta(.8)
 		.distanceMax(150)
     )
+	.force('collision', d3.forceCollide().radius(function(d) {
+		return d.radius
+	}))
     .force("center", d3.forceCenter(width / 2, height / 2));
 
 const abpJSON = {
@@ -45,6 +52,7 @@ function abbreviatedProblemToGraph(abpJSON){
 	var graph = {};
 	graph.nodes = [];
 	graph.links = [];
+		
 	
 	for(var i = 0; i < abp.variables.length; i++){
 		if( abp.variables[i].completion == 1 ){
@@ -116,7 +124,7 @@ function run(abpJSON){
 		.data(graph.nodes)
 		.enter()
 		.append("circle")
-		.attr("r", 2)
+		.attr("r", 16)
 		.style("fill", function(d) {
 			return "rgb(" + d.color[0] + "," + d.color[1] + "," + d.color[2] + ")"; 
 		})
@@ -181,9 +189,9 @@ function dragged(d) {
 }
 
 function dragended(d) {
-	d.fx = d3.event.x
-	d.fy = d3.event.y
 	if (!d3.event.active) simulation.alphaTarget(0);
+	d.fx = null;
+	d.fy = null;
 }
   
 run(abpJSON);
