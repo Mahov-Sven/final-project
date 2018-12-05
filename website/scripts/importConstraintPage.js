@@ -135,6 +135,7 @@ export default class ConstraintPage {
 		confirmButton.addClass("ButtonText");
 		confirmButton.attr("style", "width: 65%");
 		confirmButton.on("click", function(){
+			const constraintList = [];
 			$(".NewConstraint").each((i, elem) => {
 				if ($($($(elem).children()[0]).find(":selected")).text() != "Selected" && $($(elem).children()[1]).val() != "" && $($(elem).children()[2]).val() != ""){
 					const constraint = {
@@ -142,10 +143,12 @@ export default class ConstraintPage {
 						v1: $($(elem).children()[1]).val(),
 						v2: $($(elem).children()[2]).val()
 					}
-					const importPage = new ImportPage();
-					importPage.importedConstraint(constraint);
+					constraintList.push(constraint);
 				}
 			});
+
+			const importPage = new ImportPage();
+			importPage.importedConstraint(constraintList);
 			$("#ImportPageContainer").hide();
 		});
 		const cancelButton = $("<input type=\"button\" class=\"button\" value=\"Cancel\"/>");

@@ -91,11 +91,15 @@ export default class ImportPage {
 				variables.push(variable);
 			});
 			$(".ConstraintsToBeImported").each((i, elem) => {
-				const constraint = {
-					operation: $($(elem).children()[0]).text().split("Op: ").pop(),
-					v1: $($(elem).children()[1]).text().split("v1: ").pop(),
-					v2: $($(elem).children()[2]).text().split("v2: ").pop()
-				}
+				const constraint = [];
+				$($(elem).find($(".Operation"))).each((i, elem) => {
+					const operation = {
+						operation: $($(elem).children()[0]).text().split("Op: ").pop(),
+						v1: $($(elem).children()[1]).text().split("v1: ").pop(),
+						v2: $($(elem).children()[2]).text().split("v2: ").pop()
+					}
+					constraint.push(operation);
+				});
 				constraints.push(constraint);
 			});
 			console.log(variables);
@@ -109,7 +113,6 @@ export default class ImportPage {
 		cancelButton.on("click", () => $("#ImportSpace").hide());
 		container.append(cancelButton);
 		container.append(confirmButton);
-
 		this.elem.append(container);
 	}
 
@@ -134,19 +137,26 @@ export default class ImportPage {
 
 	importedConstraint(constraint){
 		const container = $("<div>");
-		container.addClass("FlexRow");
+		container.addClass("FlexColumn");
 		container.addClass("FlexStatic");
 		container.addClass("ConstraintsToBeImported");
-		const operation = $("<div>");
-		operation.html("Op: " + constraint.operation);
-		const v1 = $("<div>");
-		v1.html(" v1: " + constraint.v1);
-		const v2 = $("<div>");
-		v2.html(" v2: " + constraint.v2);
+		for (let operation of constraint){
+			const operationContainer = $("<div>");
+			operationContainer.addClass("FlexRow");
+			operationContainer.addClass("FlexStatic");
+			operationContainer.addClass("Operation");
+			const operationDiv = $("<div>");
+			operationDiv.html("Op: " + operation.operation);
+			const v1 = $("<div>");
+			v1.html(" v1: " + operation.v1);	
+			const v2 = $("<div>");
+			v2.html(" v2: " + operation.v2);
+			operationContainer.append(operationDiv);
+			operationContainer.append(v1);
+			operationContainer.append(v2);
+			container.append(operationContainer);
+		}
 
-		container.append(operation);
-		container.append(v1);
-		container.append(v2);
 		$("#SaveConstraintContainer").append(container); 
 	}
 
