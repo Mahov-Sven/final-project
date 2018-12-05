@@ -18,6 +18,18 @@ export function init() {
 	$("#LoadProblemButton").click((e) => {
 		console.log("Trying to Load");
 	});
+	
+	$("#RestartButton").click((e) => {
+		console.log("Trying restart");
+	});
+
+	$("#PausePlayButton").click((e) => {
+		console.log("Trying play/pause");
+	});
+
+	$("#StepButton").click((e) => {
+		console.log("Trying step");
+	});
 
 	$("#ImportSpace").hide();
 	$("#ImportOverviewContainer").hide();

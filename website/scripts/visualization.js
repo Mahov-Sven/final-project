@@ -14,13 +14,7 @@ To modify this code, the algorithm will need to supply a javascript object of si
 
 */
 
-/*
-var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
-*/
-
-var svg = d3.select("svg"), width = 960, height = 600;
+var svg = d3.select("svg");
 
 var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -32,14 +26,15 @@ var simulation = d3.forceSimulation()
 	.force('collision', d3.forceCollide().radius(function(d) {
 		return d.radius
 	}))
-    .force("center", d3.forceCenter(width / 2, height / 2));
-
+    .force("center", d3.forceCenter(350, 200));
+	//center is hardcoded for now, but it will at least follow the svg flexbox as it moves
+	
 const abpJSON = {
 	"variables": [
-	{"name": "v1", "completion": .86, "value": ""},
-	{"name": "v2", "completion": .14, "value": ""},
+	{"name": "v1", "completion": .86, "value": "3"},
+	{"name": "v2", "completion": .14, "value": "1"},
 	{"name": "v3", "completion": 1, "value": "12"},
-	{"name": "v4", "completion": .53, "value": ""}
+	{"name": "v4", "completion": .53, "value": "6"}
 	],
 	"constraints": [
 	{"contains": ["v1", "v2", "v3"]},
@@ -140,6 +135,8 @@ function run(abpJSON){
 		.enter()
 		.append("text")
         .attr("class", "label")
+		.attr("pointer-events", "none")
+		.style("font-size", "10px")
 		.style("fill", function(d) {
 			if( d.color[0] < 128 || d.color[1] < 128 ){
 				return "rgb(255,255,255)";
@@ -172,8 +169,7 @@ function run(abpJSON){
     
 		label
     		.attr("x", function(d) { return d.x; })
-            .attr("y", function (d) { return d.y; })
-            .style("font-size", "10px");
+            .attr("y", function (d) { return d.y; });
   }
 }
 
