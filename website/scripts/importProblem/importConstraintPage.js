@@ -1,5 +1,5 @@
 // This is the file that has the functions to create the import page for csps
-import Instruction from "./csp/Instruction.js";
+import Instruction from "../csp/Instruction.js";
 import ImportPage from "./importPage.js"
 
 export default class ConstraintPage {
@@ -115,7 +115,8 @@ export default class ConstraintPage {
 	}
 
 	_constructAddOperationButton(){
-		const input = $("<input type=\"button\" class=\"button\" value=\"Add Operation\"/>");
+		const input = $("<div>");
+		input.text("Add Operation");
 		input.addClass("FlexStatic");
 		input.addClass("Button");
 		input.addClass("ButtonText");
@@ -130,7 +131,8 @@ export default class ConstraintPage {
 		container.addClass("FlexCenter");
 		container.attr("style", "margin-top: auto");
 
-		const confirmButton = $("<input type=\"button\" class=\"button\" value=\"Confirm\"/>");
+		const confirmButton = $("<div>");
+		confirmButton.text("Confirm");
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
 		confirmButton.attr("style", "width: 65%");
@@ -148,7 +150,8 @@ export default class ConstraintPage {
 			});
 			$("#ImportPageContainer").hide();
 		});
-		const cancelButton = $("<input type=\"button\" class=\"button\" value=\"Cancel\"/>");
+		const cancelButton = $("<div>");
+		cancelButton.text("Cancel");
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
 		cancelButton.attr("style", "width: 30%");

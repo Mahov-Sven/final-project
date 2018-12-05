@@ -1,6 +1,6 @@
 import * as Loader from "./loader.js"
 import Problem from "./csp/Problem.js"
-import * as ImportCSP from "./importCSP.js"
+import ImportPage from "./importProblem/importPage.js"
 
 let activeBannerButton = -1;
 
@@ -12,13 +12,14 @@ export function init() {
 	});
 
 	$("#ImportInput").on("click", function(){
-		ImportCSP.createPage("Main");
+		const importPage = new ImportPage();
+		importPage.appendTo("#Sidebar");
 	});
 
 	$("#LoadProblemButton").click((e) => {
 		console.log("Trying to Load");
 	});
-	
+
 	$("#RestartButton").click((e) => {
 		console.log("Trying restart");
 	});
@@ -32,6 +33,4 @@ export function init() {
 	});
 
 	$("#ImportSpace").hide();
-	$("#ImportOverviewContainer").hide();
-	$("#ImportPageContainer").hide();
 }

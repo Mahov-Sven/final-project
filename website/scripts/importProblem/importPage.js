@@ -1,6 +1,6 @@
 // This is the file that has the functions to create the import page for csps
-import * as ImportCSP from "./importCSP.js"
 import VariablePage from "./importVariablePage.js"
+import ConstraintPage from "./importConstraintPage.js"
 
 export default class ImportPage {
 	constructor(){
@@ -10,14 +10,16 @@ export default class ImportPage {
 
 	_construct(){
 		this._constructRoot();
-		if(this.elem.children().length !== 0) return;
 		this._constructContainer("Variable");
 		this._constructContainer("Constraint");
 		this._constructBottomButtons();
 	}
 
 	_constructRoot(){
-		this.elem = $("#ImportOverviewContainer");
+		this.elem = $("<div>");
+		this.elem.attr("id", "ImportOverviewContainer");
+		this.elem.addClass("FlexDynamic");
+		this.elem.addClass("FlexColumn");
 	}
 
 	_constructTitle(title, parent){
@@ -57,14 +59,29 @@ export default class ImportPage {
 	}
 
 	_constructAddButton(type, parent){
-		const button = $("<input type=\"button\" value=\"Add\"/> ");
+		const button = $("<div>");
+		button.text("Add");
 		button.addClass("FlexStatic");
 		button.addClass("Button");
 		button.addClass("ButtonText");
 		button.attr("id", `Add${type}Button`);
-		button.on("click", function(){
-			ImportCSP.createPage(type);
-		});
+		switch(type){
+			case "Variable":
+				button.on("click", function(){
+					const variablePage = new VariablePage();
+					variablePage.appendTo("#Sidebar");
+				});
+
+	        	break;
+			case "Constraint":
+				button.on("click", function(){
+					const constraintPage = new ConstraintPage();
+					constraintPage.appendTo("#Sidebar");
+				});
+	        	break;
+			default: throw new Error(`Unknown Button Type "${type}"`);
+		}
+
 		parent.append(button);
 	}
 
@@ -75,11 +92,12 @@ export default class ImportPage {
 		container.addClass("FlexCenter");
 		container.attr("style", "margin-top: auto");
 
-		const confirmButton = $("<input type=\"button\" class=\"button\" value=\"Confirm\"/>");
+		const confirmButton = $("<div>");
+		confirmButton.text("Confirm");
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
 		confirmButton.attr("style", "width: 65%");
-		confirmButton.on("click", function(){
+		confirmButton.on("click", () => {
 			const variables = []
 			const constraints = []
 			$(".VariablesToBeImported").each((i, elem) => {
@@ -100,13 +118,15 @@ export default class ImportPage {
 			});
 			console.log(variables);
 			console.log(constraints);
-			$("#ImportSpace").hide();
+			console.log(this);
+			this.elem.remove();
 		});
-		const cancelButton = $("<input type=\"button\" class=\"button\" value=\"Cancel\"/>");
+		const cancelButton = $("<div>");
+		cancelButton.text("Cancel");
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
 		cancelButton.attr("style", "width: 30%");
-		cancelButton.on("click", () => $("#ImportSpace").hide());
+		cancelButton.on("click", () => this.elem.remove());
 		container.append(cancelButton);
 		container.append(confirmButton);
 
@@ -147,7 +167,7 @@ export default class ImportPage {
 		container.append(operation);
 		container.append(v1);
 		container.append(v2);
-		$("#SaveConstraintContainer").append(container); 
+		$("#SaveConstraintContainer").append(container);
 	}
 
 	appendTo(elemId){
