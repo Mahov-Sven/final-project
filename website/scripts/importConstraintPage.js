@@ -1,5 +1,6 @@
 // This is the file that has the functions to create the import page for csps
 import Instruction from "./csp/Instruction.js";
+import ImportPage from "./importPage.js"
 
 export default class ConstraintPage {
 	constructor(){
@@ -133,7 +134,20 @@ export default class ConstraintPage {
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
 		confirmButton.attr("style", "width: 65%");
-		confirmButton.on("click", function(){});
+		confirmButton.on("click", function(){
+			$(".NewConstraint").each((i, elem) => {
+				if ($($($(elem).children()[0]).find(":selected")).text() != "Selected" && $($(elem).children()[1]).val() != "" && $($(elem).children()[2]).val() != ""){
+					const constraint = {
+						operation: $($($(elem).children()[0]).find(":selected")).text(),
+						v1: $($(elem).children()[1]).val(),
+						v2: $($(elem).children()[2]).val()
+					}
+					const importPage = new ImportPage();
+					importPage.importedConstraint(constraint);
+				}
+			});
+			$("#ImportPageContainer").hide();
+		});
 		const cancelButton = $("<input type=\"button\" class=\"button\" value=\"Cancel\"/>");
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");

@@ -105,10 +105,10 @@ export default class VariablePage {
 		confirmButton.on("click", function(){
 			$(".NewVariable").each((i, elem) => {
 				if ($($(elem).children()[0]).val() != "" && $($(elem).children()[1]).val() != ""){
-					console.log($($(elem).children()[0]).val());
+					const variablePage = new VariablePage();
 					const variable = {
 						name: $($(elem).children()[0]).val(),
-						domain: $($(elem).children()[1]).val()
+						domain: variablePage._parseVariableValues($($(elem).children()[1]).val())
 					}
 					const importPage = new ImportPage();
 					importPage.importedVariable(variable);

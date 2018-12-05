@@ -16,7 +16,7 @@ export function createPage(page){
 		case "Variable":
 			$("#ImportPageContainer").empty();
 			$("#ImportPageContainer").show();
-			const variablePage = new VariablePage();
+			const variablePage = new VariablePage(ImportPage);
 			variablePage.appendTo("#ImportPageContainer");
 			$("#ImportSpace").show();
         	break;
