@@ -6,7 +6,7 @@ const CommandI = require("./commandI").CommandI;
 
 const Database = require("../database").Database;
 
-class GetProblem extends CommandI {
+class LoadProblem extends CommandI {
 
 	constructor(){
 		super();
@@ -27,10 +27,10 @@ class GetProblem extends CommandI {
 		if(!optionResult.success) return optionResult;
 		let [name] = optionResult.data;
 
-		Logger.log("GetProblem", "Finding possible problem files");
+		Logger.log("LoadProblem", "Finding possible problem files");
 		const commandResult = await this._execute(name);
 		if(!commandResult.success) {
-			Logger.warn("GetProblem", `No matches for a problem file of name "${name}" could be found`);
+			Logger.warn("LoadProblem", `No matches for a problem file of name "${name}" could be found`);
 			return new Result(
 				false,
 				{},
@@ -39,9 +39,9 @@ class GetProblem extends CommandI {
 			);
 		}
 
-		Logger.log("GetProblem", "Problem file(s) found");
+		Logger.log("LoadProblem", "Problem file(s) found");
 		return commandResult;
 	}
 }
 
-exports.Command = GetProblem;
+exports.Command = LoadProblem;
