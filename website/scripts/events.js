@@ -15,6 +15,10 @@ export function init() {
 		ImportCSP.createPage("Main");
 	});
 
+	$("#LoadProblemButton").click((e) => {
+		console.log("Trying to Load");
+	});
+
 	$("#ImportSpace").hide();
 	$("#ImportOverviewContainer").hide();
 	$("#ImportPageContainer").hide();
