@@ -16,10 +16,7 @@ export function request(postStr, notify=false){
 					responseObj.data = req.responseText;
 				}
 				responseObj.request = postStr;
-				if(notify) {
-					const notification = new Notification(`Request: ${postStr}`, responseObj);
-					notification.appendTo("#NotificationStack");
-				}
+				if(notify) Notification.create(`Request: ${postStr}`, responseObj);
 				resolve(responseObj);
 			}
 		}
@@ -29,10 +26,11 @@ export function request(postStr, notify=false){
 	});
 }
 
-export async function execCommand(commandName, commandArgs=[], notify=false){
+export async function execCommand(commandName, commandArgs={}, notify=false){
 	let argsStr = "";
-	for(const commandArg of commandArgs){
-		argsStr += encodeURIComponent(`${commandArg}`) + '&';
+	for(const commandArgName in commandArgs){
+		const commandArg = encodeURIComponent(`${commandArgs[commandArgName]}`);
+		argsStr += `${commandArgName}=${commandArg}&`;
 	}
-	return await request(`/${commandName}?${argStr.substring(0, argsStr.length - 1)}`);
+	return await request(`/${commandName}?${argsStr.substring(0, argsStr.length - 1)}`);
 }

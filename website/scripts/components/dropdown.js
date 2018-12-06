@@ -67,9 +67,11 @@ export default class Dropdown {
 
 		selectedElem.click(() => {
 			optionContainer.toggle();
-			if(selectedElem.text() === this.rows[this.selectedIndex][0])
-				selectedElem.text(this.rows[this.selectedIndex][1]);
-			else selectedElem.text(this.rows[this.selectedIndex][0]);
+			if(this.selectedIndex !== -1){
+				if(selectedElem.text() === this.rows[this.selectedIndex][0])
+					selectedElem.text(this.rows[this.selectedIndex][1]);
+				else selectedElem.text(this.rows[this.selectedIndex][0]);
+			}
 		});
 
 		options.each((i, elem) => {
