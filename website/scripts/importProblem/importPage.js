@@ -1,6 +1,7 @@
 // This is the file that has the functions to create the import page for csps
 import VariablePage from "./importVariablePage.js"
 import ConstraintPage from "./importConstraintPage.js"
+import * as Loader from "./loader.js"
 
 export default class ImportPage {
 	constructor(){
@@ -10,6 +11,8 @@ export default class ImportPage {
 
 	_construct(){
 		this._constructRoot();
+
+		this._constructProblemName();
 		this._constructContainer("Variable");
 		this._constructContainer("Constraint");
 		this._constructBottomButtons();
@@ -20,6 +23,16 @@ export default class ImportPage {
 		this.elem.attr("id", "ImportOverviewContainer");
 		this.elem.addClass("FlexDynamic");
 		this.elem.addClass("FlexColumn");
+	}
+
+	_constructProblemName(){
+		const input = $("<input>");
+		input.attr("spellcheck", false);
+		input.attr("placeholder", "Name");
+		input.attr("id", "ProblemName");
+		input.addClass("Input");
+		input.addClass("Text");
+		this.elem.append(input);
 	}
 
 	_constructTitle(title, parent){
@@ -104,7 +117,7 @@ export default class ImportPage {
 				const variablePage = new VariablePage();
 				const variable = {
 					name: $($(elem).children()[0]).text().split("Name: ").pop(),
-					domain: variablePage._parseVariableValues($($(elem).children()[1]).text().split("Domain: ").pop())
+					domain: Array.from(variablePage._parseVariableValues($($(elem).children()[1]).text().split("Domain: ").pop()))
 				}
 				variables.push(variable);
 			});
@@ -122,7 +135,9 @@ export default class ImportPage {
 			});
 			console.log(variables);
 			console.log(constraints);
-			console.log(this);
+			const problem = new Problem(variables, contraints);
+			console.log(JSON.stringify(problem));
+			Loader.request(`/createProblem?n=${$("#ProblemName").val()}&d=${JSON.stringify(problem)}`, true);
 			this.elem.remove();
 		});
 		const cancelButton = $("<div>");
