@@ -72,6 +72,7 @@ export default class VariablePage {
 		nameInput.addClass("Input");
 		nameInput.addClass("Text");
 		nameInput.css("margin", "0.1rem 0.0rem");
+		nameInput.css("width", "6em");
 
 		const domainInput = $("<input spellcheck=\"False\" placeholder=\"Values\">");
 		domainInput.addClass("FlexDynamic");
@@ -79,6 +80,7 @@ export default class VariablePage {
 		domainInput.addClass("Input");
 		domainInput.addClass("Text");
 		domainInput.css("margin", "0.1rem 0.0rem");
+		domainInput.css("width", "12em");
 
 		variable.append(nameInput);
 		variable.append(domainInput);
@@ -105,6 +107,7 @@ export default class VariablePage {
 
 		const confirmButton = $("<div>");
 		confirmButton.text("Confirm");
+		confirmButton.addClass("FlexDynamic");
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
 		confirmButton.attr("style", "width: 65%");
@@ -120,7 +123,9 @@ export default class VariablePage {
 			});
 			this.elem.remove();
 		});
-		const cancelButton = $("<input type=\"button\" class=\"button\" value=\"Cancel\"/>");
+		const cancelButton = $("<div>");
+		cancelButton.text("Cancel");
+		cancelButton.addClass("FlexDynamic");
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
 		cancelButton.attr("style", "width: 30%");

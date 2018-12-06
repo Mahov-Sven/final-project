@@ -14,7 +14,7 @@ export default class ConstraintPage {
 	_construct(){
 		if(this._exists()) return;
 		this._constructRoot();
-		this._constructTitle("Constraints:");
+		this._constructTitle("Constraints");
 		this._constructAddOperationButton();
 		this._constructConstraintPageContainer();
 		this._constructConstraintContainer();
@@ -56,32 +56,44 @@ export default class ConstraintPage {
 		constraintTitle.text(title);
 		constraintTitle.addClass("FlexStatic");
 		constraintTitle.addClass("Text");
-		constraintTitle.addClass("Text");
+		constraintTitle.addClass("Title");
 		this.elem.append(constraintTitle);
 	}
 
 	_constructConstraintInput(){
 		const constraint = $("<div>");
-		constraint.addClass("FlexDynamic");
+		constraint.addClass("FlexStatic");
 		constraint.addClass("FlexRow");
 		constraint.addClass("NewConstraint");
 
-		const variableOne = $("<input spellcheck=\"False\" placeholder=\"Variable One\">");
-		variableOne.addClass("FlexStatic");
-		variableOne.addClass("FullHeight");
-		variableOne.addClass("Input");
-		variableOne.addClass("Text");
-		variableOne.css("margin", "0.1rem 0.0rem");
+		const variable1 = $("<input spellcheck=\"False\" placeholder=\"Var 1\">");
+		variable1.addClass("FlexStatic");
+		variable1.addClass("FullHeight");
+		variable1.addClass("Input");
+		variable1.addClass("Text");
+		variable1.css("margin", "0.1rem 0.0rem");
+		variable1.css("width", "6em");
 
-		const variableTwo = $("<input spellcheck=\"False\" placeholder=\"Variable Two\">");
-		variableTwo.addClass("FlexDynamic");
-		variableTwo.addClass("Input");
-		variableTwo.addClass("Text");
-		variableTwo.css("margin", "0.1rem 0.0rem");
+		const variable2 = $("<input spellcheck=\"False\" placeholder=\"Var 2\">");
+		variable2.addClass("FlexStatic");
+		variable2.addClass("FullHeight");
+		variable2.addClass("Input");
+		variable2.addClass("Text");
+		variable2.css("margin", "0.1rem 0.0rem");
+		variable2.css("width", "6em");
+
+		const returnVal = $("<input spellcheck=\"False\" placeholder=\"Ret Val\">");
+		returnVal.addClass("FlexStatic");
+		returnVal.addClass("FullHeight");
+		returnVal.addClass("Input");
+		returnVal.addClass("Text");
+		returnVal.css("margin", "0.1rem 0.0rem");
+		returnVal.css("width", "6em");
 
 		this._constructAssemblyDropdown(constraint);
-		constraint.append(variableOne);
-		constraint.append(variableTwo);
+		constraint.append(variable1);
+		constraint.append(variable2);
+		constraint.append(returnVal);
 		this.constraintContainer.append(constraint);
 	}
 
@@ -106,13 +118,13 @@ export default class ConstraintPage {
 		container.addClass("FlexRow");
 		container.addClass("FlexStatic");
 		container.addClass("FlexCenter");
-		container.attr("style", "margin-top: auto");
 
 		const confirmButton = $("<div>");
 		confirmButton.text("Confirm");
+		confirmButton.addClass("FlexDynamic");
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
-		confirmButton.attr("style", "width: 65%");
+		confirmButton.css("width", "65%");
 		confirmButton.on("click", () => {
 			const constraintList = [];
 			$(".NewConstraint").each((i, elem) => {
@@ -136,9 +148,10 @@ export default class ConstraintPage {
 
 		const cancelButton = $("<div>");
 		cancelButton.text("Cancel");
+		cancelButton.addClass("FlexDynamic");
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
-		cancelButton.attr("style", "width: 30%");
+		cancelButton.css("width", "30%");
 		cancelButton.on("click", () => this.elem.remove());
 		container.append(cancelButton);
 		container.append(confirmButton);

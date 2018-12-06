@@ -14,12 +14,12 @@ export default class ImportPage {
 	_construct(){
 		if(this._exists()) return;
 		this._constructRoot();
-		this._constructTitle("Problem Name", this.elem);
-		this._constructProblemName();
+		this._constructContainer("Problem Name");
 		this._constructPageLine();
 		this._constructContainer("Variable");
 		this._constructPageLine();
 		this._constructContainer("Constraint");
+		this._constructSpacer();
 		this._constructBottomButtons();
 	}
 
@@ -32,16 +32,17 @@ export default class ImportPage {
 		this.elem.attr("id", "ImportOverviewContainer");
 		this.elem.addClass("FlexStatic");
 		this.elem.addClass("FlexColumn");
+		this.elem.addClass("FlexCenter");
 	}
 
-	_constructProblemName(){
+	_constructProblemName(parent){
 		const input = $("<input>");
 		input.attr("spellcheck", false);
 		input.attr("placeholder", "Name");
 		input.attr("id", "ProblemName");
 		input.addClass("Input");
 		input.addClass("Text");
-		this.elem.append(input);
+		parent.append(input);
 	}
 
 	_constructTitle(title, parent){
@@ -57,7 +58,12 @@ export default class ImportPage {
 		const container = $("<div>");
 		container.addClass("FlexStatic");
 		container.addClass("FlexColumn");
+		container.addClass("FullWidth");
 		switch(containerType){
+			case "Problem Name":
+				this._constructTitle("Problem Name", container);
+				this._constructProblemName(container);
+				break;
 			case "Variable":
 				this._constructTitle("Variables", container);
 				this._constructAddButton("Variable", container);
@@ -84,7 +90,6 @@ export default class ImportPage {
 	_constructAddButton(type, parent){
 		const button = $("<div>");
 		button.text("Add");
-		button.addClass("FlexStatic");
 		button.addClass("Button");
 		button.addClass("ButtonText");
 		button.attr("id", `Add${type}Button`);
@@ -114,15 +119,22 @@ export default class ImportPage {
 		this.elem.append(pageline);
 	}
 
+	_constructSpacer(){
+		const spacer = $("<div>");
+		spacer.addClass("FlexDynamic");
+		this.elem.append(spacer);
+	}
+
 	_constructBottomButtons(){
 		const container = $("<div>");
 		container.addClass("FlexRow");
 		container.addClass("FlexStatic");
 		container.addClass("FlexCenter");
-		container.attr("style", "margin-top: auto");
+		container.addClass("FullWidth");
 
 		const confirmButton = $("<div>");
 		confirmButton.text("Confirm");
+		confirmButton.addClass("FlexDynamic");
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
 		confirmButton.addClass("Disabled");
@@ -165,6 +177,7 @@ export default class ImportPage {
 
 		const cancelButton = $("<div>");
 		cancelButton.text("Cancel");
+		cancelButton.addClass("FlexDynamic");
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
 		cancelButton.attr("style", "width: 30%");
