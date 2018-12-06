@@ -2,7 +2,7 @@ import Constraint from "../CSP/Constraint.js"
 import Problem from "../CSP/Problem.js"
 import Assignment from "./Assignment.js";
 
-class BackTrackingAlgorithm extends AbstractAlgorithm {
+export default class BackTrackingAlgorithm extends AbstractAlgorithm {
 	constructor(){
 		super.constructor();
 	}
@@ -31,11 +31,14 @@ class BackTrackingAlgorithm extends AbstractAlgorithm {
 			}
 		}
 		if(iteration !== 0){
-			this.assignment.set(tempKeyNext, null);
 			iteration --;
 		} else {
 			console.log("No valid solution.");
 		}
+	}
+	
+	getAssignment(){
+		super.getAssignment;
 	}
 
 }

@@ -30,15 +30,15 @@ var simulation = d3.forceSimulation()
 	//center is hardcoded for now, but it will at least follow the svg flexbox as it moves
 	
 const abpJSON = {
-	"variables": [
-	{"name": "v1", "completion": .86, "value": "3"},
-	{"name": "v2", "completion": .14, "value": "1"},
-	{"name": "v3", "completion": 1, "value": "12"},
-	{"name": "v4", "completion": .53, "value": "6"}
+	variables: [
+	{name: "v1", completion: .86, value: "3"},
+	{name: "v2", completion: .14, value: "1"},
+	{name: "v3", completion: 1, value: "12"},
+	{name: "v4", completion: .53, value: "6"}
 	],
-	"constraints": [
-	{"contains": ["v1", "v2", "v3"]},
-	{"contains": ["v2", "v4"]}
+	constraints: [
+	{contains: ["v1", "v2", "v3"]},
+	{contains: ["v2", "v4"]}
 	]
 };
 
@@ -99,6 +99,8 @@ const testgraph = {
 
 
 export default function run(abpJSON){
+
+	svg.selectAll("*").remove();
 
 	var graph = JSON.parse(abbreviatedProblemToGraph(abpJSON));
 	

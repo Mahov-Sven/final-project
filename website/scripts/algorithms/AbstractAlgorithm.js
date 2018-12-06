@@ -10,4 +10,8 @@ class AbstractAlgorithm {
 	}
 
 	step(){}
+	
+	getAssignment(){
+		return this.assignment;
+	}
 }
