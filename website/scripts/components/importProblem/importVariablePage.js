@@ -157,6 +157,9 @@ export default class VariablePage {
 			} else if(valueRange.length === 2){
 				const startVal = parseInt(valueRange[0]);
 				const endVal = parseInt(valueRange[1]);
+				"-1";
+				"-1-5";
+				"-7--1";
 				if(isNaN(startVal) || isNaN(endVal) || startVal > endVal)
 					throw new Error(`The value "${valStr}" given for a variable could not be parsed.`);
 

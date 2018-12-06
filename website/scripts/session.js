@@ -1,16 +1,21 @@
 import Problem from "./csp/Problem.js"
 import * as Visualization from "./visualization.js"
-
+import AbstractAlgorithm from "/scripts/algorithms/AbstractAlgorithm.js"
+import BackTrackingAlgorithm from "/scripts/algorithms/BackTrackingAlgorithm.js"
+import HillClimbingAlgorithm from "/scripts/algorithms/HillClimbingAlgorithm.js"
 
 export default class Session {
 	constructor(){}
 
 	static init(){
-		Session.setProblem(new Problem());
+		Session.problem = new Problem();
+		Session.algorithm = new HillClimbingAlgorithm();
+		Session.algorithm.setProblem(Session.problem);
 	}
 
 	static setProblem(problem){
 		Session.problem = problem;
+		Session.algorithm.setProblem(Session.problem);
 	}
 
 	static getProblem(){
@@ -18,52 +23,42 @@ export default class Session {
 	}
 
 	static setAlgorithm(algorithm){
-		Session.algorithm = algorithm;
+		if(algorithm instanceof AbstractAlgorithm)
+			Session.algorithm = algorithm;
+		else if (typeof algorithm === "string"){
+			switch(algorithm){
+				case "BackTrack":
+					Session.algorithm = new BackTrackingAlgorithm();
+					Session.algorithm.setProblem(Session.problem);
+					Session.visualize();
+					break;
+				case "HillClimbing":
+					Session.algorithm = new HillClimbingAlgorithm();
+					Session.algorithm.setProblem(Session.problem);
+					Session.visualize();
+					break;
+				default: break;
+			}
+		}
 	}
 
 	static getAlgorithm(){
 		return Session.algorithm;
 	}
 
+	static restart(){
+		Session.algorithm.setup();
+	}
+
 	static step(){
+		if(Session.algorithm.completed()){
+			$("#PausePlayButton").trigger("stop");
+			$("#StepButton").addClass("Disabled");
+		}
 		Session.algorithm.step();
 	}
 
-	static problemToABP(){
-		//Extracts information from the Problem and Algorithm, puts it in correct format for visualization
-
-		/* Pseudocode
-			get variable names and domains from Problem
-			from Algorithm, extract # of discarded values for each variable -> "fails"
-			for each variable, set "completion" to 1 - ("fails" / domain.length)
-
-			get list of constraints from Problem
-			for each constraint, call "getVariableNames" which returns the needed list
-			result.constraints.push({ contains: getVariableNames(whatever) });
-
-			return result with .variables and .constraints
-		*/
-		return null;
-	}
-
 	static visualize(){
-		//Visualizes whatever information is currently in the session's Problem and Algorithm
-		var abp = Session.problemToABP();
-		const abpJSON = {
-			variables: [
-			{name: "v1", completion: .86, value: "3"},
-			{name: "v2", completion: .14, value: "1"},
-			{name: "v3", completion: 1, value: "12"},
-			{name: "v4", completion: .53, value: "6"}
-			],
-			constraints: [
-			{contains: ["v1", "v2", "v3"]},
-			{contains: ["v2", "v4"]}
-			]
-		};
-//		run(abp);
-		Visualization.run(abpJSON);
+		Visualization.run(Session.algorithm.progress);
 	}
-
-
 }

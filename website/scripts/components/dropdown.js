@@ -21,7 +21,8 @@ export default class Dropdown {
 		this.elem.addClass("FlexStatic");
 		this.elem.addClass("FlexColumn");
 		this.elem.addClass("Dropdown");
-		this.elem.attr("id", `${this.id}Dropdown`);
+		this.elem.attr("id", Dropdown.getId(this.id));
+		console.log(Dropdown.getId(this.id));
 	}
 
 	_constructSelected(){
@@ -31,6 +32,7 @@ export default class Dropdown {
 		selectedElem.addClass("ButtonText");
 		selectedElem.text(this.title);
 		Dropdown.values[this.id] = undefined;
+		this.elem.trigger("select");
 
 		this.elem.append(selectedElem);
 	}
@@ -80,10 +82,19 @@ export default class Dropdown {
 				Dropdown.values[this.id] = this.rows[i][2];
 				this.selectedIndex = i;
 				optionContainer.hide();
+				this.elem.trigger("select");
 			})
 		});
 
 		optionContainer.hide();
+	}
+
+	getValue(){
+		return Dropdown.values[this.id];
+	}
+
+	select(eventFunc){
+		this.elem.on("select", eventFunc);
 	}
 
 	static init(){
@@ -112,6 +123,10 @@ export default class Dropdown {
 		while(Dropdown.values.hasOwnProperty(currentId))
 			currentId = `${id}${++count}`;
 		return currentId;
+	}
+
+	static getId(id){
+		return `${id}Dropdown`;
 	}
 
 	value(){

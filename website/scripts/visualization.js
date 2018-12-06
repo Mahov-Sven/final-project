@@ -16,31 +16,7 @@ To modify this code, the algorithm will need to supply a javascript object of si
 
 var svg = d3.select("svg");
 
-export var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.id; }))
-	.force('charge', d3.forceManyBody()
-		.strength(-200)
-		.theta(.8)
-		.distanceMax(150)
-    )
-	.force('collision', d3.forceCollide().radius(function(d) {
-		return d.radius
-	}))
-    .force("center", d3.forceCenter($("#VisualizationSpace").width() / 2, $("#VisualizationSpace").height() / 2));
-	//center is hardcoded for now, but it will at least follow the svg flexbox as it moves
-
-const abpJSON = {
-	variables: [
-	{name: "v1", completion: .86, value: "3"},
-	{name: "v2", completion: .14, value: "1"},
-	{name: "v3", completion: 1, value: "12"},
-	{name: "v4", completion: .53, value: "6"}
-	],
-	constraints: [
-	{contains: ["v1", "v2", "v3"]},
-	{contains: ["v2", "v4"]}
-	]
-};
+export var simulation;
 
 function abbreviatedProblemToGraph(abpJSON){
 	var abp = abpJSON;
@@ -68,7 +44,7 @@ function abbreviatedProblemToGraph(abpJSON){
 				target: lookupIdByName(graph.nodes, abp.constraints[i].contains[j+1]),
 				value: 1,
 				color: tempColor
-				};
+			};
 			graph.links.push(tempLink);
 		}
 	}
@@ -85,16 +61,6 @@ function lookupIdByName(list, name){
 	console.log(list);
 	console.log(name);
 	return -1;
-}
-
-const testgraph = {
-	"nodes": [
-    {"id": "1", "group": 1, "color": [0,0,255], "name": "v1", "value": "12"},
-    {"id": "2", "group": 2, "color": [130,100,60], "name": "v2", "value": ""}
-	],
-	"links": [
-    {"source": "1", "target": "2", "value": 1, "color": [0,0,255]}
-	]
 }
 
 
@@ -136,7 +102,7 @@ export function run(abpJSON){
 		.data(graph.nodes)
 		.enter()
 		.append("text")
-        .attr("class", "label")
+		.attr("class", "label")
 		.attr("pointer-events", "none")
 		.style("font-size", "10px")
 		.style("fill", function(d) {
@@ -148,12 +114,15 @@ export function run(abpJSON){
 		})
 		.text(function(d) { return d.value; });
 
-	simulation
-		.nodes(graph.nodes)
-		.on("tick", ticked);
-
-	simulation.force("link")
-		.links(graph.links);
+	simulation = d3.forceSimulation(graph.nodes)
+		.force("link", d3.forceLink(graph.links).id((d) => d.id))
+		.force('charge', d3.forceManyBody()
+			.strength(-400)
+			.theta(.8)
+			.distanceMax(150))
+		.force('collision', d3.forceCollide().radius(d => d.radius))
+		.force("center", d3.forceCenter($("#VisualizationSpace").width() / 2, $("#VisualizationSpace").height() / 2))
+		.on("tick", ticked)
 
 	function ticked() {
 		link
@@ -171,8 +140,8 @@ export function run(abpJSON){
 
 		label
     		.attr("x", function(d) { return d.x; })
-            .attr("y", function (d) { return d.y; });
-  }
+			.attr("y", function (d) { return d.y; });
+	}
 }
 
 function dragstarted(d) {
@@ -191,5 +160,3 @@ function dragended(d) {
 	d.fx = null;
 	d.fy = null;
 }
-
-run(abpJSON);

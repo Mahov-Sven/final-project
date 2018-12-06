@@ -4,6 +4,7 @@ import ImportPage from "./components/importProblem/importPage.js"
 import Session from "./session.js"
 import Constraint from "./csp/Constraint.js";
 import * as Visualization from "/scripts/visualization.js"
+import Dropdown from "/scripts/components/dropdown.js"
 
 let activeBannerButton = -1;
 
@@ -20,8 +21,6 @@ export function init() {
 		$("#VisualizationSpace").trigger("_resize");
 	});
 
-	console.log(Visualization.simulation);
-
 	$(window).resize((e) => {
 		Visualization.simulation
 			.force("center", d3.forceCenter($("#VisualizationSpace").width() / 2, $("#VisualizationSpace").height() / 2))
@@ -34,30 +33,63 @@ export function init() {
 			.restart()
 	});
 
-	$("#LoadProblemInput").keypress((e) => {
+	$("#LoadProblemInput").keypress(async (e) => {
 		if(e.which !== 13) return;
 		console.log("Trying to Load");
-		Loader.request(`/loadProblem?n=${$("#LoadProblemInput").val()}`).then((a)=>{
-			const parsedJson = JSON.parse(a.data);
-			const problem = new Problem(parsedJson.variables, parsedJson.constraints);
-			Session.setProblem(problem);
-		});
+
+		const result = await Loader.execCommand("loadProblem", { n: $("#LoadProblemInput").val()});
+		console.log(result);
+		console.log(Problem.fromObject(JSON.parse(result.data)));
+		if(result.success) Session.setProblem(Problem.fromObject(JSON.parse(result.data)));
+
+		Session.visualize();
 	});
 
+
+
+	const algorithmDropdown = new Dropdown("Algorithm", "Select Algorithm", [
+		["Back Track Algorithm (Tree)", "Not Working Right Now :'(", "BackTrack"],
+		["Hill Climbing Algorithm (Local)", "Hill Climbing", "HillClimbing"],
+		["Coming Soon", "You Can't Pick This", "NoU"]
+		//["Beam Search Algorithm (Local)", "Beam Search", "BeamSearch"]
+	]);
+	algorithmDropdown.insertBefore("#RestartButton");
+	algorithmDropdown.select((e) => {
+		Session.setAlgorithm(algorithmDropdown.getValue());
+	});
+
+	let playInterval = undefined;
 	$("#RestartButton").click((e) => {
 		console.log("Trying restart");
-		/*
-		TODO
-		*/
+		clearInterval(playInterval);
+		playInterval = undefined;
+		$("#PausePlayButton").removeClass("Disabled");
+		$("#StepButton").removeClass("Disabled");
+		Session.restart();
 		Session.visualize();
 	});
 
 	$("#PausePlayButton").click((e) => {
-		console.log("Trying play/pause");
-		/*
-		TODO
-		*/
-		Session.visualize();
+		if(playInterval === undefined){
+			$("#StepButton").addClass("Disabled");
+			$("#PausePlayButton").addClass("Active");
+			playInterval = setInterval(() => {
+				Session.step();
+				Session.visualize();
+			}, 1000);
+		} else {
+			clearInterval(playInterval);
+			playInterval = undefined;
+			$("#PausePlayButton").removeClass("Active");
+			$("#StepButton").removeClass("Disabled");
+		}
+	});
+
+	$("#PausePlayButton").on("stop", () => {
+		clearInterval(playInterval);
+		playInterval = undefined;
+		$("#PausePlayButton").removeClass("Active");
+		$("#PausePlayButton").addClass("Disabled");
 	});
 
 	$("#StepButton").click((e) => {

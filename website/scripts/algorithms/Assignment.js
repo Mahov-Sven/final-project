@@ -8,4 +8,8 @@ export default class Assignment {
 	set(varName, value){
 		this[varName] = value;
 	}
+
+	get(varName){
+		return this[varName];
+	}
 }
