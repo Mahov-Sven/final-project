@@ -23,13 +23,8 @@ export function init() {
 		console.log("Trying to Load");
 		Loader.request(`/loadProblem?n=${$("#LoadProblemInput").val()}`).then((a)=>{
 			const parsedJson = JSON.parse(a.data);
-			console.log(parsedJson.constraints);
-			const problem = new Problem(parsedJson.variables);
-			for (let i of parsedJson.constraints){
-				problem.addConstraint(new Constraint(i));
-			}
-			
-			console.log(problem);
+			const problem = new Problem(parsedJson.variables, parsedJson.constraints);
+			Session.setProblem(problem);
 		});
 	});
 
