@@ -2,6 +2,7 @@
 import Instruction from "../../csp/Instruction.js";
 import ImportPage from "./importPage.js"
 import Dropdown from "/scripts/components/dropdown.js"
+import Constraint from "../../csp/Constraint.js"
 
 export default class ConstraintPage {
 	constructor(){
@@ -126,23 +127,20 @@ export default class ConstraintPage {
 		confirmButton.addClass("ButtonText");
 		confirmButton.css("width", "65%");
 		confirmButton.on("click", () => {
-			const constraintList = [];
+			const constraint = new Constraint();
 			$(".NewConstraint").each((i, elem) => {
 				const operation = Dropdown.getValues(`Assembly${i}`)[0];
 				const var1 = $($(elem).children()[1]).val();
 				const var2 = $($(elem).children()[2]).val();
-				//const rvar = $($(elem).children()[3]).val();
+				let rvar = $($(elem).children()[3]).val();
 				if (operation !== undefined && var1 !== "" && var2 !== ""){
-					const constraint = {
-						operation: Dropdown.getValues(`Assembly${i}`)[0],
-						v1: var1,
-						v2: var2,
-					}
-					constraintList.push(constraint);
+					if(rvar === "") rvar = var1;
+					const instr = new Instruction(Dropdown.getValues(`Assembly${i}`)[0], var1, var2, rvar);
+					constraint.addInstruction(instr);
 				}
 			});
 
-			ImportPage.addImportedConstraint(constraintList);
+			ImportPage.addImportedConstraint(constraint);
 			this.elem.remove();
 		});
 

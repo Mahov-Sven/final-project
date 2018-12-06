@@ -46,6 +46,10 @@
 	white-space: nowrap;
 }
 
+.VariableValue {
+	display: inline-block;
+}
+
 .Title {
 	vertical-align: middle;
 	text-align: center;

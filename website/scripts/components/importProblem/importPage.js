@@ -8,19 +8,17 @@ import Notification from "../notification.js"
 export default class ImportPage {
 	constructor(){
 		this.elem = undefined;
+		this.problem = new Problem();
 		this._construct();
 	}
 
 	_construct(){
 		if(this._exists()) return;
 		this._constructRoot();
-		this._constructContainer("Problem Name");
-		this._constructPageLine();
-		this._constructContainer("Variable");
-		this._constructPageLine();
-		this._constructContainer("Constraint");
-		this._constructSpacer();
+		this._constructContainer();
 		this._constructBottomButtons();
+
+		ImportPage.page = this;
 	}
 
 	_exists(){
@@ -33,6 +31,7 @@ export default class ImportPage {
 		this.elem.addClass("FlexStatic");
 		this.elem.addClass("FlexColumn");
 		this.elem.addClass("FlexCenter");
+		this.elem.addClass("Scrollbar");
 	}
 
 	_constructProblemName(parent){
@@ -54,37 +53,45 @@ export default class ImportPage {
 		parent.append(variableTitle);
 	}
 
-	_constructContainer(containerType){
+	_constructContainer(){
+
+		const page = $("<div>");
+		page.addClass("FlexDynamic");
+		page.addClass("FlexColumn");
+		page.addClass("FullWidth");
+		page.addClass("Scrollbar");
+
 		const container = $("<div>");
 		container.addClass("FlexStatic");
 		container.addClass("FlexColumn");
-		container.addClass("FullWidth");
-		switch(containerType){
-			case "Problem Name":
-				this._constructTitle("Problem Name", container);
-				this._constructProblemName(container);
-				break;
-			case "Variable":
-				this._constructTitle("Variables", container);
-				this._constructAddButton("Variable", container);
-				const variableContainer = $("<div>");
-				variableContainer.attr("id", "SaveVariableContainer");
-				variableContainer.addClass("FlexColumn");
-				variableContainer.addClass("FlexStatic");
-				container.append(variableContainer);
-				break;
-			case "Constraint":
-				container.addClass("Constraint");
-				this._constructTitle("Constraints", container);
-				this._constructAddButton("Constraint", container);
-				const constraintContainer = $("<div>");
-				constraintContainer.attr("id", "SaveConstraintContainer");
-				constraintContainer.addClass("FlexColumn");
-				constraintContainer.addClass("FlexStatic");
-				container.append(constraintContainer);
-				break;
-		}
-		this.elem.append(container);
+		container.css("margin", "0 0.5rem");
+
+		this._constructTitle("Problem Name", container);
+		this._constructProblemName(container);
+
+		this._constructPageLine(container);
+
+		this._constructTitle("Variables", container);
+		this._constructAddButton("Variable", container);
+		const variableContainer = $("<div>");
+		variableContainer.attr("id", "SaveVariableContainer");
+		variableContainer.addClass("FlexColumn");
+		variableContainer.addClass("FlexStatic");
+		container.append(variableContainer);
+
+		this._constructPageLine(container);
+
+		container.addClass("Constraint");
+		this._constructTitle("Constraints", container);
+		this._constructAddButton("Constraint", container);
+		const constraintContainer = $("<div>");
+		constraintContainer.attr("id", "SaveConstraintContainer");
+		constraintContainer.addClass("FlexColumn");
+		constraintContainer.addClass("FlexStatic");
+		container.append(constraintContainer);
+
+		page.append(container);
+		this.elem.append(page);
 	}
 
 	_constructAddButton(type, parent){
@@ -113,10 +120,10 @@ export default class ImportPage {
 		parent.append(button);
 	}
 
-	_constructPageLine(){
+	_constructPageLine(parent){
 		const pageline = $("<div>");
 		pageline.addClass("PageLine");
-		this.elem.append(pageline);
+		parent.append(pageline);
 	}
 
 	_constructSpacer(){
@@ -140,33 +147,9 @@ export default class ImportPage {
 		confirmButton.addClass("Disabled");
 		confirmButton.attr("style", "width: 65%");
 		confirmButton.on("click", () => {
-			const problemName = $("#ProblemName").val();
-			const variables = []
-			const constraints = []
-			$(".VariablesToBeImported").each((i, elem) => {
-				const variable = {
-					name: $($(elem).children()[0]).text().split("Name: ").pop(),
-					domain: Array.from(VariablePage._parseVariableValues($($(elem).children()[1]).text().split("Domain: ").pop()))
-				}
-				variables.push(variable);
-			});
-			$(".ConstraintsToBeImported").each((i, elem) => {
-				const constraint = [];
-				$($(elem).find($(".Operation"))).each((i, elem) => {
-					const operation = {
-						operation: $($(elem).children()[0]).text().split("Op: ").pop(),
-						v1: $($(elem).children()[1]).text().split("v1: ").pop(),
-						v2: $($(elem).children()[2]).text().split("v2: ").pop()
-					}
-					constraint.push(operation);
-				});
-				constraints.push(constraint);
-			});
-			console.log(variables);
-			console.log(constraints);
-			const problem = new Problem(variables, constraints);
-			console.log(JSON.stringify(problem));
-			Loader.execCommand("createProblem", { n: $("#ProblemName").val(), d: JSON.stringify(problem) }, true);
+			console.log(this.problem);
+			console.log(JSON.stringify(this.problem));
+			Loader.execCommand("createProblem", { n: $("#ProblemName").val(), d: JSON.stringify(this.problem) }, true);
 			this.elem.remove();
 		});
 
@@ -188,44 +171,62 @@ export default class ImportPage {
 	}
 
 	static addImportedVariable(variable){
-		const container = $("<div>");
-		container.addClass("FlexRow");
-		container.addClass("FlexStatic");
-		container.addClass("VariablesToBeImported");
-		const name = $("<div>");
-		name.text("Name: " + variable.name);
-		const domain = $("<div>");
-		domain.text(" Domain: " + variable.domain.values().next().value);
-		let first = true;
-		for (let item of variable.domain){
-			if(first){ first = false; continue;}
-			domain.append(", " + item);
+		ImportPage.page.problem.addVariable(variable.name, variable.domain);
+
+		let container = undefined;
+		if($(`#Variable${variable.name}`).length === 0){
+			container = $("<div>");
+			container.addClass("FlexColumn");
+			container.addClass("FlexStatic");
+			container.addClass("VariablesToBeImported");
+			container.attr("id", `Variable${variable.name}`);
+		} else {
+			container = $(`#Variable${variable.name}`);
+			container.empty();
 		}
-		container.append(name);
-		container.append(domain);
+
+		let varDiv = $("<div>");
+		varDiv.addClass("FlexStatic");
+		varDiv.addClass("Text");
+		let varText = `${variable.name} = { `;
+
+		for (let item of variable.domain){
+			const nextText = `${item}, `;
+			if(varText.length + nextText.length > 30){
+				varDiv.text(varText.slice(0, -1));
+				container.append(varDiv);
+
+				varDiv = $("<div>");
+				varDiv.addClass("FlexStatic");
+				varDiv.addClass("Text");
+				varText = "";
+			}
+			varText += nextText;
+		}
+
+		varDiv.text(varText.slice(0, -2) + ' }');
+		container.append(varDiv);
+
 		$("#SaveVariableContainer").append(container);
 	}
 
 	static addImportedConstraint(constraint){
+		ImportPage.page.problem.addConstraint(constraint);
+
 		const container = $("<div>");
 		container.addClass("FlexColumn");
 		container.addClass("FlexStatic");
 		container.addClass("ConstraintsToBeImported");
-		for (let operation of constraint){
-			const operationContainer = $("<div>");
-			operationContainer.addClass("FlexRow");
-			operationContainer.addClass("FlexStatic");
-			operationContainer.addClass("Operation");
-			const operationDiv = $("<div>");
-			operationDiv.html("Op: " + operation.operation);
-			const v1 = $("<div>");
-			v1.html(" v1: " + operation.v1);
-			const v2 = $("<div>");
-			v2.html(" v2: " + operation.v2);
-			operationContainer.append(operationDiv);
-			operationContainer.append(v1);
-			operationContainer.append(v2);
-			container.append(operationContainer);
+		for (let instr of constraint.instructions){
+			const instrContainer = $("<div>");
+			instrContainer.addClass("FlexRow");
+			instrContainer.addClass("FlexStatic");
+			instrContainer.addClass("Operation");
+			const instrDiv = $("<div>");
+			instrDiv.addClass("Text");
+			instrDiv.text(`${instr.rvar} = ${instr.name}(${instr.var1}, ${instr.var2})`);
+			instrContainer.append(instrDiv);
+			container.append(instrContainer);
 		}
 
 		$("#SaveConstraintContainer").append(container);

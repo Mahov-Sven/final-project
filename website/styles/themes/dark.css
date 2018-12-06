@@ -32,6 +32,20 @@
 	color: #000000;
 }
 
+.ConstraintsToBeImported {
+	background-color: #111111;
+	border-radius: 0.4em;
+	padding: 0.2em;
+	margin: 0.2em 0;
+}
+
+.VariablesToBeImported {
+	background-color: #111111;
+	border-radius: 0.4em;
+	padding: 0.2em;
+	margin: 0.2em 0;
+}
+
 .Text {
 	color: #cccccc;
 	font-family: Verdana;
@@ -97,17 +111,11 @@
 	box-shadow: 0 0.1em 0.1em 0.1em #00000033;
 }
 
-.DropdownSelection {
-}
-
 .DropdownContainer {
 	background-color: #111111;
 	border-radius: 0.2em;
 	border-width: 0;
 	box-shadow: 0 0.1em 0.1em 0.1em #00000033;
-}
-
-.DropdownOption {
 }
 
 .Scrollbar {

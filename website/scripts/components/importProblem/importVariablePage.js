@@ -160,7 +160,7 @@ export default class VariablePage {
 				for(let i = startVal; i <= endVal; i++) valSet.add(i);
 			} else throw new Error(`The value "${valStr}" given for a variable could not be parsed.`);
 		}
-		return valSet;
+		return Array.from(valSet);
 	}
 
 	appendTo(elemId){
