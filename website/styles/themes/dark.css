@@ -71,7 +71,7 @@
 	border-color: #555555;
 	border-style: solid;
 	background-color: #111111;
-	padding: 0.5em 1em;
+	padding: 0.5em 1em 0.4em 1em;
 	transition: 0.1s;
 	box-sizing: border-box;
 	outline-width: 0;
@@ -80,22 +80,34 @@
 .Input:hover {
 	border-width: 0 0 0.2em 0;
 	border-color: #9b9b9b;
-	padding-bottom: 0.4em;
+	padding-bottom: 0.3em;
 }
 
 .Input:focus {
 	border-width: 0 0 0.2em 0;
 	border-color: #9999ff;
-	padding-bottom: 0.4em;
+	padding-bottom: 0.3em;
 }
 
 .Dropdown {
 	background-color: #111111;
 	border-radius: 0.2em;
 	border-width: 0;
-	padding: 0.5em 1em;
 	outline-width: 0;
 	box-shadow: 0 0.1em 0.1em 0.1em #00000033;
+}
+
+.DropdownSelection {
+}
+
+.DropdownContainer {
+	background-color: #111111;
+	border-radius: 0.2em;
+	border-width: 0;
+	box-shadow: 0 0.1em 0.1em 0.1em #00000033;
+}
+
+.DropdownOption {
 }
 
 .Scrollbar {

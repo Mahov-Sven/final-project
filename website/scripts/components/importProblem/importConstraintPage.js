@@ -1,6 +1,7 @@
 // This is the file that has the functions to create the import page for csps
-import Instruction from "../csp/Instruction.js";
+import Instruction from "../../csp/Instruction.js";
 import ImportPage from "./importPage.js"
+import Dropdown from "/scripts/components/dropdown.js"
 
 export default class ConstraintPage {
 	constructor(){
@@ -85,35 +86,9 @@ export default class ConstraintPage {
 	}
 
 	_constructAssemblyDropdown(parent){
-		const dropdownContainer = $("<select>");
-		dropdownContainer.addClass("FlexColumn");
-		dropdownContainer.addClass("FlexStatic");
-		dropdownContainer.addClass("Dropdown");
-		dropdownContainer.addClass("Text");
-
-		const _ = $("<option>");
-		_.val("");
-		_.attr("selected", true);
-		_.attr("disabled", true);
-		_.attr("hidden", true);
-		_.html("Instruction");
-		dropdownContainer.append(_);
-		dropdownContainer.addClass("DropdownContent");
-		dropdownContainer.addClass("FlexColumn");
-		dropdownContainer.addClass("FlexStatic");
-
-		this._constructDropdownOptions(dropdownContainer);
-		parent.append(dropdownContainer);
-	}
-
-	_constructDropdownOptions(parent){
-		for (let instructionKey in Instruction.names){
-			const instruction = Instruction.names[instructionKey];
-			const instructionDiv = $("<option>");
-			instructionDiv.text(instruction[1]);
-			instructionDiv.addClass(instruction);
-			parent.append(instructionDiv);
-		}
+		const assemblyDropdown = new Dropdown(Dropdown.nextId("Assembly"), "Select Instruction", Object.values(Instruction.names));
+		assemblyDropdown.elem.css("margin", "0.1em 0.3em");
+		assemblyDropdown.appendTo(parent);
 	}
 
 	_constructAddOperationButton(){
@@ -141,11 +116,15 @@ export default class ConstraintPage {
 		confirmButton.on("click", () => {
 			const constraintList = [];
 			$(".NewConstraint").each((i, elem) => {
-				if ($($($(elem).children()[0]).find(":selected")).text() != "Selected" && $($(elem).children()[1]).val() != "" && $($(elem).children()[2]).val() != ""){
+				const operation = Dropdown.getValues(`Assembly${i}`)[0];
+				const var1 = $($(elem).children()[1]).val();
+				const var2 = $($(elem).children()[2]).val();
+				//const rvar = $($(elem).children()[3]).val();
+				if (operation !== undefined && var1 !== "" && var2 !== ""){
 					const constraint = {
-						operation: $($($(elem).children()[0]).find(":selected")).text(),
-						v1: $($(elem).children()[1]).val(),
-						v2: $($(elem).children()[2]).val()
+						operation: Dropdown.getValues(`Assembly${i}`)[0],
+						v1: var1,
+						v2: var2,
 					}
 					constraintList.push(constraint);
 				}

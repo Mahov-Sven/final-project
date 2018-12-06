@@ -1,8 +1,8 @@
 // This is the file that has the functions to create the import page for csps
 import VariablePage from "./importVariablePage.js"
 import ConstraintPage from "./importConstraintPage.js"
-import * as Loader from "../loader.js"
-import Problem from "../csp/Problem.js"
+import * as Loader from "../../loader.js"
+import Problem from "../../csp/Problem.js"
 import Notification from "../notification.js"
 
 export default class ImportPage {

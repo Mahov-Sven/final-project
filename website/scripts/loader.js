@@ -1,4 +1,4 @@
-import Notification from "./notification.js"
+import Notification from "./components/notification.js"
 import * as Visualization from "./visualization.js"
 
 export function init(){}

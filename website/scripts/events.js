@@ -1,6 +1,6 @@
 import * as Loader from "./loader.js"
 import Problem from "./csp/Problem.js"
-import ImportPage from "./importProblem/importPage.js"
+import ImportPage from "./components/importProblem/importPage.js"
 import * as Session from "./session.js"
 
 let activeBannerButton = -1;

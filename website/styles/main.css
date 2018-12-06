@@ -76,14 +76,24 @@
 	background-position: center
 }
 
-.Input {
-	padding: 0 0.5em;
-}
-
 .Dropdown {
 	user-select: none;
-    cursor: pointer;
-    margin: 0 0.4em;
+	cursor: pointer;
+	margin: 0.4em;
+	height: inherit;
+}
+
+.DropdownSelection {
+	padding: 0.5em 1em;
+}
+
+.DropdownContainer {
+	z-index: 2;
+	position: absolute;
+}
+
+.DropdownOption {
+	padding: 0.5em 1em;
 }
 
 .FlexRow {
@@ -133,6 +143,11 @@
 .FullContainer {
 	width: 100%;
 	height: 100%;
+}
+
+.TextLeft {
+	vertical-align: middle;
+	text-align: left;
 }
 
 .Disabled {
