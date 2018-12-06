@@ -9,6 +9,7 @@ export default class ConstraintPage {
 		this.elem = undefined;
 		this.constraintPageContainer = undefined;
 		this.constraintContainer = undefined;
+		this.dropdownId = parseInt(/[0-9]+/.exec(Dropdown.nextId("Assembly"))[0]);
 		this._construct();
 	}
 
@@ -129,13 +130,13 @@ export default class ConstraintPage {
 		confirmButton.on("click", () => {
 			const constraint = new Constraint();
 			$(".NewConstraint").each((i, elem) => {
-				const operation = Dropdown.getValues(`Assembly${i}`)[0];
+				const operation = Dropdown.getValues(`Assembly${i + this.dropdownId}`)[0];
 				const var1 = $($(elem).children()[1]).val();
 				const var2 = $($(elem).children()[2]).val();
 				let rvar = $($(elem).children()[3]).val();
 				if (operation !== undefined && var1 !== "" && var2 !== ""){
 					if(rvar === "") rvar = var1;
-					const instr = new Instruction(Dropdown.getValues(`Assembly${i}`)[0], var1, var2, rvar);
+					const instr = new Instruction(Dropdown.getValues(`Assembly${i + this.dropdownId}`)[0], var1, var2, rvar);
 					constraint.addInstruction(instr);
 				}
 			});
