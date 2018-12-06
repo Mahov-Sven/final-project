@@ -3,6 +3,7 @@ import VariablePage from "./importVariablePage.js"
 import ConstraintPage from "./importConstraintPage.js"
 import * as Loader from "../loader.js"
 import Problem from "../csp/Problem.js"
+import Notification from "../notification.js"
 
 export default class ImportPage {
 	constructor(){
@@ -124,8 +125,10 @@ export default class ImportPage {
 		confirmButton.text("Confirm");
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
+		confirmButton.addClass("Disabled");
 		confirmButton.attr("style", "width: 65%");
 		confirmButton.on("click", () => {
+			const problemName = $("#ProblemName").val();
 			const variables = []
 			const constraints = []
 			$(".VariablesToBeImported").each((i, elem) => {
@@ -154,6 +157,13 @@ export default class ImportPage {
 			Loader.execCommand("createProblem", { n: $("#ProblemName").val(), d: JSON.stringify(problem) }, true);
 			this.elem.remove();
 		});
+
+		this.elem.find("#ProblemName").keyup(() => {
+			console.log($("#ProblemName").val())
+			if($("#ProblemName").val() === "") confirmButton.addClass("Disabled");
+			else confirmButton.removeClass("Disabled");
+		});
+
 		const cancelButton = $("<div>");
 		cancelButton.text("Cancel");
 		cancelButton.addClass("Button");

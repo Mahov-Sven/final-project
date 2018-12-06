@@ -154,6 +154,7 @@ export default class ConstraintPage {
 			ImportPage.addImportedConstraint(constraintList);
 			this.elem.remove();
 		});
+
 		const cancelButton = $("<div>");
 		cancelButton.text("Cancel");
 		cancelButton.addClass("Button");

@@ -35,6 +35,7 @@ export default class Notification {
 			const fieldDiv = $("<div>");
 			fieldDiv.addClass("FlexStatic");
 			fieldDiv.addClass("Text");
+			fieldDiv.css("color", "black");
 			fieldDiv.text(this.data);
 			this.elem.append(fieldDiv);
 		} else {
@@ -89,5 +90,10 @@ export default class Notification {
 		this.elem.delay(5000).fadeOut(2000, () => {
 			this.elem.remove();
 		});
+	}
+
+	static create(title, data){
+		const notification = new Notification(title, data);
+		notification.appendTo("#NotificationStack");
 	}
 }
