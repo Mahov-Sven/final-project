@@ -2,6 +2,7 @@ import * as Loader from "./loader.js"
 import Problem from "./csp/Problem.js"
 import ImportPage from "./components/importProblem/importPage.js"
 import Session from "./session.js"
+import Constraint from "./csp/Constraint.js";
 
 let activeBannerButton = -1;
 
@@ -12,13 +13,24 @@ export function init() {
 		Loader.request($("#CommandInput").val(), true);
 	});
 
-	$("#ImportInput").on("click", function(){
+	$("#ImportInput").click((e)=>{
 		const importPage = new ImportPage();
 		importPage.appendTo("#Sidebar");
 	});
 
-	$("#LoadProblemButton").click((e) => {
+	$("#LoadProblemInput").keypress((e) => {
+		if(e.which !== 13) return;
 		console.log("Trying to Load");
+		Loader.request(`/loadProblem?n=${$("#LoadProblemInput").val()}`).then((a)=>{
+			const parsedJson = JSON.parse(a.data);
+			console.log(parsedJson.constraints);
+			const problem = new Problem(parsedJson.variables);
+			for (let i of parsedJson.constraints){
+				problem.addConstraint(new Constraint(i));
+			}
+			
+			console.log(problem);
+		});
 	});
 
 	$("#RestartButton").click((e) => {
