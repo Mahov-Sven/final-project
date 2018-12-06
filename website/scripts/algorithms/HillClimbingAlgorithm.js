@@ -1,5 +1,5 @@
-import Constraint from "../CSP/Constraint.js"
-import Problem from "../CSP/Problem.js"
+import Constraint from "../csp/Constraint.js"
+import Problem from "../csp/Problem.js"
 import Assignment from "./Assignment.js";
 import AbstractAlgorithm from "/scripts/algorithms/AbstractAlgorithm.js"
 import Random from "/scripts/random.js"
