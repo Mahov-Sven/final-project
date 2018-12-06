@@ -4,6 +4,7 @@ import ConstraintPage from "./importConstraintPage.js"
 import * as Loader from "../../loader.js"
 import Problem from "../../csp/Problem.js"
 import Notification from "../notification.js"
+import Session from "/scripts/session.js"
 
 export default class ImportPage {
 	constructor(){
@@ -105,6 +106,7 @@ export default class ImportPage {
 				button.on("click", function(){
 					const variablePage = new VariablePage();
 					variablePage.appendTo("#Sidebar");
+					$("#VisualizationSpace").trigger("_resize");
 				});
 
 	        	break;
@@ -112,6 +114,7 @@ export default class ImportPage {
 				button.on("click", function(){
 					const constraintPage = new ConstraintPage();
 					constraintPage.appendTo("#Sidebar");
+					$("#VisualizationSpace").trigger("_resize");
 				});
 	        	break;
 			default: throw new Error(`Unknown Button Type "${type}"`);
@@ -150,6 +153,7 @@ export default class ImportPage {
 			console.log(this.problem);
 			console.log(JSON.stringify(this.problem));
 			Loader.execCommand("createProblem", { n: $("#ProblemName").val(), d: JSON.stringify(this.problem) }, true);
+			Session.setProblem(this.problem);
 			this.elem.remove();
 		});
 
@@ -164,7 +168,10 @@ export default class ImportPage {
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
 		cancelButton.attr("style", "width: 30%");
-		cancelButton.on("click", () => this.elem.remove());
+		cancelButton.on("click", () => {
+			this.elem.remove();
+			$("#VisualizationSpace").trigger("_resize");
+		});
 		container.append(cancelButton);
 		container.append(confirmButton);
 		this.elem.append(container);

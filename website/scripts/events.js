@@ -3,6 +3,7 @@ import Problem from "./csp/Problem.js"
 import ImportPage from "./components/importProblem/importPage.js"
 import Session from "./session.js"
 import Constraint from "./csp/Constraint.js";
+import * as Visualization from "/scripts/visualization.js"
 
 let activeBannerButton = -1;
 
@@ -16,6 +17,21 @@ export function init() {
 	$("#ImportInput").click((e)=>{
 		const importPage = new ImportPage();
 		importPage.appendTo("#Sidebar");
+		$("#VisualizationSpace").trigger("_resize");
+	});
+
+	console.log(Visualization.simulation);
+
+	$(window).resize((e) => {
+		Visualization.simulation
+			.force("center", d3.forceCenter($("#VisualizationSpace").width() / 2, $("#VisualizationSpace").height() / 2))
+			.restart()
+	});
+
+	$("#VisualizationSpace").on("_resize", (e) => {
+		Visualization.simulation
+			.force("center", d3.forceCenter($("#VisualizationSpace").width() / 2, $("#VisualizationSpace").height() / 2))
+			.restart()
 	});
 
 	$("#LoadProblemInput").keypress((e) => {

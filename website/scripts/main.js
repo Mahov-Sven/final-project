@@ -11,7 +11,8 @@ function main(){
 
 	const algorithmDropdown = new Dropdown("Algorithm", "Select Algorithm", [
 		["Back Track Algorithm (Tree)", "Back Track", "BackTrack"],
-		["Beam Search Algorithm (Local)", "Beam Search", "BeamSearch"]
+		["Coming Soon", "You Can't Pick This", "NoU"]
+		//["Beam Search Algorithm (Local)", "Beam Search", "BeamSearch"]
 	]);
 	algorithmDropdown.insertBefore("#RestartButton");
 } main();

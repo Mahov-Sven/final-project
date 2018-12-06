@@ -129,7 +129,10 @@ export default class VariablePage {
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
 		cancelButton.attr("style", "width: 30%");
-		cancelButton.on("click", () => this.elem.remove());
+		cancelButton.on("click", () => {
+			this.elem.remove();
+			$("#VisualizationSpace").trigger("_resize");
+		});
 		container.append(cancelButton);
 		container.append(confirmButton);
 

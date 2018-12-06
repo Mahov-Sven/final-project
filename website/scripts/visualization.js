@@ -1,5 +1,5 @@
 /*
-Visualization code for group 9's final project on CSP's. 
+Visualization code for group 9's final project on CSP's.
 Base code for force simulation by Anton Vynogradenko
 Additional code, helper functions, and modifications by Group 9
 
@@ -16,7 +16,7 @@ To modify this code, the algorithm will need to supply a javascript object of si
 
 var svg = d3.select("svg");
 
-var simulation = d3.forceSimulation()
+export var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
 	.force('charge', d3.forceManyBody()
 		.strength(-200)
@@ -26,9 +26,9 @@ var simulation = d3.forceSimulation()
 	.force('collision', d3.forceCollide().radius(function(d) {
 		return d.radius
 	}))
-    .force("center", d3.forceCenter(350, 200));
+    .force("center", d3.forceCenter($("#VisualizationSpace").width() / 2, $("#VisualizationSpace").height() / 2));
 	//center is hardcoded for now, but it will at least follow the svg flexbox as it moves
-	
+
 const abpJSON = {
 	variables: [
 	{name: "v1", completion: .86, value: "3"},
@@ -47,8 +47,8 @@ function abbreviatedProblemToGraph(abpJSON){
 	var graph = {};
 	graph.nodes = [];
 	graph.links = [];
-		
-	
+
+
 	for(var i = 0; i < abp.variables.length; i++){
 		if( abp.variables[i].completion == 1 ){
 			var value = abp.variables[i].value;
@@ -58,7 +58,7 @@ function abbreviatedProblemToGraph(abpJSON){
 			var color = [255*(1-abp.variables[i].completion),255*abp.variables[i].completion,0];
 		}
 		var tempNode = {id: i, group: 1, color: color, value: value, name: abp.variables[i].name};
-		graph.nodes.push(tempNode);		
+		graph.nodes.push(tempNode);
 	}
 	for(var i = 0; i < abp.constraints.length; i++){
 		var tempColor = [255*Math.random(), 255*Math.random(), 255*Math.random()];
@@ -89,7 +89,7 @@ function lookupIdByName(list, name){
 
 const testgraph = {
 	"nodes": [
-    {"id": "1", "group": 1, "color": [0,0,255], "name": "v1", "value": "12"},	
+    {"id": "1", "group": 1, "color": [0,0,255], "name": "v1", "value": "12"},
     {"id": "2", "group": 2, "color": [130,100,60], "name": "v2", "value": ""}
 	],
 	"links": [
@@ -98,12 +98,12 @@ const testgraph = {
 }
 
 
-export default function run(abpJSON){
+export function run(abpJSON){
 
 	svg.selectAll("*").remove();
 
 	var graph = JSON.parse(abbreviatedProblemToGraph(abpJSON));
-	
+
 	var link = svg.append("g")
 		.attr("class", "links")
 		.selectAll("line")
@@ -112,24 +112,24 @@ export default function run(abpJSON){
 		.append("line")
 		.style("stroke-width", "5px")
 		.style("stroke", function(d) {
-			return "rgb(" + d.color[0] + "," + d.color[1] + "," + d.color[2] + ")"; 					
+			return "rgb(" + d.color[0] + "," + d.color[1] + "," + d.color[2] + ")";
 		});
-		
+
 	var node = svg.append("g")
 		.attr("class", "nodes")
-		.selectAll("circle")  
+		.selectAll("circle")
 		.data(graph.nodes)
 		.enter()
 		.append("circle")
 		.attr("r", 16)
 		.style("fill", function(d) {
-			return "rgb(" + d.color[0] + "," + d.color[1] + "," + d.color[2] + ")"; 
+			return "rgb(" + d.color[0] + "," + d.color[1] + "," + d.color[2] + ")";
 		})
 		.call(d3.drag()
 			.on("start", dragstarted)
 			.on("drag", dragged)
 			.on("end", dragended));
-  
+
 	var label = svg.append("g")
 		.attr("class", "labels")
 		.selectAll("text")
@@ -144,7 +144,7 @@ export default function run(abpJSON){
 				return "rgb(255,255,255)";
 			} else{
 				return "rgb(10,10,10)";
-			}			
+			}
 		})
 		.text(function(d) { return d.value; });
 
@@ -168,7 +168,7 @@ export default function run(abpJSON){
 			.style("stroke-width", "1px")
 			.attr("cx", function (d) { return d.x+5; })
 			.attr("cy", function(d) { return d.y-3; });
-    
+
 		label
     		.attr("x", function(d) { return d.x; })
             .attr("y", function (d) { return d.y; });
@@ -191,7 +191,5 @@ function dragended(d) {
 	d.fx = null;
 	d.fy = null;
 }
-  
+
 run(abpJSON);
-
-

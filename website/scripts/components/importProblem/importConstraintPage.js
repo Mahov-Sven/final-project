@@ -151,7 +151,10 @@ export default class ConstraintPage {
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
 		cancelButton.css("width", "30%");
-		cancelButton.on("click", () => this.elem.remove());
+		cancelButton.on("click", () => {
+			this.elem.remove();
+			$("#VisualizationSpace").trigger("_resize");
+		});
 		container.append(cancelButton);
 		container.append(confirmButton);
 		this.elem.append(container);
