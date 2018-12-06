@@ -123,6 +123,10 @@
 	width: 0.6em;
 }
 
+.PageLine {
+	background-color: #111111;
+}
+
 /*===== Main Page =====*/
 
 #Content {
@@ -167,6 +171,14 @@
 
 #Sidebar {
 	border-right: #111111 solid 0.2em;
+}
+
+#ImportOverviewContainer,
+#ImportVariableContainer,
+#ImportConstraintContainer {
+	border-right: #333333 solid 0.2em;
+	box-sizing: content-box;
+	padding: 0 0.5em;
 }
 
 #CommandInput {

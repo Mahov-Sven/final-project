@@ -50,6 +50,12 @@
 	width: 8em;
 }
 
+.Title {
+	vertical-align: middle;
+	text-align: center;
+	margin: 0.25em 0;
+}
+
 .Button {
 	user-select: none;
 	cursor: pointer;
@@ -77,7 +83,7 @@
 .Dropdown {
 	user-select: none;
     cursor: pointer;
-    margin: 0.4em;
+    margin: 0 0.4em;
 }
 
 .FlexRow {
@@ -113,7 +119,7 @@
 .PageLine {
 	height: 0.2em;
 	width: 90%;
-	left: 5%;
+	margin: 0.5em 5%;
 }
 
 .FullWidth {

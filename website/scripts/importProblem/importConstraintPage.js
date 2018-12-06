@@ -23,6 +23,7 @@ export default class ConstraintPage {
 
 	_constructRoot(){
 		this.elem = $("<div>");
+		this.elem.attr("id", "ImportConstraintContainer");
 		this.elem.addClass("FlexStatic");
 		this.elem.addClass("FlexColumn");
 	}
@@ -47,6 +48,8 @@ export default class ConstraintPage {
 	_constructTitle(title){
 		const constraintTitle = $("<div>");
 		constraintTitle.text(title);
+		constraintTitle.addClass("FlexStatic");
+		constraintTitle.addClass("Text");
 		constraintTitle.addClass("Text");
 		this.elem.append(constraintTitle);
 	}
@@ -77,11 +80,6 @@ export default class ConstraintPage {
 	}
 
 	_constructAssemblyDropdown(parent){
-		const container = $("<div>");
-		container.addClass("Text");
-		container.addClass("Dropdown");
-		container.css("margin", "0.1rem 0.0rem");
-
 		const dropdownContainer = $("<select>");
 		dropdownContainer.addClass("FlexColumn");
 		dropdownContainer.addClass("FlexStatic");
@@ -100,8 +98,7 @@ export default class ConstraintPage {
 		dropdownContainer.addClass("FlexStatic");
 
 		this._constructDropdownOptions(dropdownContainer);
-		container.append(dropdownContainer);
-		parent.append(container);
+		parent.append(dropdownContainer);
 	}
 
 	_constructDropdownOptions(parent){
@@ -136,7 +133,7 @@ export default class ConstraintPage {
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
 		confirmButton.attr("style", "width: 65%");
-		confirmButton.on("click", function(){
+		confirmButton.on("click", () => {
 			const constraintList = [];
 			$(".NewConstraint").each((i, elem) => {
 				if ($($($(elem).children()[0]).find(":selected")).text() != "Selected" && $($(elem).children()[1]).val() != "" && $($(elem).children()[2]).val() != ""){
@@ -149,19 +146,17 @@ export default class ConstraintPage {
 				}
 			});
 
-			const importPage = new ImportPage();
-			importPage.importedConstraint(constraintList);
-			$("#ImportPageContainer").hide();
+			ImportPage.addImportedConstraint(constraintList);
+			this.elem.remove();
 		});
 		const cancelButton = $("<div>");
 		cancelButton.text("Cancel");
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
 		cancelButton.attr("style", "width: 30%");
-		cancelButton.on("click", () => $("#ImportPageContainer").hide());
+		cancelButton.on("click", () => this.elem.remove());
 		container.append(cancelButton);
 		container.append(confirmButton);
-
 		this.elem.append(container);
 	}
 
@@ -171,7 +166,5 @@ export default class ConstraintPage {
 
 	appendTo(elemId){
 		$(`${elemId}`).append(this.elem);
-		// Add element to another element
-		// Can add other things here
 	}
 }

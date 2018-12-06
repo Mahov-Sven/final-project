@@ -98,7 +98,7 @@ const testgraph = {
 }
 
 
-function run(abpJSON){
+export default function run(abpJSON){
 
 	var graph = JSON.parse(abbreviatedProblemToGraph(abpJSON));
 	

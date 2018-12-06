@@ -31,6 +31,7 @@ class BackTrackingAlgorithm extends AbstractAlgorithm {
 			}
 		}
 		if(iteration !== 0){
+			this.assignment.set(tempKeyNext, null);
 			iteration --;
 		} else {
 			console.log("No valid solution.");
