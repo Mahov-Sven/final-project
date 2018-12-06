@@ -18,6 +18,10 @@ export default class BackTrackingAlgorithm extends AbstractAlgorithm {
 				valIndex: 0
 		};
 
+		this.progress.variables[this.info.variableIs[current.varName]].completion = (current.varIndex / this.problem.variables[varIndex].length());
+		this.progress.variables[this.info.variableIs[current.varName]].value = this.problem.getVariableValue(this.variableNames[current.varIndex], current.valIndex);
+		
+		
 	}
 
 	step(){
@@ -30,10 +34,14 @@ export default class BackTrackingAlgorithm extends AbstractAlgorithm {
 					if(varIndex === 0){
 						//no solution exit
 					} else {
+						//update visualization
+						this.progress.variables[this.info.variableIs[current.varName]].completion = (current.varIndex / this.problem.variables[varIndex].length());
+						this.progress.variables[this.info.variableIs[current.varName]].value = this.problem.getVariableValue(this.variableNames[current.varIndex], current.valIndex);
 						//backtrack
 						this.current = this.current.parent;
+						//break
+						//exit()?
 					}
-					
 				}	
 			}
 		}
@@ -44,6 +52,11 @@ export default class BackTrackingAlgorithm extends AbstractAlgorithm {
 			varName: this.variableNames[this.current.varIndex + 1],
 			valIndex: 0
 		};
+		
+		this.progress.variables[this.info.variableIs[current.varName]].completion = (current.varIndex / this.problem.variables[varIndex].length());
+		this.progress.variables[this.info.variableIs[current.varName]].value = this.problem.getVariableValue(this.variableNames[current.varIndex], current.valIndex);
+		
+		
 		this.current = next;
 	}
 }
