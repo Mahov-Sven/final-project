@@ -9,60 +9,41 @@ export default class BackTrackingAlgorithm extends AbstractAlgorithm {
 	}
 
 	setup(){
-    	super.setup();
-		this.ruledOutCount = {};
-		for(variableName in this.problem.variables){
-			ruledOutCount[variableName] = 0;
-		}
+		super.setup();
+		this.variableNames = this.problem.getVariableNames();
+		this.current = {
+				parent: null,
+				varIndex: 0, 
+				varName: this.variableNames[0], 
+				valIndex: 0
+		};
+
 	}
 
 	step(){
-		console.log(this);
-		if(this.iteration === 0){
-			for(let x = this.ruledOutCount[this.problem.variables[this.iteration]]; x < length(this.problem.variables[this.iteration]); x ++){
-				for(let y = this.ruledOutCount[this.problem.variables[this.iteration + 1]]; y < length(this.problem.variables[this.iteration + 1]); y++){
-					let tempKey = keys(this.problem.variables)[this.iteration];
-					let tempKeyNext = keys(this.problem.variables)[this.iteration + 1];
-					this.assignment.set(tempKey, variables[tempKey][x]);
-					this.assignment.set(tempKeyNext, variables[tempKeyNext][y]);
-					for(constraint of this.problem.constraints){
-						for(instruction of constraint){
-							if((instruction.var1 === tempKey && instruction.var2 === tempKeyNext) || (instruction.var2 === tempKey && instruction.var1 === tempKeyNext)){
-								if(constraint.isSatisfiedBy(this.assignment)){
-									this.iteration++;
-									return;
-								}
-							}
-						}
+		this.assignment.set(this.variableNames[this.current.varIndex], this.problem.getVariableValue(this.variableNames[this.current.varIndex], this.current.valIndex));
+		for(constraint of this.problem.getContraints()){
+			if(!constraint.isSatisfiedBy(this.assignment)){
+				if(this.current.valIndex < this.problem.getVariableValue(this.variableValues()).length){
+					this.current.valIndex ++;
+				} else {
+					if(varIndex === 0){
+						//no solution exit
+					} else {
+						//backtrack
+						this.current = this.current.parent;
 					}
-				}
-				this.ruledOutCount[tempKey] ++;
+					
+				}	
 			}
-
-		}else{
-			for(let y = this.ruledOutCount[this.problem.variables[this.iteration+1]]; y < length(this.problem.variables[this.iteration + 1]); y++){
-				let tempKey = keys(this.problem.variables)[this.iteration];
-				let tempKeyNext = keys(this.problem.variables)[this.iteration + 1];
-				this.assignment.set(tempKeyNext, variables[tempKeyNext][y]);
-				for(constraint of this.problem.constraints){
-					for(instruction of constraint){
-						if((instruction.var1 === tempKey && instruction.var2 === tempKeyNext) || (instruction.var2 === tempKey && instruction.var1 === tempKeyNext)){
-							if(constraint.isSatisfiedBy(this.assignment)){
-								this.iteration++;
-								return;
-							}
-						}
-					}
-				}
-			}
-			this.ruledOutCount[tempKey]++;
 		}
-		if(iteration !== 0){
-			this.ruledOutCount[tempKeyNext]++;
-			this.assignment.set(tempKeyNext, null);
-			this.iteration--;
-		} else {
-			console.log("No valid solution.");
-		}
+		
+		let next = {
+			parent: this.current,
+			varIndex: this.current.varIndex + 1,
+			varName: this.variableNames[this.current.varIndex + 1],
+			valIndex: 0
+		};
+		this.current = next;
 	}
 }

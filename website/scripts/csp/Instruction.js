@@ -16,7 +16,7 @@ export default class Instruction {
 		let val2 = state[this.var2];
 		if(val1 === undefined) val1 = parseInt(this.var1);
 		if(val2 === undefined) val2 = parseInt(this.var2);
-		if(val1 === NaN || val2 === NaN) return state[this.rvar] = false;
+		if(val1 === NaN || val2 === NaN) return state[this.rvar] = true;
 		if(typeof val1 !== "number" || typeof val2 !== "number")
 			throw new Error(`The values for an assignment were '${val1}' and '${val2}' but were not numbers`);
 
