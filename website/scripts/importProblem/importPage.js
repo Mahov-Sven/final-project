@@ -11,8 +11,8 @@ export default class ImportPage {
 	}
 
 	_construct(){
+		if(this._exists()) return;
 		this._constructRoot();
-
 		this._constructTitle("Problem Name", this.elem);
 		this._constructProblemName();
 		this._constructPageLine();
@@ -20,6 +20,10 @@ export default class ImportPage {
 		this._constructPageLine();
 		this._constructContainer("Constraint");
 		this._constructBottomButtons();
+	}
+
+	_exists(){
+		return $("#ImportOverviewContainer").length !== 0;
 	}
 
 	_constructRoot(){

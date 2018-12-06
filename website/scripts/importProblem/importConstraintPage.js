@@ -11,6 +11,7 @@ export default class ConstraintPage {
 	}
 
 	_construct(){
+		if(this._exists()) return;
 		this._constructRoot();
 		this._constructTitle("Constraints:");
 		this._constructAddOperationButton();
@@ -19,6 +20,10 @@ export default class ConstraintPage {
 		this._constructConstraintInput();
 		this._constructBottomButtons();
 		this._constructEvents();
+	}
+
+	_exists(){
+		return $("#ImportConstraintContainer").length !== 0;
 	}
 
 	_constructRoot(){

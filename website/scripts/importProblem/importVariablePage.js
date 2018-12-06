@@ -9,6 +9,7 @@ export default class VariablePage {
 	}
 
 	_construct(){
+		if(this._exists()) return;
 		this._constructRoot();
 		this._constructTitle("Variables");
 		this._constructAddVariableButton();
@@ -17,6 +18,12 @@ export default class VariablePage {
 		this._constructVariableInput();
 		this._constructBottomButtons();
 		this._constructEvents();
+	}
+
+
+
+	_exists(){
+		return $("#ImportVariableContainer").length !== 0;
 	}
 
 	_constructRoot(){
