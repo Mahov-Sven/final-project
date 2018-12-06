@@ -13,7 +13,8 @@ export function init() {
 	});
 
 	$("#ImportInput").on("click", function(){
-		ImportCSP.createPage("Main");
+		const importPage = new ImportPage();
+		importPage.appendTo("#Sidebar");
 	});
 
 	$("#LoadProblemButton").click((e) => {
