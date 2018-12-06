@@ -159,7 +159,6 @@ export default class ImportPage {
 		});
 
 		this.elem.find("#ProblemName").keyup(() => {
-			console.log($("#ProblemName").val())
 			if($("#ProblemName").val() === "") confirmButton.addClass("Disabled");
 			else confirmButton.removeClass("Disabled");
 		});
