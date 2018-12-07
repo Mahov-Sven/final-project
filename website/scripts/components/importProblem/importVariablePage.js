@@ -147,24 +147,19 @@ export default class VariablePage {
 		const valSet = new Set();
 		const valueArray = inString.split(",");
 		for(const valStr of valueArray){
-			const valueRange = valStr.split("-");
-			if(valueRange.length === 1){
-				const newVal = parseInt(valStr);
-				if(isNaN(newVal))
-					throw new Error(`The value "${valStr}" given for a variable could not be parsed.`);
+			const valueRangeArray = /^(-?[0-9]+)(-(-?[0-9]+))?$/.exec(valStr);
+			console.log(valueRangeArray);
+			if(valueRangeArray === null)
+				throw new Error(`The value "${valStr}" given for a variable could not be parsed.`);
 
-				valSet.add(newVal);
-			} else if(valueRange.length === 2){
-				const startVal = parseInt(valueRange[0]);
-				const endVal = parseInt(valueRange[1]);
-				"-1";
-				"-1-5";
-				"-7--1";
-				if(isNaN(startVal) || isNaN(endVal) || startVal > endVal)
-					throw new Error(`The value "${valStr}" given for a variable could not be parsed.`);
+			const startVal = parseInt(valueRangeArray[0]);
+			const endVal = parseInt(valueRangeArray[3]);
 
-				for(let i = startVal; i <= endVal; i++) valSet.add(i);
-			} else throw new Error(`The value "${valStr}" given for a variable could not be parsed.`);
+			if(isNaN(startVal))
+				throw new Error(`The value "${valStr}" given for a variable could not be parsed.`);
+
+			if(isNaN(endVal)) valSet.add(startVal);
+			else for(let i = startVal; i <= endVal; i++) valSet.add(i);
 		}
 		return Array.from(valSet);
 	}
