@@ -1,16 +1,18 @@
 import Constraint from "../CSP/Constraint.js"
 import Problem from "../CSP/Problem.js"
 import Assignment from "./Assignment.js";
+import AbstractAlgorithm from "/scripts/algorithms/AbstractAlgorithm.js"
+import Random from "/scripts/random.js"
 
-class LocalSearchAlgorithm extends AbstractAlgorithm {
+class BeamSearchAlgorithm extends AbstractAlgorithm {
 	constructor(){
 		super.constructor();
 	}
 
 	setup(){
         super.setup();
-        //array of assignments
-        this.candidateSpace = [];
+		
+		
     }
 
     step(){

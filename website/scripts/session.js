@@ -3,6 +3,7 @@ import * as Visualization from "./visualization.js"
 import AbstractAlgorithm from "/scripts/algorithms/AbstractAlgorithm.js"
 import BackTrackingAlgorithm from "/scripts/algorithms/BackTrackingAlgorithm.js"
 import HillClimbingAlgorithm from "/scripts/algorithms/HillClimbingAlgorithm.js"
+import BeamSearchAlgorithm from "/scripts/algorithms/BeamSearchAlgorithm.js"
 
 export default class Session {
 	constructor(){}
@@ -43,6 +44,11 @@ export default class Session {
 					break;
 				case "HillClimbing":
 					Session.algorithm = new HillClimbingAlgorithm();
+					Session.algorithm.setProblem(Session.problem);
+					Session.visualize();
+					break;
+				case "LocalBeam":
+					Session.algorithm = new BeamSearchAlgorithm();
 					Session.algorithm.setProblem(Session.problem);
 					Session.visualize();
 					break;
