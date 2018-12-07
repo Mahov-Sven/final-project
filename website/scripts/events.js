@@ -46,10 +46,9 @@ export function init() {
 
 
 	const algorithmDropdown = new Dropdown("Algorithm", "Select Algorithm", [
-		["Back Track Algorithm (Tree)", "Might Be Working Right Now ¯\_(ツ)_/¯", "BackTrack"],
+		["Back Track Algorithm (Tree)", "Back Track", "BackTrack"],
 		["Hill Climbing Algorithm (Local)", "Hill Climbing", "HillClimbing"],
-		["Coming Soon", "You Can't Pick This", "NoU"]
-		//["Beam Search Algorithm (Local)", "Beam Search", "BeamSearch"]
+		["Coming Soon", "...", "UndefinedLocalSearch"]
 	]);
 	algorithmDropdown.insertBefore("#RestartButton");
 	algorithmDropdown.select((e) => {
@@ -71,8 +70,7 @@ export function init() {
 			$("#StepButton").addClass("Disabled");
 			$("#PausePlayButton").addClass("Active");
 			playInterval = setInterval(() => {
-				Session.step();
-				Session.visualize();
+				if(Session.step()) Session.visualize();
 			}, 1000);
 		} else {
 			clearInterval(playInterval);
@@ -90,8 +88,7 @@ export function init() {
 	});
 
 	$("#StepButton").click((e) => {
-		Session.step();
-		Session.visualize();
+		if(Session.step()) Session.visualize();
 	});
 
 	$("#ImportSpace").hide();

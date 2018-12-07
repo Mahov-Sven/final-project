@@ -123,10 +123,10 @@ export default class ConstraintPage {
 
 		const confirmButton = $("<div>");
 		confirmButton.text("Confirm");
-		confirmButton.addClass("FlexDynamic");
+		confirmButton.addClass("FlexStatic");
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
-		confirmButton.css("width", "65%");
+		confirmButton.css("width", "50%");
 		confirmButton.on("click", () => {
 			const constraint = new Constraint();
 			$(".NewConstraint").each((i, elem) => {
@@ -147,10 +147,10 @@ export default class ConstraintPage {
 
 		const cancelButton = $("<div>");
 		cancelButton.text("Cancel");
-		cancelButton.addClass("FlexDynamic");
+		cancelButton.addClass("FlexStatic");
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
-		cancelButton.css("width", "30%");
+		cancelButton.css("width", "20%");
 		cancelButton.on("click", () => {
 			this.elem.remove();
 			$("#VisualizationSpace").trigger("_resize");

@@ -66,9 +66,10 @@ export default class Session {
 		if(Session.algorithm.completed()){
 			$("#PausePlayButton").trigger("stop");
 			$("#StepButton").addClass("Disabled");
-			return;
+			return false;
 		}
 		Session.algorithm.step();
+		return true;
 	}
 
 	static visualize(){

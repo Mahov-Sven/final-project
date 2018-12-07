@@ -107,10 +107,10 @@ export default class VariablePage {
 
 		const confirmButton = $("<div>");
 		confirmButton.text("Confirm");
-		confirmButton.addClass("FlexDynamic");
+		confirmButton.addClass("FlexStatic");
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
-		confirmButton.attr("style", "width: 65%");
+		confirmButton.attr("style", "width: 50%");
 		confirmButton.on("click", () => {
 			$(".NewVariable").each((i, elem) => {
 				if ($($(elem).children()[0]).val() != "" && $($(elem).children()[1]).val() != ""){
@@ -125,10 +125,10 @@ export default class VariablePage {
 		});
 		const cancelButton = $("<div>");
 		cancelButton.text("Cancel");
-		cancelButton.addClass("FlexDynamic");
+		cancelButton.addClass("FlexStatic");
 		cancelButton.addClass("Button");
 		cancelButton.addClass("ButtonText");
-		cancelButton.attr("style", "width: 30%");
+		cancelButton.attr("style", "width: 20%");
 		cancelButton.on("click", () => {
 			this.elem.remove();
 			$("#VisualizationSpace").trigger("_resize");
