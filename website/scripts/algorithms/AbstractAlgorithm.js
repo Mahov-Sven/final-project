@@ -35,8 +35,6 @@ export default class AbstractAlgorithm {
 				contains: constraint.getVariableNames(this.problem.getVariableNames()),
 			});
 		}
-
-		console.log(this.progress);
 	}
 
 	step(){}

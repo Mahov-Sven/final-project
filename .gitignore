@@ -1,9 +1,7 @@
 # ignore these directories
-server/database/*
+#server/database/*
 node_modules/*
 *.DS_Store
 
 # keep .placeholder files
 !.placeholder
-!4Rooks.json
-!RegionColoring.json

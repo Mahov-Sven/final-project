@@ -8,7 +8,6 @@ export function request(postStr, notify=false){
 		const req = new XMLHttpRequest();
 		req.onreadystatechange = () => {
 			if(req.readyState == 4 && req.status == 200){
-				console.log(req.responseText);
 				let responseObj = {};
 				try {
 					responseObj = JSON.parse(req.responseText);

@@ -22,7 +22,6 @@ export default class Dropdown {
 		this.elem.addClass("FlexColumn");
 		this.elem.addClass("Dropdown");
 		this.elem.attr("id", Dropdown.getId(this.id));
-		console.log(Dropdown.getId(this.id));
 	}
 
 	_constructSelected(){

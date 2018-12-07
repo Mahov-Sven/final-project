@@ -35,8 +35,6 @@ export function init() {
 
 	$("#LoadProblemInput").keypress(async (e) => {
 		if(e.which !== 13) return;
-		console.log("Trying to Load");
-
 		const result = await Loader.execCommand("loadProblem", { n: $("#LoadProblemInput").val()});
 		console.log(result);
 		console.log(Problem.fromObject(JSON.parse(result.data)));
@@ -60,7 +58,6 @@ export function init() {
 
 	let playInterval = undefined;
 	$("#RestartButton").click((e) => {
-		console.log("Trying restart");
 		clearInterval(playInterval);
 		playInterval = undefined;
 		$("#PausePlayButton").removeClass("Disabled");
@@ -93,7 +90,6 @@ export function init() {
 	});
 
 	$("#StepButton").click((e) => {
-		console.log("Trying step");
 		Session.step();
 		Session.visualize();
 	});

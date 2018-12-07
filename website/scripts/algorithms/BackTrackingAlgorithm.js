@@ -12,51 +12,57 @@ export default class BackTrackingAlgorithm extends AbstractAlgorithm {
 		super.setup();
 		this.variableNames = this.problem.getVariableNames();
 		this.current = {
-				parent: null,
-				varIndex: 0, 
-				varName: this.variableNames[0], 
-				valIndex: 0
+			parent: null,
+			varIndex: 0,
+			varName: this.variableNames[0],
+			valIndex: 0
 		};
 
-		this.progress.variables[this.info.variableIs[current.varName]].completion = (current.varIndex / this.problem.variables[varIndex].length());
-		this.progress.variables[this.info.variableIs[current.varName]].value = this.problem.getVariableValue(this.variableNames[current.varIndex], current.valIndex);
-		
-		
+		this.progress.variables[this.info.variableIs[this.current.varName]].completion = 1; //(this.current.varIndex / this.problem.getVariableValues(this.current.varName).length);
+		this.progress.variables[this.info.variableIs[this.current.varName]].value = this.problem.getVariableValue(this.variableNames[this.current.varIndex], this.current.valIndex);
+
+		this.isCompleted = false;
 	}
 
 	step(){
 		this.assignment.set(this.variableNames[this.current.varIndex], this.problem.getVariableValue(this.variableNames[this.current.varIndex], this.current.valIndex));
-		for(constraint of this.problem.getContraints()){
+		console.log(this.assignment);
+		let constraintFailed = false;
+		for(const constraint of this.problem.getConstraints()){
 			if(!constraint.isSatisfiedBy(this.assignment)){
-				if(this.current.valIndex < this.problem.getVariableValue(this.variableValues()).length){
-					this.current.valIndex ++;
-				} else {
-					if(varIndex === 0){
-						//no solution exit
-					} else {
-						//update visualization
-						this.progress.variables[this.info.variableIs[current.varName]].completion = (current.varIndex / this.problem.variables[varIndex].length());
-						this.progress.variables[this.info.variableIs[current.varName]].value = this.problem.getVariableValue(this.variableNames[current.varIndex], current.valIndex);
-						//backtrack
-						this.current = this.current.parent;
-						//break
-						//exit()?
-					}
-				}	
+				constraintFailed = true;
+				break;
 			}
 		}
-		
-		let next = {
-			parent: this.current,
-			varIndex: this.current.varIndex + 1,
-			varName: this.variableNames[this.current.varIndex + 1],
-			valIndex: 0
-		};
-		
-		this.progress.variables[this.info.variableIs[current.varName]].completion = (current.varIndex / this.problem.variables[varIndex].length());
-		this.progress.variables[this.info.variableIs[current.varName]].value = this.problem.getVariableValue(this.variableNames[current.varIndex], current.valIndex);
-		
-		
-		this.current = next;
+
+		if(constraintFailed){
+			if(this.current.valIndex < this.problem.getVariableValues(this.current.varName).length){
+				this.current.valIndex ++;
+			} else {
+				if(this.current.varIndex === 0){
+				} else {
+					this.progress.variables[this.info.variableIs[this.current.varName]].completion = 0; //(this.current.varIndex / this.problem.getVariableValues(this.current.varName).length);
+					this.progress.variables[this.info.variableIs[this.current.varName]].value = this.problem.getVariableValue(this.variableNames[this.current.varIndex], this.current.valIndex);
+					this.current = this.current.parent;
+				}
+			}
+
+		} else {
+			let next = {
+				parent: this.current,
+				varIndex: this.current.varIndex + 1,
+				varName: this.variableNames[this.current.varIndex + 1],
+				valIndex: 0
+			};
+
+			this.progress.variables[this.info.variableIs[this.current.varName]].completion = 1;//(this.current.varIndex / this.problem.getVariableValues(this.current.varName).length);
+			this.progress.variables[this.info.variableIs[this.current.varName]].value = this.problem.getVariableValue(this.variableNames[this.current.varIndex], this.current.valIndex);
+
+			this.current = next;
+		}
+	}
+
+	completed(){
+		return this.isCompleted || super.completed();
 	}
 }

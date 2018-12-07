@@ -11,8 +11,6 @@ async function main(){
 	Events.init();
 
 	const result = await Loader.execCommand("loadProblem", { n: "4Rooks"});
-	console.log(result);
-	console.log(Problem.fromObject(JSON.parse(result.data)));
 	if(result.success) Session.setProblem(Problem.fromObject(JSON.parse(result.data)));
 
 	Session.visualize();
