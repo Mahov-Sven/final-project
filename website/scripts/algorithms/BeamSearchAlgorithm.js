@@ -16,8 +16,6 @@ export default class BeamSearchAlgorithm extends AbstractAlgorithm {
 		this.variableNames = this.problem.getVariableNames();
 
 		this.k = Math.ceil(Math.sqrt(this.variableNames.length));
-		
-		//console.log(this.k);
 				
 		for(const varName of this.variableNames){
 			const domainSize = this.problem.getVariableValues(varName).length;
@@ -38,39 +36,42 @@ export default class BeamSearchAlgorithm extends AbstractAlgorithm {
 	}
 
     step(){
-		//For each k state, generate a secessor state
-			//If any of these are a goal state, return solution
-			
-			//Else select k ""best" sucessors 
-		
-		//Run step() again on the sucessor states
-		for(let x = 0; x < this.k; x ++){
+		let kBestAssignments = []; //initialize bestAssignment
+		for(let x = 0; x <= this.k; x ++){
 			let randI = Random.randInt(this.variableNames.length); //selects random index 
 			let varName = this.variableNames[randI]; // selects random varName with randI
-			let minBrokenConstraints = Infinity; // initialize minBrokenConstraints
-			let bestAssignment = undefined; //initialize bestAssignment
+			let index = 0;
 			
-			for(const value of this.problem.getVariableValues(varName)){ //loops over all values for varName and finds assignment with least brokenConstraints
-				let tempAssign = new Assignment();
-				tempAssign = this.assignment;
+			for(const value of this.problem.getVariableValues(varName)){ 
+				let tempAssign = Object.assign(new Assignment(), this.assignment);
 				tempAssign.set(varName, value);
 				let brokenConstraints = 0;
 				for(const constraint of this.problem.getConstraints()){
 					if(!constraint.isSatisfiedBy(tempAssign)) brokenConstraints++;
 				}
-				if(brokenConstraints < minBrokenConstraints){
-					minBrokenConstraints = brokenConstraints;
-					bestAssignment = value;
+				console.log(index, this.k)
+				if(index < this.k){
+					kBestAssignments[index] = [tempAssign, brokenConstraints, varName];
+					index ++;
+				} else {
+					let worstIndex = 0;
+					for(let x = 1; x < this.k; x ++){
+						if(kBestAssignments[x][1] > kBestAssignments[worstIndex][1]){
+							worstIndex = x;
+						}
+					}
+					kBestAssignments[worstIndex] = [tempAssign, brokenConstraints,varName]
 				}
 			}
-			
-			randI = Random.randInt(this.variableNames.length); //selects random index 
-			varName = this.variableNames[randI];
-		
-
-		this.assignment.set(varName, bestAssignment);
-		this.progress.variables[this.info.variableIs[varName]].completion = 1 - (minBrokenConstraints / this.info.variableOCs[varName]);
-		this.progress.variables[this.info.variableIs[varName]].value = this.assignment.get(varName);
 		}
+		let bestIndex = 0;
+		for(let x = 0; x < this.k; x ++){
+			if(kBestAssignments[x][1] < kBestAssignments[bestIndex][1]){
+				bestIndex = x;
+			}
+		}
+		Object.assign(this.assignment, kBestAssignments[bestIndex][0])
+		this.progress.variables[this.info.variableIs[kBestAssignments[bestIndex][2]]].completion = 1 - (kBestAssignments[bestIndex][1] / this.info.variableOCs[kBestAssignments[bestIndex][2]]);
+		this.progress.variables[this.info.variableIs[kBestAssignments[bestIndex][2]]].value = this.assignment.get(kBestAssignments[bestIndex][2]);
     }
 }
