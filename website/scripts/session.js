@@ -14,8 +14,14 @@ export default class Session {
 	}
 
 	static setProblem(problem){
+		$("#PausePlayButton").trigger("stop");
+		$("#StepButton").addClass("Disabled");
+
 		Session.problem = problem;
 		Session.algorithm.setProblem(Session.problem);
+
+		$("#PausePlayButton").removeClass("Disabled");
+		$("#StepButton").removeClass("Disabled");
 	}
 
 	static getProblem(){
@@ -23,6 +29,9 @@ export default class Session {
 	}
 
 	static setAlgorithm(algorithm){
+		$("#PausePlayButton").trigger("stop");
+		$("#StepButton").addClass("Disabled");
+
 		if(algorithm instanceof AbstractAlgorithm)
 			Session.algorithm = algorithm;
 		else if (typeof algorithm === "string"){
@@ -40,6 +49,9 @@ export default class Session {
 				default: break;
 			}
 		}
+
+		$("#PausePlayButton").removeClass("Disabled");
+		$("#StepButton").removeClass("Disabled");
 	}
 
 	static getAlgorithm(){

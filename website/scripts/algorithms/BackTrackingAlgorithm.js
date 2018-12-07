@@ -26,7 +26,6 @@ export default class BackTrackingAlgorithm extends AbstractAlgorithm {
 
 	step(){
 		this.assignment.set(this.variableNames[this.current.varIndex], this.problem.getVariableValue(this.variableNames[this.current.varIndex], this.current.valIndex));
-		console.log(this.assignment);
 		let constraintFailed = false;
 		for(const constraint of this.problem.getConstraints()){
 			if(!constraint.isSatisfiedBy(this.assignment)){
