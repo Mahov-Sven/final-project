@@ -126,7 +126,7 @@ export default class ConstraintPage {
 		confirmButton.addClass("FlexStatic");
 		confirmButton.addClass("Button");
 		confirmButton.addClass("ButtonText");
-		confirmButton.css("width", "50%");
+		confirmButton.css("width", "60%");
 		confirmButton.on("click", () => {
 			const constraint = new Constraint();
 			$(".NewConstraint").each((i, elem) => {

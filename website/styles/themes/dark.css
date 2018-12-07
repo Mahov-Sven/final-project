@@ -166,19 +166,19 @@
 }
 
 #PausePlayButton:not(.Active) {
-	background-image: url("/resources/images/Paused.png");
-}
-
-#PausePlayButton:not(.Active):hover {
-	background-image: url("/resources/images/PausedHover.png");
-}
-
-#PausePlayButton.Active {
 	background-image: url("/resources/images/Play.png");
 }
 
-#PausePlayButton.Active:hover {
+#PausePlayButton:not(.Active):hover {
 	background-image: url("/resources/images/PlayHover.png");
+}
+
+#PausePlayButton.Active {
+	background-image: url("/resources/images/Paused.png");
+}
+
+#PausePlayButton.Active:hover {
+	background-image: url("/resources/images/PausedHover.png");
 }
 
 #StepButton {
