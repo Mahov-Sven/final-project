@@ -60,7 +60,7 @@ export default class BeamSearchAlgorithm extends AbstractAlgorithm {
 							worstIndex = x;
 						}
 					}
-					kBestAssignments[worstIndex] = [tempAssign, brokenConstraints,varName]
+					if(kBestAssignments[worstIndex][1] > brokenConstraints) kBestAssignments[worstIndex] = [tempAssign, brokenConstraints,varName];
 				}
 			}
 		}
