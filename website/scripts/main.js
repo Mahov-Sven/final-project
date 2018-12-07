@@ -3,10 +3,12 @@ import * as Events from "./events.js"
 import Session from "./session.js"
 import Dropdown from "/scripts/components/dropdown.js"
 import Problem from "/scripts/csp/Problem.js"
+import Visualization from "/scripts/visualization.js"
 
 async function main(){
 	Loader.init();
 	Dropdown.init();
+	Visualization.init();
 	Session.init();
 	Events.init();
 

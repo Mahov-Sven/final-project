@@ -157,6 +157,17 @@
 	border-bottom: #111111 solid 0.2em;
 }
 
+#IterationCounter {
+	background-color: #111111;
+	border-radius: 0.2em;
+	box-shadow: 0 0.1em 0.1em 0.1em #00000033;
+	color: #9b9b9b;
+	font-family: Verdana;
+	user-select: none;
+	margin: 0.4em;
+	padding: 0.5em 1em;
+}
+
 #RestartButton {
 	background-image: url("/resources/images/Repeat.png");
 }

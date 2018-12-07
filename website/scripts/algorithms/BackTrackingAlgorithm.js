@@ -25,6 +25,8 @@ export default class BackTrackingAlgorithm extends AbstractAlgorithm {
 	}
 
 	step(){
+		super.step();
+
 		this.assignment.set(this.variableNames[this.current.varIndex], this.problem.getVariableValue(this.variableNames[this.current.varIndex], this.current.valIndex));
 		let constraintFailed = false;
 		for(const constraint of this.problem.getConstraints()){
@@ -35,13 +37,13 @@ export default class BackTrackingAlgorithm extends AbstractAlgorithm {
 		}
 
 		if(constraintFailed){
-			if(this.current.valIndex < this.problem.getVariableValues(this.current.varName).length){
+			if(this.current.valIndex < this.problem.getVariableValues(this.current.varName).length - 1){
 				this.current.valIndex ++;
 			} else {
 				if(this.current.varIndex === 0){
 				} else {
 					this.progress.variables[this.info.variableIs[this.current.varName]].completion = 0; //(this.current.varIndex / this.problem.getVariableValues(this.current.varName).length);
-					this.progress.variables[this.info.variableIs[this.current.varName]].value = this.problem.getVariableValue(this.variableNames[this.current.varIndex], this.current.valIndex);
+					this.progress.variables[this.info.variableIs[this.current.varName]].value = this.variableNames[this.current.varIndex];
 					this.current = this.current.parent;
 				}
 			}

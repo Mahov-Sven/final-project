@@ -37,7 +37,9 @@ export default class AbstractAlgorithm {
 		}
 	}
 
-	step(){}
+	step(){
+		this.iteration++;
+	}
 
 	completed(){
 		for(const variable of this.progress.variables){

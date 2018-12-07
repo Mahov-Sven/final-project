@@ -3,7 +3,7 @@ import Problem from "./csp/Problem.js"
 import ImportPage from "./components/importProblem/importPage.js"
 import Session from "./session.js"
 import Constraint from "./csp/Constraint.js";
-import * as Visualization from "/scripts/visualization.js"
+import Visualization from "/scripts/visualization.js"
 import Dropdown from "/scripts/components/dropdown.js"
 
 let activeBannerButton = -1;

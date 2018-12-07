@@ -1,5 +1,5 @@
 import Problem from "./csp/Problem.js"
-import * as Visualization from "./visualization.js"
+import Visualization from "./visualization.js"
 import AbstractAlgorithm from "/scripts/algorithms/AbstractAlgorithm.js"
 import BackTrackingAlgorithm from "/scripts/algorithms/BackTrackingAlgorithm.js"
 import HillClimbingAlgorithm from "/scripts/algorithms/HillClimbingAlgorithm.js"
@@ -20,6 +20,8 @@ export default class Session {
 
 		Session.problem = problem;
 		Session.algorithm.setProblem(Session.problem);
+		Visualization.restart(Session.algorithm.progress);
+		$("#IterationCounter").text(`Iteration: ${Session.algorithm.iteration}`);
 
 		$("#PausePlayButton").removeClass("Disabled");
 		$("#StepButton").removeClass("Disabled");
@@ -66,6 +68,8 @@ export default class Session {
 
 	static restart(){
 		Session.algorithm.setup();
+		Visualization.restart(Session.algorithm.progress);
+		$("#IterationCounter").text(`Iteration: ${Session.algorithm.iteration}`);
 	}
 
 	static step(){
@@ -75,10 +79,11 @@ export default class Session {
 			return false;
 		}
 		Session.algorithm.step();
+		$("#IterationCounter").text(`Iteration: ${Session.algorithm.iteration}`);
 		return true;
 	}
 
 	static visualize(){
-		Visualization.run(Session.algorithm.progress);
+		Visualization.draw(Session.algorithm.progress);
 	}
 }

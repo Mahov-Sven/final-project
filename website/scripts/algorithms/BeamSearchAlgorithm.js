@@ -12,11 +12,11 @@ export default class BeamSearchAlgorithm extends AbstractAlgorithm {
 	setup(){
 
         super.setup();
-		
+
 		this.variableNames = this.problem.getVariableNames();
 
 		this.k = Math.ceil(Math.sqrt(this.variableNames.length));
-				
+
 		for(const varName of this.variableNames){
 			const domainSize = this.problem.getVariableValues(varName).length;
 			const randI = Random.randInt(domainSize);
@@ -36,13 +36,15 @@ export default class BeamSearchAlgorithm extends AbstractAlgorithm {
 	}
 
     step(){
+		super.step();
+		
 		let kBestAssignments = []; //initialize bestAssignment
 		for(let x = 0; x <= this.k; x ++){
-			let randI = Random.randInt(this.variableNames.length); //selects random index 
+			let randI = Random.randInt(this.variableNames.length); //selects random index
 			let varName = this.variableNames[randI]; // selects random varName with randI
 			let index = 0;
-			
-			for(const value of this.problem.getVariableValues(varName)){ 
+
+			for(const value of this.problem.getVariableValues(varName)){
 				let tempAssign = Object.assign(new Assignment(), this.assignment);
 				tempAssign.set(varName, value);
 				let brokenConstraints = 0;

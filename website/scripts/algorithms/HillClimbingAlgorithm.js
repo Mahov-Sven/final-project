@@ -31,6 +31,8 @@ export default class HillClimbingAlgorithm extends AbstractAlgorithm {
 	}
 
 	step(){
+		super.step();
+		
 		const randI = Random.randInt(this.variableNames.length);
 		const varName = this.variableNames[randI];
 		let minBrokenConstraints = Infinity;
